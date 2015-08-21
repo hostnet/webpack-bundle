@@ -65,12 +65,6 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
         touch($temp_file, time() + 10);
         $this->assertTrue($tracker->isOutdated());
         unlink($temp_file3);
-
-        // Test getters
-        $this->assertContains(realpath($fixture_path . '/Bundle/BarBundle/Resources'), $tracker->getAliases());
-        $this->assertCount(1, $tracker->getTemplates());
-        $this->assertContains(realpath($fixture_path . '/Resources/template.html.twig'), $tracker->getTemplates());
-        $this->assertCount(4, $tracker->getCacheEntries());
     }
 
     /**
