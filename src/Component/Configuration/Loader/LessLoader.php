@@ -24,10 +24,7 @@ final class LessLoader implements LoaderInterface
     {
         $node_builder
             ->arrayNode('less')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->booleanNode('enabled')->defaultFalse()->end()
-                ->end()
+                ->canBeEnabled()
             ->end();
     }
 

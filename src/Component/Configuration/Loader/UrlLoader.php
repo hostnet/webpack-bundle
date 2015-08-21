@@ -24,10 +24,7 @@ final class UrlLoader implements LoaderInterface
     {
         $node_builder
             ->arrayNode('url')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->booleanNode('enabled')->defaultTrue()->end()
-                ->end()
+                ->canBeDisabled()
             ->end();
     }
 

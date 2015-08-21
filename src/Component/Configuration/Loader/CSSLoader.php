@@ -24,9 +24,9 @@ final class CSSLoader implements LoaderInterface
     {
         $node_builder
             ->arrayNode('css')
+                ->canBeDisabled()
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->booleanNode('enabled')->defaultTrue()->end()
                     ->booleanNode('all_chunks')->defaultTrue()->end()
                     ->scalarNode('filename')->defaultNull()->end()
                 ->end()
