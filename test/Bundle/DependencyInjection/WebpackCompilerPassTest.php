@@ -28,7 +28,14 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->set('twig', $this->getMock(\Twig_Environment::class));
         $bundle->build($container);
 
-        $extension->load(['webpack' => ['bundles' => ['FooBundle']]], $container);
+        $extension->load([
+            'webpack' => [
+                'node' => [
+                    'node_modules_path' => $fixture_dir . '/node_modules'
+                ],
+                'bundles' => ['FooBundle']
+            ]
+        ], $container);
         $container->compile();
 
         $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
