@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @TODO Add some decent logging interface to allow optional verbose output.
+ *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class CompileCommand extends Command
@@ -19,14 +21,9 @@ class CompileCommand extends Command
      */
     public function __construct(Compiler $compiler)
     {
-        parent::__construct();
+        parent::__construct('webpack:compile');
 
         $this->compiler = $compiler;
-    }
-
-    protected function configure()
-    {
-        $this->setName('webpack:compile');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
