@@ -133,7 +133,7 @@ class Configuration implements ConfigurationInterface
                 continue;
             }
 
-            /* @var $class_name \Hostnet\Component\WebpackBridge\Plugin\AbstractPluginInterface */
+            /* @var $class_name \Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface */
             $class_name::applyConfiguration($node_builder);
         }
     }
