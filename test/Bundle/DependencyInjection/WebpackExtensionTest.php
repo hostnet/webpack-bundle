@@ -24,9 +24,7 @@ class WebpackExtensionTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.bundles', []);
         $container->setParameter('kernel.debug', true);
 
+        // This should not fail.
         $extension->load([], $container);
-
-        // Do stuff...
-        // print_r($container->getDefinitions());
     }
 }
