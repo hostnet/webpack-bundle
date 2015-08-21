@@ -4,7 +4,7 @@ namespace Hostnet\Component\WebpackBridge\Configuration\Loader;
 use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class LessLoader implements LoaderInterface
+final class LessLoader implements LoaderInterface
 {
     /**
      * @var array

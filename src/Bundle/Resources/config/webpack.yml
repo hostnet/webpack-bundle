@@ -9,6 +9,7 @@ services:
         class: Hostnet\Bundle\WebpackBridge\Command\CompileCommand
         arguments:
             - '@hostnet_webpack.bridge.asset_compiler'
+            - []
         tags:
             - { name: console.command }
 
@@ -22,9 +23,14 @@ services:
             - '@templating.finder'
             - '%kernel.cache_dir%'
             - '%kernel.root_dir%'
+            - '' # asset_path
+            - [] # bundles
 
     hostnet_webpack.bridge.compiler_process:
         class: Symfony\Component\Process\Process
+        arguments:
+            - '' # Node binary
+            - '' # Cache directory
 
     hostnet_webpack.bridge.asset_twig_parser:
         class: Hostnet\Component\WebpackBridge\Asset\TwigParser
@@ -41,9 +47,13 @@ services:
             - '@hostnet_webpack.bridge.config_generator'
             - '@hostnet_webpack.bridge.compiler_process'
             - '%kernel.cache_dir%'
+            - [] # bundles
+            - '@?debug.stopwatch'
 
     hostnet_webpack.bridge.twig_extension:
         class: Hostnet\Bundle\WebpackBridge\Twig\TwigExtension
+        arguments:
+            - '' # public_path
         tags:
             - { name: twig.extension }
 

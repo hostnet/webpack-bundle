@@ -31,4 +31,15 @@ class CodeBlockTest extends \PHPUnit_Framework_TestCase
     {
         (new CodeBlock())->get(CodeBlock::HEADER);
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The chunk "header" is already in use.
+     */
+    public function testDuplicateChunk()
+    {
+        $block = new CodeBlock();
+        $block->set(CodeBlock::HEADER, 'foo');
+        $block->set(CodeBlock::HEADER, 'bar');
+    }
 }

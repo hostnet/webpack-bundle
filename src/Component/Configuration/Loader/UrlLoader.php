@@ -4,7 +4,7 @@ namespace Hostnet\Component\WebpackBridge\Configuration\Loader;
 use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
-class UrlLoader implements LoaderInterface
+final class UrlLoader implements LoaderInterface
 {
     /**
      * @var array

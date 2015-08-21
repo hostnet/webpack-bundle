@@ -72,6 +72,11 @@ class CodeBlock
                 implode(", ", $this->types)
             ));
         }
+
+        if (isset($this->chunks[$chunk])) {
+            throw new \InvalidArgumentException(sprintf('The chunk "%s" is already in use.', $chunk));
+        }
+
         $this->chunks[$chunk] = $code;
 
         return $this;

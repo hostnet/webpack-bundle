@@ -28,6 +28,7 @@ class CompileCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // TODO: Move logging somewhere else.
         $output->write('Compiling...');
         $this->compiler->compile();
         $output->writeln('DONE.');

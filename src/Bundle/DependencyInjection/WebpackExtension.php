@@ -2,6 +2,7 @@
 namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -33,7 +34,9 @@ class WebpackExtension extends Extension
             $config_class_names[$id] = $container->getDefinition($id)->getClass();
         }
 
-        $config = $this->processConfiguration(new Configuration(array_keys($bundles), $config_class_names), $config);
+        $configuration = new Configuration(array_keys($bundles), $config_class_names);
+        $config        = $this->processConfiguration($configuration, $config);
+        $container->addResource(new FileResource((new \ReflectionClass(Configuration::class))->getFileName()));
 
         // Parse application config into the config generator
         foreach ($config_definitions as $id => $definition) {

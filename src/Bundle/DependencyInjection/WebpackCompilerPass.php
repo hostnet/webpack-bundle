@@ -29,8 +29,8 @@ class WebpackCompilerPass implements CompilerPassInterface
             $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
         }
 
-        $asset_tracker->addArgument($config['resolve']['asset_path']);
-        $asset_tracker->addArgument($bundle_paths);
+        $asset_tracker->replaceArgument(4, $config['resolve']['asset_path']);
+        $asset_tracker->replaceArgument(5, $bundle_paths);
 
         // Configure the compiler process.
         $env_vars = [
@@ -42,11 +42,11 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_compiler')
-            ->addArgument($config['bundles']);
+            ->replaceArgument(6, $config['bundles']);
 
         $container
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
-            ->addArgument($config['output']['public_path']);
+            ->replaceArgument(0, $config['output']['public_path']);
 
         // Enable the request listener if we're running in debug mode.
         if ($container->getParameter('kernel.debug') === true) {
@@ -61,8 +61,8 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $process_definition = $container
             ->getDefinition('hostnet_webpack.bridge.compiler_process')
-            ->addArgument($config['node']['binary'])
-            ->addArgument($container->getParameter('kernel.cache_dir'));
+            ->replaceArgument(0, $config['node']['binary'])
+            ->replaceArgument(1, $container->getParameter('kernel.cache_dir'));
 
         // Unfortunately, we need to specify some additional environment variables to pass to the compiler process. We
         // need this because there is a big chance that populating the $_ENV variable is disabled on most machines.

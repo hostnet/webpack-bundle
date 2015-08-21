@@ -5,7 +5,7 @@ use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\DependencyInjection\Container;
 
-class ResolveConfig implements ConfigInterface
+final class ResolveConfig implements ConfigInterface
 {
     /**
      * @var array

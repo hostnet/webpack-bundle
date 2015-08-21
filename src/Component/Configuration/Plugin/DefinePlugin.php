@@ -9,7 +9,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class DefinePlugin implements PluginInterface
+final class DefinePlugin implements PluginInterface
 {
     /**
      * @var array
