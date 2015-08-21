@@ -16,7 +16,6 @@ services:
         class: Hostnet\Bundle\WebpackBridge\Command\CompileCommand
         arguments:
             - '@hostnet_webpack.bridge.asset_compiler'
-            - '@hostnet_webpack.bridge.profiler'
         tags:
             - { name: console.command }
 

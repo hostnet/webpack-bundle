@@ -67,7 +67,6 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
         unlink($temp_file3);
 
         // Test getters
-        $this->assertArrayHasKey('@BarBundle', $tracker->getAliases());
         $this->assertContains(realpath($fixture_path . '/Bundle/BarBundle/Resources'), $tracker->getAliases());
         $this->assertCount(1, $tracker->getTemplates());
         $this->assertContains(realpath($fixture_path . '/Resources/template.html.twig'), $tracker->getTemplates());

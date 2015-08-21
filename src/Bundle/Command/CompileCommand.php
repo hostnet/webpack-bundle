@@ -13,17 +13,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CompileCommand extends Command
 {
     private $compiler;
-    private $profiler;
 
     /**
-     * @param Compiler        $compiler
+     * @param Compiler $compiler
      */
-    public function __construct(Compiler $compiler, Profiler $profiler)
+    public function __construct(Compiler $compiler)
     {
         parent::__construct();
 
         $this->compiler = $compiler;
-        $this->profiler = $profiler;
     }
 
     protected function configure()
