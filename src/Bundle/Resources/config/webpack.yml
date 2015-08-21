@@ -1,0 +1,61 @@
+imports:
+    - { resource: config.yml }
+    - { resource: loaders.yml }
+    - { resource: plugins.yml }
+
+services:
+
+    hostnet_webpack.bridge.request_listener:
+        class: Hostnet\Bundle\WebpackBridge\EventListener\RequestListener
+        arguments:
+            - '@hostnet_webpack.bridge.asset_tracker'
+            - '@hostnet_webpack.bridge.asset_compiler'
+            - '%kernel.debug%'
+
+    hostnet_webpack.bridge.generate_config_command:
+        class: Hostnet\Bundle\WebpackBridge\Command\CompileCommand
+        arguments:
+            - '@hostnet_webpack.bridge.asset_compiler'
+            - '@hostnet_webpack.bridge.profiler'
+        tags:
+            - { name: console.command }
+
+    hostnet_webpack.bridge.config_generator:
+        class: Hostnet\Component\WebpackBridge\Configuration\ConfigGenerator
+
+    hostnet_webpack.bridge.asset_tracker:
+        class: Hostnet\Component\WebpackBridge\Asset\Tracker
+        arguments:
+            - '@hostnet_webpack.bridge.profiler'
+            - '@templating.finder'
+            - '%kernel.cache_dir%'
+            - '%kernel.root_dir%'
+
+    hostnet_webpack.bridge.compiler_process:
+        class: Symfony\Component\Process\Process
+
+    hostnet_webpack.bridge.asset_twig_parser:
+        class: Hostnet\Component\WebpackBridge\Asset\TwigParser
+        arguments:
+            - '@hostnet_webpack.bridge.asset_tracker'
+            - '@twig'
+
+    hostnet_webpack.bridge.asset_compiler:
+        class: Hostnet\Component\WebpackBridge\Asset\Compiler
+        arguments:
+            - '@hostnet_webpack.bridge.profiler'
+            - '@hostnet_webpack.bridge.asset_tracker'
+            - '@hostnet_webpack.bridge.asset_twig_parser'
+            - '@hostnet_webpack.bridge.config_generator'
+            - '@hostnet_webpack.bridge.compiler_process'
+            - '%kernel.cache_dir%'
+
+    hostnet_webpack.bridge.twig_extension:
+        class: Hostnet\Bundle\WebpackBridge\Twig\TwigExtension
+        tags:
+            - { name: twig.extension }
+
+    hostnet_webpack.bridge.profiler:
+        class: Hostnet\Component\WebpackBridge\Profiler\Profiler
+        tags:
+            - { name: data_collector, template: "WebpackBridgeBundle::profiler.html.twig", id: "webpack" }

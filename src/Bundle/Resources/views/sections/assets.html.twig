@@ -1,0 +1,24 @@
+<div class="webpack-tab-panel" id="webpack-tab-assets">
+    <h2>Bundles</h2>
+    <table>
+        <tbody>
+        {% for bundle, path in collector.get('bundles') %}
+            <tr>
+                <th>{{ bundle }}</th>
+                <td>{{ path }}</td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <h2>Templates</h2>
+    <table>
+        <tbody>
+        {% for path in collector.get('templates') %}
+        <tr>
+            <td>{{ path }}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+

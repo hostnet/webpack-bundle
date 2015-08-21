@@ -1,0 +1,30 @@
+<div class="webpack-tab-panel" id="webpack-tab-output">
+    <p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Compile reason</th>
+                    <td><code>{{ collector.get('tracker.reason') }}</code></td>
+                </tr>
+                <tr>
+                    <th>Analyze time</th>
+                    <td>
+                        {{ collector.get('compiler.performance.prepare') }} ms (
+                        {{ collector.get('tracker.file_count') }} files,
+                        {{ collector.get('templates')|length }} templates,
+                        {{ collector.get('bundles')|length }} bundles )
+                    </td>
+                </tr>
+                <tr>
+                    <th>Compile time</th>
+                    <td>{{ collector.get('compiler.performance.compiler') }} ms</td>
+                </tr>
+                <tr>
+                    <th>Total time</th>
+                    <td>{{ collector.get('compiler.performance.total') }} ms</td>
+                </tr>
+            </tbody>
+        </table>
+        <pre style="background:#444;color:#fff;border:1px solid #ccc;padding:10px;">{{ collector.get('compiler.last_output')|raw }}</pre>
+    </p>
+</div>

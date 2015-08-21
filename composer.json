@@ -1,0 +1,42 @@
+{
+    "name"              : "hostnet/webpack-bridge",
+    "description"       : "Integrates Webpack with Symfony2",
+    "authors"           : [{ "name": "Harold Iedema", "email" : "hiedema@hostnet.nl" }],
+    "license"           : "MIT",
+    "minimum-stability" : "dev",
+    "prefer-stable"     : true,
+    "type"              : "symfony-bundle",
+    "keywords"          : ["symfony2", "webpack"],
+    "require"           : {
+        "php"                          : "^5.5|^7.0",
+        "symfony/dependency-injection" : "^2.7|^3.0",
+        "symfony/framework-bundle"     : "^2.7|^3.0",
+        "symfony/http-kernel"          : "^2.7|^3.0",
+        "symfony/config"               : "^2.7|^3.0",
+        "symfony/console"              : "^2.7|^3.0",
+        "symfony/finder"               : "^2.7|^3.0",
+        "symfony/process"              : "^2.7|^3.0",
+        "symfony/stopwatch"            : "^2.7|^3.0",
+        "symfony/yaml"                 : "^2.7|^3.0",
+        "twig/extensions"              : "1.*"
+    },
+    "require-dev" : {
+        "phpunit/phpunit" : "4.*"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Hostnet\\Bundle\\WebpackBridge\\"    : "src/Bundle",
+            "Hostnet\\Component\\WebpackBridge\\" : "src/Component"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "Hostnet\\Fixture\\WebpackBridge\\"   : "test/Fixture",
+            "Hostnet\\Bundle\\WebpackBridge\\"    : "test/Bundle",
+            "Hostnet\\Component\\WebpackBridge\\" : "test/Component"
+        }
+    },
+    "archive": {
+        "exclude": [ "/test" ]
+    }
+}
