@@ -14,16 +14,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CompileCommand extends Command
 {
+    /**
+     * @var Compiler
+     */
     private $compiler;
 
     /**
-     * @param Compiler $compiler
+     * @var Profiler
      */
-    public function __construct(Compiler $compiler)
+    private $profiler;
+
+    /**
+     * @param Compiler $compiler
+     * @param Profiler $profiler
+     */
+    public function __construct(Compiler $compiler, Profiler $profiler)
     {
         parent::__construct('webpack:compile');
 
         $this->compiler = $compiler;
+        $this->profiler = $profiler;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

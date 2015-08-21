@@ -15,11 +15,14 @@ class WebpackCompilerPass implements CompilerPassInterface
     /** {@inheritdoc} */
     public function process(ContainerBuilder $container)
     {
-        $asset_tracker   = $container->getDefinition('hostnet_webpack.bridge.asset_tracker');
-        $bundles         = $container->getParameter('kernel.bundles');
-        $config          = $container->getParameter('hostnet_webpack_config');
-        $tracked_bundles = $config['bundles'];
-        $bundle_paths    = [];
+        $asset_tracker     = $container->getDefinition('hostnet_webpack.bridge.asset_tracker');
+        $bundles           = $container->getParameter('kernel.bundles');
+        $config            = $container->getParameter('hostnet_webpack_config');
+        $tracked_bundles   = $config['bundles'];
+        $bundle_paths      = [];
+        $node_modules_path = ! empty($config['node']['node_modules_path'])
+            ? $config['node']['node_modules_path']
+            : getenv('NODE_PATH');
 
         foreach ($bundles as $name => $class) {
             if (! in_array($name, $tracked_bundles)) {
@@ -35,9 +38,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         // Configure the compiler process.
         $env_vars = [
             'PATH'      => getenv('PATH'),
-            'NODE_PATH' => ! empty($config['node']['node_modules_path'])
-                ? $config['node']['node_modules_path']
-                : getenv('NODE_PATH')
+            'NODE_PATH' => $node_modules_path
         ];
 
         $container
@@ -59,9 +60,14 @@ class WebpackCompilerPass implements CompilerPassInterface
             );
         }
 
+        // Ensure webpack is installed in the given (or detected) node_modules directory.
+        if (false === ($webpack = realpath($node_modules_path . '/webpack/bin/webpack.js'))) {
+            throw new \RuntimeException(sprintf('Webpack is not installed in path "%s".', $node_modules_path));
+        }
+
         $process_definition = $container
             ->getDefinition('hostnet_webpack.bridge.compiler_process')
-            ->replaceArgument(0, $config['node']['binary'])
+            ->replaceArgument(0, $config['node']['binary'] . ' ' . $webpack)
             ->replaceArgument(1, $container->getParameter('kernel.cache_dir'));
 
         // Unfortunately, we need to specify some additional environment variables to pass to the compiler process. We
@@ -75,7 +81,8 @@ class WebpackCompilerPass implements CompilerPassInterface
             $env_vars['COMPUTERNAME']       = getenv('COMPUTERNAME');
             $env_vars['TMP']                = getenv('TMP');
 
-            $process_definition->addMethodCall('setEnhanceWindowsCompatibility', true);
+            $process_definition->addMethodCall('setEnhanceWindowsCompatibility', [true]);
+            // $process_definition->addMethodCall('setEnv', [$env_vars]);
         } else {
             $process_definition->addMethodCall('setEnv', [$env_vars]);
         }

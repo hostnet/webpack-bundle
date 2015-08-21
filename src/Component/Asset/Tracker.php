@@ -4,6 +4,7 @@ namespace Hostnet\Component\WebpackBridge\Asset;
 use Hostnet\Component\WebpackBridge\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 /**
@@ -138,7 +139,7 @@ class Tracker
         $files = [];
 
         foreach ($this->paths as $path) {
-            $files = array_merge($files, $this->scan($path));
+            $files += $this->scan($path);
         }
 
         // If the length of the arrays don't match; something has changed.
