@@ -1,0 +1,130 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+{% block toolbar %}
+    {# This toolbar item may appear along the top or bottom of the screen.#}
+    {% set icon %}
+        {% if not collector.get('compiler.executed') %}
+            <span class="icon"><img style="width: 28px; height: 28px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAADw0lEQVRIS3WUS28dRRCFv1M9d8ZOSAISoPBK2CBYgUCwQJAgkT8OSVgisQCJBSKKE0TAedi+zvV9dNdhMXNth0C1Zlqj6frq1GOm8B/2DfcBuMl716/dunb1+uO99U3un3tzZnrZ+XvgawJe5wu/jwkW+olfby/Pn/hPwE1uT7te4RM+pJCAER3P+JG93NwBvqVOJ88BbnBn3KUdfaCPNahiBHg8mb3/5Ef2s94BbmDubgHbhxtoh3f1abwaK5osPAYwIMtddr7nn3x4pwJ8zd0zBV+hQW/qM70dJ1GVSiUQFsgksrK4tN7yL/6FY7cfgLIFXN/llr7UrlbRItXCYUTxTFILe0oEI7+nj1hpfw+I0f0GuqzPlUpZxkDanrUr9Vp9Oy84ZCEwiVV1WZ+pAHQjIHBSNQhlZkmUvS+01/MS+IIv+qkOtDZAaKbdLGzG4k6ARqBUUzBIWdz7iq8wls8u9ape45mOZfV0ZNQcU9oCCqBUi4ZV6uX6jqy1ctQtu+WO39fh7LGqqotD+QLABGRYKZOBd2gWlZz6FMzcRx+pZgkXpqqeArBMympyNjXkgd6NBIqKrFRTU0op2RN5Aowmk0rGGRDK4hmYEStIrOYihCYFcaoAQAIQaFwmQVZi2VNBXvA4X0RAlgI7xhGW1QxWygY5HJrGYYs4S2F8XQxkcWASUaZcbVMcWVQsh2OrfdreIHFktMiuhVaxr7VLhjGW5bB0HAdklixZHFacB3xHU4ZLdilQLU+0z5GdBVkZXseT+Etz0mTJLruMQ52loINYdbuzXAaWi+XQiarWupwX1XSoYy1o7lpqrGe4f9yRuANEqeVQO0ca0qMmj71YRONEGQtVx9nvgaKyOTjoaGRBFDr6RfFB0L2m3nKwXVC1mZorwuFO/Wp+8POj354tbSgEhUJf+4PN0clqUfr+EgUhi0BjEyQCuWhW6/6DP+49fDRf2OSoQAQdHbON5pv589ViGPpdYPoFbC8V8/SvB/cf/f187g2VDZUcJ0hsRbKp8+XRvC6HC91g0FgTBTF/uvf7n4+Oj3LBiiVLVmyoIyAxSdLG+6bOT44OqbuvRA+E4uTo4b2Hfxwd5oIFJzznhCVrKnkWOyjM6BkY2GVgKDuXLr31zpWrdfn33v6T5XOvpshL1qxpNPK0LxOkEMwYGNhhh4G+Gy7utlwscn0qe8WGDQ3jqdvnbISUCTIw0BGYxobVqXPF5JnLv21MJpjRM6NQMI3KZoqcY+T/B2wh43wEgqm8Lzn/P2Db+3GNH79fdgb4B4IeNqTNsQWZAAAAAElFTkSuQmCC"></span>
+        {% else %}
+            <span class="icon"><img style="width: 28px; height: 28px;" src="data:image/png;base64,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" alt=""/></span>
+            {% if not collector.get('compiler.successful') %}
+                <span class="sf-toolbar-status sf-toolbar-status-red">error</span>
+            {% endif %}
+        {% endif %}
+    {% endset %}
+
+    {% if not collector.get('compiler.successful') %}
+        {% set text %}
+            <pre style="font-size: 10px; background: #444; color: #eee;">{{ collector.get('compiler.last_output')|raw }}</pre>
+        {% endset %}
+    {% elseif collector.get('compiler.executed') %}
+        {% set text %}
+            <div class="sf-toolbar-info-piece">
+                <b>Analyze time</b>
+                <span>{{ collector.get('compiler.performance.prepare') }} ms.</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Compile time</b>
+                <span>{{ collector.get('compiler.performance.compiler') }} ms.</span>
+            </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Total time</b>
+                <span>{{ collector.get('compiler.performance.total') }} ms.</span>
+            </div>
+        {% endset %}
+    {% else %}
+        {% set text %}
+            No tracked assets have been modified.
+        {% endset %}
+    {% endif %}
+
+    {# Set the "link" value to false if you do not have a big "panel"
+       section that you want to direct the user to. #}
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+
+{% block head %}
+    {# Optional, if you need your own JS or CSS files. #}
+    {{ parent() }} {# Use parent() to keep the default styles #}
+{% endblock %}
+
+{% block menu %}
+    {# This left-hand menu appears when using the full-screen profiler. #}
+    <span class="label">
+        <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAADw0lEQVRIS3WUS28dRRCFv1M9d8ZOSAISoPBK2CBYgUCwQJAgkT8OSVgisQCJBSKKE0TAedi+zvV9dNdhMXNth0C1Zlqj6frq1GOm8B/2DfcBuMl716/dunb1+uO99U3un3tzZnrZ+XvgawJe5wu/jwkW+olfby/Pn/hPwE1uT7te4RM+pJCAER3P+JG93NwBvqVOJ88BbnBn3KUdfaCPNahiBHg8mb3/5Ef2s94BbmDubgHbhxtoh3f1abwaK5osPAYwIMtddr7nn3x4pwJ8zd0zBV+hQW/qM70dJ1GVSiUQFsgksrK4tN7yL/6FY7cfgLIFXN/llr7UrlbRItXCYUTxTFILe0oEI7+nj1hpfw+I0f0GuqzPlUpZxkDanrUr9Vp9Oy84ZCEwiVV1WZ+pAHQjIHBSNQhlZkmUvS+01/MS+IIv+qkOtDZAaKbdLGzG4k6ARqBUUzBIWdz7iq8wls8u9ape45mOZfV0ZNQcU9oCCqBUi4ZV6uX6jqy1ctQtu+WO39fh7LGqqotD+QLABGRYKZOBd2gWlZz6FMzcRx+pZgkXpqqeArBMympyNjXkgd6NBIqKrFRTU0op2RN5Aowmk0rGGRDK4hmYEStIrOYihCYFcaoAQAIQaFwmQVZi2VNBXvA4X0RAlgI7xhGW1QxWygY5HJrGYYs4S2F8XQxkcWASUaZcbVMcWVQsh2OrfdreIHFktMiuhVaxr7VLhjGW5bB0HAdklixZHFacB3xHU4ZLdilQLU+0z5GdBVkZXseT+Etz0mTJLruMQ52loINYdbuzXAaWi+XQiarWupwX1XSoYy1o7lpqrGe4f9yRuANEqeVQO0ca0qMmj71YRONEGQtVx9nvgaKyOTjoaGRBFDr6RfFB0L2m3nKwXVC1mZorwuFO/Wp+8POj354tbSgEhUJf+4PN0clqUfr+EgUhi0BjEyQCuWhW6/6DP+49fDRf2OSoQAQdHbON5pv589ViGPpdYPoFbC8V8/SvB/cf/f187g2VDZUcJ0hsRbKp8+XRvC6HC91g0FgTBTF/uvf7n4+Oj3LBiiVLVmyoIyAxSdLG+6bOT44OqbuvRA+E4uTo4b2Hfxwd5oIFJzznhCVrKnkWOyjM6BkY2GVgKDuXLr31zpWrdfn33v6T5XOvpshL1qxpNPK0LxOkEMwYGNhhh4G+Gy7utlwscn0qe8WGDQ3jqdvnbISUCTIw0BGYxobVqXPF5JnLv21MJpjRM6NQMI3KZoqcY+T/B2wh43wEgqm8Lzn/P2Db+3GNH79fdgb4B4IeNqTNsQWZAAAAAElFTkSuQmCC" alt=""/></span>
+        <strong>WEBPACK</strong>
+        {% if collector.get('compiler.executed') %}
+            <span class="count">
+                <span>{{ collector.get('compiler.performance.total') }} ms</span>
+            </span>
+        {% endif %}
+    </span>
+{% endblock %}
+
+{% block panel %}
+    {% if not collector.get('compiler.executed') %}
+        <p><em>No assets have been compiled during this request.</em></p>
+    {% else %}
+    <style>
+        #webpack_tab_panel {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: 28px;
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            background: #fff;
+        }
+        #webpack_tab_panel li {
+            float: left;
+            height: 28px;
+            padding: 0px 16px;
+            line-height: 28px;
+            margin: 0px 10px;
+            cursor: pointer;
+        }
+        #webpack_tab_panel li.active {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-bottom: 1px solid #fff;
+            height: 29px;
+            font-weight: bold;
+        }
+        .webpack-tab-panel { margin-top: 10px; }
+    </style>
+    <script>
+        var sfWebpackSwitchTab = function(id, button) {
+            var elements, i;
+
+            elements = document.getElementsByClassName('webpack-tab-panel');
+            for (i in elements) {
+                if (! elements.hasOwnProperty(i)) continue;
+                elements[i].setAttribute('style', 'display: none');
+            }
+            document.getElementById("webpack-tab-" + id).setAttribute('style', 'display: block');
+
+            if (button) {
+                elements = document.getElementsByClassName('webpack-tab-button');
+                for (i in elements) {
+                    if (!elements.hasOwnProperty(i)) continue;
+                    elements[i].setAttribute('class', 'webpack-tab-button');
+                }
+                button.setAttribute('class', 'webpack-tab-button active');
+            }
+        };
+    </script>
+    <ul id="webpack_tab_panel">
+        <li class="webpack-tab-button active" onclick="sfWebpackSwitchTab('output', this);">Compilation Summary</li>
+        <li class="webpack-tab-button" onclick="sfWebpackSwitchTab('assets', this);">Assets</li>
+        <li class="webpack-tab-button" onclick="sfWebpackSwitchTab('config', this);">Configuration</li>
+    </ul>
+    <div style="clear: both;"></div>
+
+    {{ include("WebpackBridgeBundle:sections:output.html.twig") }}
+    {{ include("WebpackBridgeBundle:sections:assets.html.twig") }}
+    {{ include("WebpackBridgeBundle:sections:config.html.twig") }}
+
+    <script>sfWebpackSwitchTab('output');</script>
+    {% endif %}
+{% endblock %}
+
