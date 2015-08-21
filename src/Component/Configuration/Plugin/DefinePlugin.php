@@ -53,9 +53,9 @@ final class DefinePlugin implements PluginInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
-        return (new CodeBlock())
-            ->set(CodeBlock::PLUGIN, sprintf('new %s(%s)', 'webpack.DefinePlugin', json_encode($this->constants)));
+        return [(new CodeBlock())
+            ->set(CodeBlock::PLUGIN, sprintf('new %s(%s)', 'webpack.DefinePlugin', json_encode($this->constants)))];
     }
 }

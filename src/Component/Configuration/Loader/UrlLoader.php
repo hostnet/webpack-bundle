@@ -32,17 +32,17 @@ final class UrlLoader implements LoaderInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
         if (! $this->config['enabled']) {
-            return new CodeBlock();
+            return [new CodeBlock()];
         }
 
         // @TODO Make extensions and mimetypes configurable.
-        return (new CodeBlock())->set(CodeBlock::LOADER, [
+        return [(new CodeBlock())->set(CodeBlock::LOADER, [
             '{ test: /\.png$/, loader: \'url-loader?mimetype=image/png\' }',
             '{ test: /\.jpg$/, loader: \'url-loader?mimetype=image/png\' }',
             '{ test: /\.gif$/, loader: \'url-loader?mimetype=image/png\' }'
-        ]);
+        ])];
     }
 }

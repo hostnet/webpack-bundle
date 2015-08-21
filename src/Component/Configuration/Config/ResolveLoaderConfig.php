@@ -38,7 +38,7 @@ final class ResolveLoaderConfig implements ConfigInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
         // Convert keys to camelCase.
         $config = [];
@@ -46,6 +46,6 @@ final class ResolveLoaderConfig implements ConfigInterface
             $config[lcfirst(Container::camelize($key))] = $value;
         }
 
-        return (new CodeBlock())->set(CodeBlock::RESOLVE_LOADER, $config);
+        return [(new CodeBlock())->set(CodeBlock::RESOLVE_LOADER, $config)];
     }
 }

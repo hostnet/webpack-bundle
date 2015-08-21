@@ -39,8 +39,8 @@ class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
         );
 
         // And some plugins
-        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['a' => 'b']]]))->add('b', 'c')->getCodeBlock());
-        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['c' => 'd']]]))->add('d', 'e')->getCodeBlock());
+        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['a' => 'b']]]))->add('b', 'c')->getCodeBlocks()[0]);
+        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['c' => 'd']]]))->add('d', 'e')->getCodeBlocks()[0]);
 
         // Add extension
         $config->addExtension(new OutputConfig(['output' => ['path' => 'path/to/output']]));

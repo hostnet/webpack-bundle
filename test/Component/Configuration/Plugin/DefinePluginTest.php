@@ -35,7 +35,7 @@ class DefinePluginTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             'new webpack.DefinePlugin({"foo":"bar","bar":"baz"})',
-            $config->getCodeBlock()->get(CodeBlock::PLUGIN)
+            $config->getCodeBlocks()[0]->get(CodeBlock::PLUGIN)
         );
     }
 }

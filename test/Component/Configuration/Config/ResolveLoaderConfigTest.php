@@ -33,7 +33,7 @@ class ResolveLoaderConfigTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($config->getCodeBlock()->has(CodeBlock::RESOLVE_LOADER));
-        $this->assertArrayHasKey('root', $config->getCodeBlock()->get(CodeBlock::RESOLVE_LOADER));
+        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE_LOADER));
+        $this->assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE_LOADER));
     }
 }

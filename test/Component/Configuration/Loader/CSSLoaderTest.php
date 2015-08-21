@@ -30,12 +30,12 @@ class CSSLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $config = new CSSLoader(['loaders' => ['css' => ['enabled' => false]]]);
 
-        $this->assertFalse($config->getCodeBlock()->has(CodeBlock::LOADER));
+        $this->assertFalse($config->getCodeBlocks()[0]->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlockEnabledDefaults()
     {
-        $configs = (new CSSLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlock();
+        $configs = (new CSSLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlocks();
 
         $this->assertTrue($configs[0]->has(CodeBlock::LOADER));
         $this->assertFalse($configs[0]->has(CodeBlock::HEADER));
@@ -44,7 +44,10 @@ class CSSLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCodeBlockEnabledCommonsChunk()
     {
-        $configs = (new CSSLoader(['output' => ['common_id' => 'foobar'],'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]]]))->getCodeBlock();
+        $configs = (new CSSLoader([
+            'output'  => ['common_id' => 'foobar'],
+            'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]]
+        ]))->getCodeBlocks();
 
         $this->assertTrue($configs[0]->has(CodeBlock::LOADER));
         $this->assertTrue($configs[0]->has(CodeBlock::HEADER));

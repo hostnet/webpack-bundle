@@ -24,7 +24,7 @@ interface ConfigExtensionInterface
     /**
      * Returns the CodeBlock for this plugin.
      *
-     * @return CodeBlock
+     * @return CodeBlock[]
      */
-    public function getCodeBlock();
+    public function getCodeBlocks();
 }

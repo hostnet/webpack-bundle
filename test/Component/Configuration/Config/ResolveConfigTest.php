@@ -43,11 +43,11 @@ class ResolveConfigTest extends \PHPUnit_Framework_TestCase
         ]);
         $config->addAlias('/foo/bar', '@FooBar');
 
-        $this->assertTrue($config->getCodeBlock()->has(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('root', $config->getCodeBlock()->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('alias', $config->getCodeBlock()->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('modulesDirectories', $config->getCodeBlock()->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('@FooBar', $config->getCodeBlock()->get(CodeBlock::RESOLVE)['alias']);
-        $this->assertArrayHasKey('@Common', $config->getCodeBlock()->get(CodeBlock::RESOLVE)['alias']);
+        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE));
+        $this->assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        $this->assertArrayHasKey('alias', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        $this->assertArrayHasKey('modulesDirectories', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        $this->assertArrayHasKey('@FooBar', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
+        $this->assertArrayHasKey('@Common', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
     }
 }

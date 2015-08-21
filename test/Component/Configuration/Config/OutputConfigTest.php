@@ -46,8 +46,8 @@ class OutputConfigTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($config->getCodeBlock()->has(CodeBlock::OUTPUT));
-        $this->assertArrayHasKey('filename', $config->getCodeBlock()->get(CodeBlock::OUTPUT));
-        $this->assertArrayHasKey('commonId', $config->getCodeBlock()->get(CodeBlock::OUTPUT));
+        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::OUTPUT));
+        $this->assertArrayHasKey('filename', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
+        $this->assertArrayHasKey('commonId', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
     }
 }

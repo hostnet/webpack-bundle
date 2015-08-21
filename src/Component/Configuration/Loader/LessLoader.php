@@ -32,15 +32,13 @@ final class LessLoader implements LoaderInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
         if (! $this->config['enabled']) {
-            return new CodeBlock();
+            return [new CodeBlock()];
         }
 
         // @TODO Make extensions and mimetypes configurable.
-        return (new CodeBlock())->set(CodeBlock::LOADER, [
-            '{ test: /\.less$/, loader: \'style!css!less\' }',
-        ]);
+        return [(new CodeBlock())->set(CodeBlock::LOADER, ['{ test: /\.less$/, loader: \'style!css!less\' }'])];
     }
 }

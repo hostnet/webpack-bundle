@@ -27,7 +27,7 @@ class LessLoaderTest extends \PHPUnit_Framework_TestCase
     public function testGetCodeBlockDisabled()
     {
         $config = new LessLoader(['loaders' => ['less' => ['enabled' => false]]]);
-        $block  = $config->getCodeBlock();
+        $block  = $config->getCodeBlocks()[0];
 
         $this->assertFalse($block->has(CodeBlock::LOADER));
     }
@@ -35,7 +35,7 @@ class LessLoaderTest extends \PHPUnit_Framework_TestCase
     public function testGetCodeBlock()
     {
         $config = new LessLoader(['loaders' => ['less' => ['enabled' => true]]]);
-        $block  = $config->getCodeBlock();
+        $block  = $config->getCodeBlocks()[0];
 
         $this->assertTrue($block->has(CodeBlock::LOADER));
     }

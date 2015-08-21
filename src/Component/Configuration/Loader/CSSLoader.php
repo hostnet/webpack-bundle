@@ -34,13 +34,13 @@ final class CSSLoader implements LoaderInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
         $config      = $this->config['loaders']['css'];
         $code_blocks = [];
 
         if ($config['enabled'] !== true) {
-            return new CodeBlock();
+            return [new CodeBlock()];
         }
 
         if (empty($config['filename'])) {

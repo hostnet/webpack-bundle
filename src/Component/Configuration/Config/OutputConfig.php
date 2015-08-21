@@ -46,7 +46,7 @@ final class OutputConfig implements ConfigInterface
     }
 
     /** {@inheritdoc} */
-    public function getCodeBlock()
+    public function getCodeBlocks()
     {
         // Convert keys to camelCase.
         $config = [];
@@ -54,6 +54,6 @@ final class OutputConfig implements ConfigInterface
             $config[lcfirst(Container::camelize($key))] = $value;
         }
 
-        return (new CodeBlock())->set(CodeBlock::OUTPUT, $config);
+        return [(new CodeBlock())->set(CodeBlock::OUTPUT, $config)];
     }
 }

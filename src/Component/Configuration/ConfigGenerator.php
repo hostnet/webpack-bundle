@@ -17,12 +17,8 @@ class ConfigGenerator
      */
     public function addExtension(ConfigExtensionInterface $entity)
     {
-        if (is_array($blocks = $entity->getCodeBlock())) {
-            foreach ($blocks as $block) {
-                $this->addBlock($block);
-            }
-        } else {
-            $this->addBlock($entity->getCodeBlock());
+        foreach ($entity->getCodeBlocks() as $block) {
+            $this->addBlock($block);
         }
 
         return $this;
