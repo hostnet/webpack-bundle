@@ -2,10 +2,11 @@
 namespace Hostnet\Component\WebpackBridge\Configuration\Config;
 
 use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\DependencyInjection\Container;
 
-final class ResolveLoaderConfig implements ConfigInterface
+final class ResolveLoaderConfig implements ConfigInterface, ConfigExtensionInterface
 {
     /**
      * @var array

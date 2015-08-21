@@ -2,6 +2,7 @@
 namespace Hostnet\Component\WebpackBridge\Configuration\Plugin;
 
 use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**
@@ -11,7 +12,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-final class DefinePlugin implements PluginInterface
+final class DefinePlugin implements PluginInterface, ConfigExtensionInterface
 {
     /**
      * @var array
