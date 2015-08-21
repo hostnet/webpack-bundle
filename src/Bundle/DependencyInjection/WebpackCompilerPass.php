@@ -68,14 +68,14 @@ class WebpackCompilerPass implements CompilerPassInterface
         // need this because there is a big chance that populating the $_ENV variable is disabled on most machines.
         // FIXME http://stackoverflow.com/questions/32125810/windows-symfony2-process-crashes-when-passing-env-variables
         // @codeCoverageIgnoreStart
-        if ($is_win = (strpos(strtoupper(php_uname('s')), 'WIN') === 0)) {
+        if (strpos(strtoupper(php_uname('s')), 'WIN') === 0) {
             $env_vars['COMSPEC']            = getenv('COMSPEC');
             $env_vars['WINDIR']             = getenv('WINDIR');
             $env_vars['COMMONPROGRAMW6432'] = getenv('COMMONPROGRAMW6432');
             $env_vars['COMPUTERNAME']       = getenv('COMPUTERNAME');
             $env_vars['TMP']                = getenv('TMP');
 
-            $process_definition->addMethodCall('setEnhanceWindowsCompatibility', [$is_win ? true : false]);
+            $process_definition->addMethodCall('setEnhanceWindowsCompatibility', true);
         } else {
             $process_definition->addMethodCall('setEnv', [$env_vars]);
         }
