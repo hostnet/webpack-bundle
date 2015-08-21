@@ -5,6 +5,8 @@ use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**
+ * https://github.com/webpack/docs/wiki/list-of-plugins#defineplugin
+ *
  * Define free variables. Useful for having development builds with debug logging or adding global constants.
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
