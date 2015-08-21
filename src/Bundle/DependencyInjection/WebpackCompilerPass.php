@@ -58,7 +58,7 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->addArgument($container->getParameter('kernel.cache_dir'));
 
         // Unfortunately, we need to specify some additional environment variables to pass to the compiler process. We
-        // need this because there is a big change that populating the $_ENV variable is disabled on most machines.
+        // need this because there is a big chance that populating the $_ENV variable is disabled on most machines.
         // FIXME http://stackoverflow.com/questions/32125810/windows-symfony2-process-crashes-when-passing-env-variables
         // @codeCoverageIgnoreStart
         if ($is_win = (strpos(strtoupper(php_uname('s')), 'WIN') === 0)) {
