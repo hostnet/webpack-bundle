@@ -5,13 +5,6 @@ imports:
 
 services:
 
-    hostnet_webpack.bridge.request_listener:
-        class: Hostnet\Bundle\WebpackBridge\EventListener\RequestListener
-        arguments:
-            - '@hostnet_webpack.bridge.asset_tracker'
-            - '@hostnet_webpack.bridge.asset_compiler'
-            - '%kernel.debug%'
-
     hostnet_webpack.bridge.generate_config_command:
         class: Hostnet\Bundle\WebpackBridge\Command\CompileCommand
         arguments:

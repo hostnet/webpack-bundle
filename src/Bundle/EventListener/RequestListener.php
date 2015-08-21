@@ -22,21 +22,13 @@ class RequestListener
     private $compiler;
 
     /**
-     * @var bool
-     */
-    private $is_debug;
-
-    /**
-     * @param Profiler $profiler
      * @param Tracker  $tracker
      * @param Compiler $compiler
-     * @param bool     $is_debug
      */
-    public function __construct(Tracker $tracker, Compiler $compiler, $is_debug)
+    public function __construct(Tracker $tracker, Compiler $compiler)
     {
         $this->tracker  = $tracker;
         $this->compiler = $compiler;
-        $this->is_debug = $is_debug;
     }
 
     /**
@@ -44,7 +36,7 @@ class RequestListener
      */
     public function onRequest(GetResponseEvent $event)
     {
-        if (! $event->isMasterRequest() || ! $this->is_debug) {
+        if (! $event->isMasterRequest()) {
             return;
         }
 

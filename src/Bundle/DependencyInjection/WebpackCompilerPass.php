@@ -1,8 +1,11 @@
 <?php
 namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
 
+use Hostnet\Bundle\WebpackBridge\EventListener\RequestListener;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
@@ -47,9 +50,13 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         // Enable the request listener if we're running in debug mode.
         if ($container->getParameter('kernel.debug') === true) {
-            $container
-                ->getDefinition('hostnet_webpack.bridge.request_listener')
-                ->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest']);
+            $container->setDefinition(
+                'hostnet_webpack.bridge.request_listener',
+                (new Definition(RequestListener::class, [
+                    new Reference('hostnet_webpack.bridge.asset_tracker'),
+                    new Reference('hostnet_webpack.bridge.asset_compiler')
+                ]))->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest'])
+            );
         }
 
         $process_definition = $container

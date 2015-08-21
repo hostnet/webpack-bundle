@@ -34,22 +34,13 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->tracker  = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
     }
 
-    public function testRequestNoDebug()
-    {
-        $this->tracker->expects($this->never())->method('isOutdated');
-        $this->compiler->expects($this->never())->method('compile');
-        $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
-
-        (new RequestListener($this->tracker, $this->compiler, false))->onRequest($this->event);
-    }
-
     public function testRequestNoMasterRequest()
     {
         $this->tracker->expects($this->never())->method('isOutdated');
         $this->compiler->expects($this->never())->method('compile');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(false);
 
-        (new RequestListener($this->tracker, $this->compiler, false))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
     }
 
     public function testRequestValidCache()
@@ -58,7 +49,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->compiler->expects($this->never())->method('compile');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
 
-        (new RequestListener($this->tracker, $this->compiler, true))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
     }
 
     public function testRequestCompile()
@@ -67,6 +58,6 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
         $this->compiler->expects($this->once())->method('compile');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
 
-        (new RequestListener($this->tracker, $this->compiler, true))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
     }
 }
