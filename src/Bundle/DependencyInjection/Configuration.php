@@ -58,8 +58,8 @@ class Configuration implements ConfigurationInterface
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('binary')->defaultValue('node')->end()
-                ->scalarNode('npm_packages_path')->defaultValue(null)->end()
-                ->scalarNode('node_modules_path')->defaultValue(null)->end()
+                ->scalarNode('npm_packages_path')->defaultNull()->end()
+                ->scalarNode('node_modules_path')->defaultNull()->end()
             ->end();
     }
 

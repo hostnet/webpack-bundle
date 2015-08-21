@@ -28,7 +28,7 @@ class CSSLoader implements LoaderInterface
                 ->children()
                     ->booleanNode('enabled')->defaultTrue()->end()
                     ->booleanNode('all_chunks')->defaultTrue()->end()
-                    ->scalarNode('filename')->defaultValue(null)->end()
+                    ->scalarNode('filename')->defaultNull()->end()
                 ->end()
             ->end();
     }
