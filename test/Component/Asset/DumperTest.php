@@ -42,24 +42,8 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\IOException
-     */
-    public function testDumpDirCreateFail()
+    public function testDumpDefaults()
     {
-        $fs = $this->getMock(Filesystem::class);
-        $fs->expects($this->once())->method('exists')->willReturn(false);
-        $fs->expects($this->once())->method('mkdir')->willThrowException(new IOException(''));
-
-        $this->dumper->dump($fs);
-    }
-
-    public function testDump()
-    {
-        $fs = $this->getMock(Filesystem::class);
-        $fs->expects($this->exactly(2))->method('exists')->willReturn(false);
-        $fs->expects($this->once())->method('symlink')->willThrowException(new IOException(''));
-
-        $this->dumper->dump($fs);
+        $this->dumper->dump($this->getMock(Filesystem::class));
     }
 }
