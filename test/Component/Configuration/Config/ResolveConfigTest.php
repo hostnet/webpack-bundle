@@ -23,7 +23,6 @@ class ResolveConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('resolve', $config);
         $this->assertArrayHasKey('root', $config['resolve']);
         $this->assertArrayHasKey('alias', $config['resolve']);
-        $this->assertArrayHasKey('asset_path', $config['resolve']);
         $this->assertArrayHasKey('modules_directories', $config['resolve']);
         $this->assertArrayHasKey('fallback', $config['resolve']);
         $this->assertArrayHasKey('extensions', $config['resolve']);

@@ -12,10 +12,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
         $extension = new TwigExtension('foobar');
 
         $this->assertEquals('webpack', $extension->getName());
-        $this->assertCount(1, $extension->getFunctions());
-        $this->assertEquals([
-            'js'  => 'foobar/app_bundle.app.js',
-            'css' => 'foobar/app_bundle.app.css'
-        ], $extension->webpack('@AppBundle/app.js'));
+        $this->assertCount(2, $extension->getFunctions());
+        $this->assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
     }
 }

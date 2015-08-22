@@ -2,10 +2,13 @@
 namespace Hostnet\Bundle\WebpackBridge\Command;
 
 use Hostnet\Component\WebpackBridge\Asset\Compiler;
+use Hostnet\Component\WebpackBridge\Asset\Dumper;
 use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @TODO Add some decent logging interface to allow optional verbose output.
@@ -14,25 +17,50 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CompileCommand extends Command
 {
+    /**
+     * @var Compiler
+     */
     private $compiler;
 
     /**
-     * @param Compiler $compiler
+     * @var Dumper
      */
-    public function __construct(Compiler $compiler)
+    private $dumper;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * @var Profiler
+     */
+    private $profiler;
+
+    /**
+     * @param Compiler        $compiler
+     * @param Dumper          $dumper
+     * @param LoggerInterface $logger
+     * @param Profiler        $profiler
+     */
+    public function __construct(Compiler $compiler, Dumper $dumper, LoggerInterface $logger, Profiler $profiler)
     {
         parent::__construct('webpack:compile');
 
         $this->compiler = $compiler;
+        $this->dumper   = $dumper;
+        $this->logger   = $logger;
+        $this->profiler = $profiler;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // TODO: Move logging somewhere else.
-        $output->write('Compiling...');
+        $this->logger->info('[WEBPACK]: Compiling assets...');
         $this->compiler->compile();
-        $output->writeln('DONE.');
 
-        $output->writeln($this->profiler->get('compiler.last_output'));
+        $this->logger->info('[WEBPACK]: Dumping assets...');
+        $this->dumper->dump(new Filesystem());
+
+        $this->logger->debug($this->profiler->get('compiler.last_output'));
     }
 }

@@ -57,7 +57,30 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('node')
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('binary')->defaultValue('node')->end()
+                ->arrayNode('binary')
+                    ->addDefaultsIfNotSet()
+                    ->beforeNormalization()
+                    ->ifString()
+                        ->then(function($value) { return
+                            [
+                                'win32'     => $value,
+                                'win64'     => $value,
+                                'linux_x32' => $value,
+                                'linux_x64' => $value,
+                                'darwin'    => $value,
+                                'fallback'  => $value
+                            ];
+                        })
+                    ->end()
+                    ->children()
+                        ->scalarNode('win32')->defaultValue('node')->end()
+                        ->scalarNode('win64')->defaultValue('node')->end()
+                        ->scalarNode('linux_x32')->defaultValue('node')->end()
+                        ->scalarNode('linux_x64')->defaultValue('node')->end()
+                        ->scalarNode('darwin')->defaultValue('node')->end()
+                        ->scalarNode('fallback')->defaultValue('node')->end()
+                    ->end()
+                ->end()
                 ->scalarNode('npm_packages_path')->defaultNull()->end()
                 ->scalarNode('node_modules_path')->defaultNull()->end()
             ->end();
@@ -81,6 +104,14 @@ class Configuration implements ConfigurationInterface
     private function addBundleConfiguration(NodeBuilder $node)
     {
         $node
+            ->arrayNode('bundle')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('resources_dir')->defaultValue('Resources')->end()
+                    ->scalarNode('asset_dir')->defaultValue('assets')->end()
+                    ->scalarNode('public_dir')->defaultValue('public')->end()
+                ->end()
+            ->end()
             ->arrayNode('bundles')
                 ->defaultValue($this->bundles)
                 ->prototype('scalar')

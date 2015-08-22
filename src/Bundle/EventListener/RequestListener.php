@@ -2,8 +2,10 @@
 namespace Hostnet\Bundle\WebpackBridge\EventListener;
 
 use Hostnet\Component\WebpackBridge\Asset\Compiler;
+use Hostnet\Component\WebpackBridge\Asset\Dumper;
 use Hostnet\Component\WebpackBridge\Asset\Tracker;
 use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -22,13 +24,20 @@ class RequestListener
     private $compiler;
 
     /**
+     * @var Dumper
+     */
+    private $dumper;
+
+    /**
      * @param Tracker  $tracker
      * @param Compiler $compiler
+     * @param Dumper   $dumper
      */
-    public function __construct(Tracker $tracker, Compiler $compiler)
+    public function __construct(Tracker $tracker, Compiler $compiler, Dumper $dumper)
     {
         $this->tracker  = $tracker;
         $this->compiler = $compiler;
+        $this->dumper   = $dumper;
     }
 
     /**
@@ -43,5 +52,7 @@ class RequestListener
         if ($this->tracker->isOutdated()) {
             $this->compiler->compile();
         }
+
+        $this->dumper->dump(new Filesystem());
     }
 }
