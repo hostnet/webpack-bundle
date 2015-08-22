@@ -19,6 +19,9 @@ class WebpackCompilerPass implements CompilerPassInterface
         $bundles           = $container->getParameter('kernel.bundles');
         $config            = $container->getParameter('hostnet_webpack_config');
         $tracked_bundles   = $config['bundles'];
+        $asset_path        = $config['bundle']['resources_dir'] . DIRECTORY_SEPARATOR . $config['bundle']['asset_dir'];
+        $public_path       = $config['bundle']['resources_dir'] . DIRECTORY_SEPARATOR . $config['bundle']['public_dir'];
+        $dump_path         = $config['output']['dump_path'];
         $bundle_paths      = [];
         $node_modules_path = ! empty($config['node']['node_modules_path'])
             ? $config['node']['node_modules_path']
@@ -32,7 +35,8 @@ class WebpackCompilerPass implements CompilerPassInterface
             $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
         }
 
-        $asset_tracker->replaceArgument(4, $config['resolve']['asset_path']);
+
+        $asset_tracker->replaceArgument(4, $asset_path);
         $asset_tracker->replaceArgument(5, $bundle_paths);
 
         // Configure the compiler process.
@@ -40,6 +44,12 @@ class WebpackCompilerPass implements CompilerPassInterface
             'PATH'      => getenv('PATH'),
             'NODE_PATH' => $node_modules_path
         ];
+
+        $container
+            ->getDefinition('hostnet_webpack.bridge.asset_dumper')
+            ->replaceArgument(1, $bundle_paths)
+            ->replaceArgument(2, $public_path)
+            ->replaceArgument(3, $dump_path);
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_compiler')
@@ -55,7 +65,8 @@ class WebpackCompilerPass implements CompilerPassInterface
                 'hostnet_webpack.bridge.request_listener',
                 (new Definition(RequestListener::class, [
                     new Reference('hostnet_webpack.bridge.asset_tracker'),
-                    new Reference('hostnet_webpack.bridge.asset_compiler')
+                    new Reference('hostnet_webpack.bridge.asset_compiler'),
+                    new Reference('hostnet_webpack.bridge.asset_dumper')
                 ]))->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest'])
             );
         }

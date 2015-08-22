@@ -2,6 +2,7 @@
 namespace Hostnet\Bundle\WebpackBridge\EventListener;
 
 use Hostnet\Component\WebpackBridge\Asset\Compiler;
+use Hostnet\Component\WebpackBridge\Asset\Dumper;
 use Hostnet\Component\WebpackBridge\Asset\Tracker;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
@@ -26,38 +27,47 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
      */
     private $tracker;
 
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|Dumper
+     */
+    private $dumper;
+
     /** {@inheritdoc} */
     protected function setUp()
     {
         $this->event    = $this->getMockBuilder(GetResponseEvent::class)->disableOriginalConstructor()->getMock();
         $this->compiler = $this->getMockBuilder(Compiler::class)->disableOriginalConstructor()->getMock();
         $this->tracker  = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
+        $this->dumper   = $this->getMockBuilder(Dumper::class)->disableOriginalConstructor()->getMock();
     }
 
     public function testRequestNoMasterRequest()
     {
         $this->tracker->expects($this->never())->method('isOutdated');
         $this->compiler->expects($this->never())->method('compile');
+        $this->dumper->expects($this->never())->method('dump');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(false);
 
-        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler, $this->dumper))->onRequest($this->event);
     }
 
     public function testRequestValidCache()
     {
         $this->tracker->expects($this->once())->method('isOutdated')->willReturn(false);
         $this->compiler->expects($this->never())->method('compile');
+        $this->dumper->expects($this->once())->method('dump');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
 
-        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler, $this->dumper))->onRequest($this->event);
     }
 
     public function testRequestCompile()
     {
         $this->tracker->expects($this->once())->method('isOutdated')->willReturn(true);
         $this->compiler->expects($this->once())->method('compile');
+        $this->dumper->expects($this->once())->method('dump');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
 
-        (new RequestListener($this->tracker, $this->compiler))->onRequest($this->event);
+        (new RequestListener($this->tracker, $this->compiler, $this->dumper))->onRequest($this->event);
     }
 }

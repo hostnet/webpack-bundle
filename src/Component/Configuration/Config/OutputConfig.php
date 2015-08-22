@@ -29,6 +29,7 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                 ->addDefaultsIfNotSet()
                 ->children()
                     ->scalarNode('path')->defaultValue('%kernel.root_dir%/../web')->end()
+                    ->scalarNode('dump_path')->defaultValue('%kernel.root_dir%/../web/bundles')->end()
                     ->scalarNode('filename')->defaultValue('[name].js')->end()
                     ->scalarNode('common_id')->defaultValue('common.js')->end()
                     ->scalarNode('chunk_filename')->defaultValue('[name].[hash].chunk.js')->end()
