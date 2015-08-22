@@ -23,9 +23,6 @@ class WebpackCompilerPass implements CompilerPassInterface
         $public_path       = $config['bundle']['resources_dir'] . DIRECTORY_SEPARATOR . $config['bundle']['public_dir'];
         $dump_path         = $config['output']['dump_path'];
         $bundle_paths      = [];
-        $node_modules_path = ! empty($config['node']['node_modules_path'])
-            ? $config['node']['node_modules_path']
-            : getenv('NODE_PATH');
 
         foreach ($bundles as $name => $class) {
             if (! in_array($name, $tracked_bundles)) {
@@ -42,7 +39,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         // Configure the compiler process.
         $env_vars = [
             'PATH'      => getenv('PATH'),
-            'NODE_PATH' => $node_modules_path
+            'NODE_PATH' => $config['node']['node_modules_path']
         ];
 
         $container
@@ -57,7 +54,8 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
-            ->replaceArgument(0, $config['output']['public_path']);
+            ->replaceArgument(0, $config['output']['public_path'])
+            ->replaceArgument(1, $config['output']['dump_path']);
 
         // Enable the request listener if we're running in debug mode.
         if ($container->getParameter('kernel.debug') === true) {
@@ -72,8 +70,8 @@ class WebpackCompilerPass implements CompilerPassInterface
         }
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
-        if (false === ($webpack = realpath($node_modules_path . '/webpack/bin/webpack.js'))) {
-            throw new \RuntimeException(sprintf('Webpack is not installed in path "%s".', $node_modules_path));
+        if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {
+            throw new \RuntimeException(sprintf('Webpack is not installed in path "%s".', $config['node']['node_modules_path']));
         }
 
         $process_definition = $container

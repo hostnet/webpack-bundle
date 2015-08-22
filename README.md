@@ -45,9 +45,14 @@ Imagine having the following files in your application:
 Lets start with the twig template.
 ```twig
 {# src/AppBundle/Resources/views/base.html.twig #}
-<script src="{{ webpack_asset("@AppBundle/app.js") }}"></script>
+<script src="{{ webpack_asset("@AppBundle/app.js").js }}"></script>
 ```
-Use the twig function `webpack_asset(url)` in your template to specify an [entry-point](http://webpack.github.io/docs/configuration.html#entry). In short, an entry-point is an asset that will be compiled and exported to the output path. This path defaults to `%kernel.root_dir%/../web`. The compiled file will be named `app_bundle.app.js` by default. Both of these settings are configurable.
+Use the twig function `webpack_asset(url)` in your template to specify an [entry-point](http://webpack.github.io/docs/configuration.html#entry).
+In short, an entry-point is an asset that will be compiled and exported to the output path. This path defaults to
+`%kernel.root_dir%/../web`. The compiled file will be named `app_bundle.app.js` by default. Both of these settings are configurable.
+
+`webpack_asset` returns an array with two keys: `js` referencing the compiled javascript file and `css` referencing the compiled css file.
+Beware that the `css` element may be blank if this file doesn't exist.
 
 ```javascript
 // src/AppBundle/Resources/assets/app.js

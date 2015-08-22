@@ -40,6 +40,9 @@ class WebpackExtension extends Extension
 
         // Select the correct node binary for the platform we're currently running on.
         $config['node']['binary'] = $config['node']['binary'][$this->getPlatformKey()];
+        $config['node']['node_modules_path'] = ! empty($config['node']['node_modules_path'])
+            ? $config['node']['node_modules_path']
+            : getenv('NODE_PATH');
 
         // Parse application config into the config generator
         foreach ($config_definitions as $id => $definition) {

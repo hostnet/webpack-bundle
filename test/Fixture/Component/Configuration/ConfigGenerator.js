@@ -4,7 +4,7 @@ var webpack = require('webpack');
 var a = require("b");
 var preLoader1 = require("pre-loader-1");
 var preLoader2 = require("pre-loader-2");
-var fn_extract_text_plugin = require("extract-text-webpack-plugin");
+var fn_extract_text_plugin_css = require("extract-text-webpack-plugin");
 module.exports = {
 
 entry : {
@@ -34,7 +34,7 @@ resolveLoader : {
 plugins : [
     new webpack.DefinePlugin({"a":"b","b":"c"}), 
     new webpack.DefinePlugin({"c":"d","d":"e"}), 
-    new fn_extract_text_plugin("foo", {allChunks: true})
+    new fn_extract_text_plugin_css("foo", {allChunks: true})
 ],
 module : {
     preLoaders : [
@@ -43,7 +43,7 @@ module : {
     ],
     loaders : [
         { test: /\.css$/, loader: "style!some-loader" },
-        { test: /\.css$/, loader: fn_extract_text_plugin.extract("css-loader") }
+        { test: /\.css$/, loader: fn_extract_text_plugin_css.extract("css-loader") }
     ],
     postLoaders : [
         { test: /\.inl$/, loader: "style" }
