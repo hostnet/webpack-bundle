@@ -31,7 +31,7 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                     ->scalarNode('path')->defaultValue('%kernel.root_dir%/../web')->end()
                     ->scalarNode('dump_path')->defaultValue('%kernel.root_dir%/../web/bundles')->end()
                     ->scalarNode('filename')->defaultValue('[name].js')->end()
-                    ->scalarNode('common_id')->defaultValue('common.js')->end()
+                    ->scalarNode('common_id')->defaultValue('common')->end()
                     ->scalarNode('chunk_filename')->defaultValue('[name].[hash].chunk.js')->end()
                     ->scalarNode('source_map_filename')->defaultValue('[file].sourcemap.js')->end()
                     ->scalarNode('devtool_module_filename_template')->defaultValue('webpack:///[resource-path]')->end()

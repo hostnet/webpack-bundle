@@ -60,20 +60,10 @@ class Dumper
             $fs->mkdir($this->output_dir, 0775);
         }
 
-        // Create symlinks or fall back to hard-copy.
-        if (! $fs->exists($target_dir)) {
-            try {
-                $fs->symlink($path, $target_dir);
-                $this->logger->info(sprintf('Created symlink: %s <=> %s', $path, $target_dir));
-            } catch (IOException $e) {
-                $this->logger->warning($e->getMessage() . ' Falling back to hard-copy.');
-                $fs->mkdir($target_dir);
-            }
-        }
-
-        if (! is_link($target_dir)) {
-            $fs->mirror($path, $target_dir, null, ['override' => true, 'copy_on_windows' => true, 'delete' => true]);
-        }
+        // Copy on Windows must be set to true for safety reasons. Although symlinks are supported, they become hard-
+        // links instead of soft-links. This means that removing a symlink would essentially also remove any and all
+        // files from the source path.
+        $fs->mirror($path, $target_dir, null, ['override' => true, 'copy_on_windows' => true, 'delete' => true]);
     }
 
     /**
