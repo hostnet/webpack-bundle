@@ -1,9 +1,9 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
-use Hostnet\Component\WebpackBundle\Asset\Compiler;
-use Hostnet\Component\WebpackBundle\Asset\Dumper;
-use Hostnet\Component\WebpackBundle\Asset\Tracker;
+use Hostnet\Component\Webpack\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Dumper;
+use Hostnet\Component\Webpack\Asset\Tracker;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**

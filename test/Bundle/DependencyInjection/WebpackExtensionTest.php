@@ -1,8 +1,8 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Component\WebpackBundle\Configuration\Loader\CSSLoader;
-use Hostnet\Component\WebpackBundle\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
+use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

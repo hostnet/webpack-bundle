@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration;
+namespace Hostnet\Component\Webpack\Configuration;
 
 /**
  * A CodeBlock is a collection of JavaScript snippets that will be combined and compiled to one javascript file. This

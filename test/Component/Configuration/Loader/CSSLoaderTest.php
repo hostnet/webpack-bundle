@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
+namespace Hostnet\Component\Webpack\Configuration\Loader;
 
-use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBundle\Configuration\Loader\CSSLoader
+ * @covers Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class CSSLoaderTest extends \PHPUnit_Framework_TestCase

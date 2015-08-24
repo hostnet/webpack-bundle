@@ -1,10 +1,10 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration;
+namespace Hostnet\Component\Webpack\Configuration;
 
 /**
  * Class CodeBlockTest
  *
- * @covers \Hostnet\Component\WebpackBundle\Configuration\CodeBlock
+ * @covers \Hostnet\Component\Webpack\Configuration\CodeBlock
  * @author Harold Iedema <harold@iedema.me>
  */
 class CodeBlockTest extends \PHPUnit_Framework_TestCase

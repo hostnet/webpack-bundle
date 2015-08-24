@@ -1,9 +1,9 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Profiler;
+namespace Hostnet\Component\Webpack\Profiler;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
-use Hostnet\Component\WebpackBundle\Asset\Compiler;
-use Hostnet\Component\WebpackBundle\Asset\Tracker;
+use Hostnet\Component\Webpack\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Tracker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;

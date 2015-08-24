@@ -1,12 +1,12 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Asset;
+namespace Hostnet\Component\Webpack\Asset;
 
-use Hostnet\Component\WebpackBundle\Configuration\ConfigGenerator;
-use Hostnet\Component\WebpackBundle\Profiler\Profiler;
+use Hostnet\Component\Webpack\Configuration\ConfigGenerator;
+use Hostnet\Component\Webpack\Profiler\Profiler;
 use Symfony\Component\Process\Process;
 
 /**
- * @covers \Hostnet\Component\WebpackBundle\Asset\Compiler
+ * @covers \Hostnet\Component\Webpack\Asset\Compiler
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class CompilerTest extends \PHPUnit_Framework_TestCase

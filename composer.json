@@ -26,15 +26,15 @@
     },
     "autoload" : {
         "psr-4" : {
-            "Hostnet\\Bundle\\WebpackBundle\\"    : "src/Bundle",
-            "Hostnet\\Component\\WebpackBundle\\" : "src/Component"
+            "Hostnet\\Bundle\\WebpackBundle\\" : "src/Bundle",
+            "Hostnet\\Component\\Webpack\\"    : "src/Component"
         }
     },
     "autoload-dev" : {
         "psr-4" : {
             "Hostnet\\Fixture\\WebpackBundle\\"   : "test/Fixture",
             "Hostnet\\Bundle\\WebpackBundle\\"    : "test/Bundle",
-            "Hostnet\\Component\\WebpackBundle\\" : "test/Component"
+            "Hostnet\\Component\\Webpack\\" : "test/Component"
         }
     },
     "archive": {

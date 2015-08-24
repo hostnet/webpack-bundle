@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Asset;
+namespace Hostnet\Component\Webpack\Asset;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Symfony\Component\Templating\EngineInterface;
 

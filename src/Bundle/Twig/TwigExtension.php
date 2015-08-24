@@ -2,7 +2,7 @@
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
-use Hostnet\Component\WebpackBundle\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Compiler;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>

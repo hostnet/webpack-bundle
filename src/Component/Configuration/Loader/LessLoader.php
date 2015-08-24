@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
+namespace Hostnet\Component\Webpack\Configuration\Loader;
 
-use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
-use Hostnet\Component\WebpackBundle\Configuration\ConfigExtensionInterface;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\ConfigExtensionInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 final class LessLoader implements LoaderInterface, ConfigExtensionInterface

@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Asset;
+namespace Hostnet\Component\Webpack\Asset;
 
 /**
- * @covers \Hostnet\Component\WebpackBundle\Asset\TwigParser
+ * @covers \Hostnet\Component\Webpack\Asset\TwigParser
  * @author Harold Iedema <harold@iedema.me>
  */
 class TwigParserTest extends \PHPUnit_Framework_TestCase

@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration\Config;
+namespace Hostnet\Component\Webpack\Configuration\Config;
 
-use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBundle\Configuration\Config\ResolveLoaderConfig
+ * @covers Hostnet\Component\Webpack\Configuration\Config\ResolveLoaderConfig
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class ResolveLoaderConfigTest extends \PHPUnit_Framework_TestCase

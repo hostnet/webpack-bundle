@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
+namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>

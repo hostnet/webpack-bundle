@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
+namespace Hostnet\Component\Webpack\Configuration\Loader;
 
-use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBundle\Configuration\Loader\UrlLoader
+ * @covers Hostnet\Component\Webpack\Configuration\Loader\UrlLoader
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class UrlLoaderTest extends \PHPUnit_Framework_TestCase
