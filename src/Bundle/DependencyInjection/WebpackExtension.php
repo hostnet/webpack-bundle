@@ -78,4 +78,10 @@ class WebpackExtension extends Extension
 
         return 'fallback';
     }
+    
+    /** {@inheritdoc} */
+    public function getNamespace()
+    {
+        return 'http://hostnet.nl/schema/dic/webpack';
+    }
 }
