@@ -1,7 +1,7 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Asset;
+namespace Hostnet\Component\WebpackBundle\Asset;
 
-use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Hostnet\Component\WebpackBundle\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Stopwatch\Stopwatch;

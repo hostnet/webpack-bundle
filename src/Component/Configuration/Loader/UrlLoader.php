@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Loader;
+namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
-use Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface;
+use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBundle\Configuration\ConfigExtensionInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 final class UrlLoader implements LoaderInterface, ConfigExtensionInterface

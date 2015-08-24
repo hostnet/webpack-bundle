@@ -1,12 +1,12 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration;
+namespace Hostnet\Component\WebpackBundle\Configuration;
 
-use Hostnet\Component\WebpackBridge\Configuration\Config\OutputConfig;
-use Hostnet\Component\WebpackBridge\Configuration\Loader\CSSLoader;
-use Hostnet\Component\WebpackBridge\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\WebpackBundle\Configuration\Config\OutputConfig;
+use Hostnet\Component\WebpackBundle\Configuration\Loader\CSSLoader;
+use Hostnet\Component\WebpackBundle\Configuration\Plugin\DefinePlugin;
 
 /**
- * @covers \Hostnet\Component\WebpackBridge\Configuration\ConfigGenerator
+ * @covers \Hostnet\Component\WebpackBundle\Configuration\ConfigGenerator
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase

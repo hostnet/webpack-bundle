@@ -1,10 +1,10 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\EventListener;
+namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
-use Hostnet\Component\WebpackBridge\Asset\Compiler;
-use Hostnet\Component\WebpackBridge\Asset\Dumper;
-use Hostnet\Component\WebpackBridge\Asset\Tracker;
-use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Hostnet\Component\WebpackBundle\Asset\Compiler;
+use Hostnet\Component\WebpackBundle\Asset\Dumper;
+use Hostnet\Component\WebpackBundle\Asset\Tracker;
+use Hostnet\Component\WebpackBundle\Profiler\Profiler;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 

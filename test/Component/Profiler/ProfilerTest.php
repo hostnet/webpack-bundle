@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Profiler;
+namespace Hostnet\Component\WebpackBundle\Profiler;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @covers Hostnet\Component\WebpackBridge\Profiler\Profiler
+ * @covers Hostnet\Component\WebpackBundle\Profiler\Profiler
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class ProfilerTest extends \PHPUnit_Framework_TestCase

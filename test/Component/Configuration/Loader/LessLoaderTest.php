@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Loader;
+namespace Hostnet\Component\WebpackBundle\Configuration\Loader;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBridge\Configuration\Loader\LessLoader
+ * @covers Hostnet\Component\WebpackBundle\Configuration\Loader\LessLoader
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class LessLoaderTest extends \PHPUnit_Framework_TestCase

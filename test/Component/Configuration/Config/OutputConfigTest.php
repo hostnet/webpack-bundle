@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Config;
+namespace Hostnet\Component\WebpackBundle\Configuration\Config;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBridge\Configuration\Config\OutputConfig
+ * @covers Hostnet\Component\WebpackBundle\Configuration\Config\OutputConfig
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class OutputConfigTest extends \PHPUnit_Framework_TestCase

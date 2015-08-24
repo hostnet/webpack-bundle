@@ -6,7 +6,7 @@
         bootstrap                     = "vendor/autoload.php"
         >
     <testsuites>
-        <testsuite name="webpack-bridge">
+        <testsuite name="webpack-bundle">
             <directory>./test</directory>
         </testsuite>
     </testsuites>

@@ -1,9 +1,9 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Asset;
+namespace Hostnet\Component\WebpackBundle\Asset;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
-use Hostnet\Component\WebpackBridge\Configuration\ConfigGenerator;
-use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBundle\Configuration\ConfigGenerator;
+use Hostnet\Component\WebpackBundle\Profiler\Profiler;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Stopwatch\Stopwatch;

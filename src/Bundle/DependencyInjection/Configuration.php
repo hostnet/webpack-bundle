@@ -1,9 +1,9 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
+namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Component\WebpackBridge\Configuration\Config\ConfigInterface;
-use Hostnet\Component\WebpackBridge\Configuration\Loader\LoaderInterface;
-use Hostnet\Component\WebpackBridge\Configuration\Plugin\PluginInterface;
+use Hostnet\Component\WebpackBundle\Configuration\Config\ConfigInterface;
+use Hostnet\Component\WebpackBundle\Configuration\Loader\LoaderInterface;
+use Hostnet\Component\WebpackBundle\Configuration\Plugin\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -158,7 +158,7 @@ class Configuration implements ConfigurationInterface
                 continue;
             }
 
-            /* @var $class_name \Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface */
+            /* @var $class_name \Hostnet\Component\WebpackBundle\Configuration\ConfigExtensionInterface */
             $class_name::applyConfiguration($node_builder);
         }
     }

@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
+namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Component\WebpackBridge\Configuration\Loader\CSSLoader;
-use Hostnet\Component\WebpackBridge\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\WebpackBundle\Configuration\Loader\CSSLoader;
+use Hostnet\Component\WebpackBundle\Configuration\Plugin\DefinePlugin;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\DependencyInjection\Configuration
+ * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase

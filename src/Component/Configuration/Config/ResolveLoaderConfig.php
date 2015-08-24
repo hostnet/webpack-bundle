@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Config;
+namespace Hostnet\Component\WebpackBundle\Configuration\Config;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
-use Hostnet\Component\WebpackBridge\Configuration\ConfigExtensionInterface;
+use Hostnet\Component\WebpackBundle\Configuration\CodeBlock;
+use Hostnet\Component\WebpackBundle\Configuration\ConfigExtensionInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\DependencyInjection\Container;
 

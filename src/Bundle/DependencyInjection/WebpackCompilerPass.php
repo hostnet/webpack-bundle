@@ -1,7 +1,7 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
+namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Bundle\WebpackBridge\EventListener\RequestListener;
+use Hostnet\Bundle\WebpackBundle\EventListener\RequestListener;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

@@ -1,4 +1,4 @@
-# hostnet/webpack-bridge
+# hostnet/webpack-bundle
 
 - [Introduction](#introduction)
 - [Installation](#installation)
@@ -44,10 +44,10 @@ Please note that `webpack_asset` returns an array with two keys: `js` and `css`.
 Install using [composer](https://getcomposer.org/).
 ```json
 "require" : {
-    "hostnet/webpack-bridge" : "1.*"
+    "hostnet/webpack-bundle" : "1.*"
 }
 ```
-Once installed, enable the bundle `Hostnet\Bundle\WebpackBridge\WebpackBridgeBundle` in the `AppKernel` class.
+Once installed, enable the bundle `Hostnet\Bundle\WebpackBundle\WebpackBundle` in the `AppKernel` class.
 
 ## Quick how-to
 
@@ -93,7 +93,7 @@ document.write(image('/bundles/app/images/logo.png'));
 ```
 Any webpack asset may use the `require` or `define` functions that come with webpack. Webpack allows for both CommonJS
 and AMD-style loading of files. As you might have noticed, the example above references a bundle by its shorthand name,
-`@AppBundle`. The bridge automatically aliases tracked bundles for you, so you're free to use this method of
+`@AppBundle`. The bundle automatically aliases tracked bundles for you, so you're free to use this method of
 referencing dependencies throughout the entire application.
 
 The `logo.png` file, located in the `Resources/public` directory will be symlinked or copied to
@@ -268,7 +268,7 @@ webpack:
 
 ## Plugins
 
-The webpack-bridge package comes with an easy way to develop and use plugins. A plugin simply writes pieces of code
+The webpack-bundle package comes with an easy way to develop and use plugins. A plugin simply writes pieces of code
 to the generated webpack configuration file, and by doing so it _should_ enable more features.
 
 ### DefinePlugin

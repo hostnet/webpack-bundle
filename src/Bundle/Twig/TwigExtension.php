@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\Twig;
+namespace Hostnet\Bundle\WebpackBundle\Twig;
 
-use Hostnet\Bundle\WebpackBridge\DependencyInjection\Configuration;
-use Hostnet\Component\WebpackBridge\Asset\Compiler;
+use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
+use Hostnet\Component\WebpackBundle\Asset\Compiler;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>

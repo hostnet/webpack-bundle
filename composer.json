@@ -1,5 +1,5 @@
 {
-    "name"              : "hostnet/webpack-bridge",
+    "name"              : "hostnet/webpack-bundle",
     "description"       : "Integrates Webpack with Symfony2",
     "authors"           : [{ "name": "Harold Iedema", "email" : "hiedema@hostnet.nl" }],
     "license"           : "MIT",
@@ -26,15 +26,15 @@
     },
     "autoload" : {
         "psr-4" : {
-            "Hostnet\\Bundle\\WebpackBridge\\"    : "src/Bundle",
-            "Hostnet\\Component\\WebpackBridge\\" : "src/Component"
+            "Hostnet\\Bundle\\WebpackBundle\\"    : "src/Bundle",
+            "Hostnet\\Component\\WebpackBundle\\" : "src/Component"
         }
     },
     "autoload-dev" : {
         "psr-4" : {
-            "Hostnet\\Fixture\\WebpackBridge\\"   : "test/Fixture",
-            "Hostnet\\Bundle\\WebpackBridge\\"    : "test/Bundle",
-            "Hostnet\\Component\\WebpackBridge\\" : "test/Component"
+            "Hostnet\\Fixture\\WebpackBundle\\"   : "test/Fixture",
+            "Hostnet\\Bundle\\WebpackBundle\\"    : "test/Bundle",
+            "Hostnet\\Component\\WebpackBundle\\" : "test/Component"
         }
     },
     "archive": {

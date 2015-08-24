@@ -1,10 +1,10 @@
 <?php
-namespace Hostnet\Fixture\WebpackBridge\Bundle\BarBundle;
+namespace Hostnet\Fixture\WebpackBundle\Bundle\BarBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class WebpackBridgeBundle
+ * Class WebpackBundle
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */

@@ -1,8 +1,8 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\Twig;
+namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\Twig\TwigExtension
+ * @covers \Hostnet\Bundle\WebpackBundle\Twig\TwigExtension
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class TwigExtensionTest extends \PHPUnit_Framework_TestCase

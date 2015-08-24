@@ -1,10 +1,10 @@
 <?php
-namespace Hostnet\Fixture\WebpackBridge\Bundle\FooBundle;
+namespace Hostnet\Fixture\WebpackBundle\Bundle\FooBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class WebpackBridgeBundle
+ * Class WebpackBundle
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */

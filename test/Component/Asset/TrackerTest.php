@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Asset;
-use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+namespace Hostnet\Component\WebpackBundle\Asset;
+use Hostnet\Component\WebpackBundle\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Templating\TemplateReference;
 
 /**
- * @covers \Hostnet\Component\WebpackBridge\Asset\Tracker
+ * @covers \Hostnet\Component\WebpackBundle\Asset\Tracker
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class TrackerTest extends \PHPUnit_Framework_TestCase

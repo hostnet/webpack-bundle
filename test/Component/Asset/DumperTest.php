@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Asset;
+namespace Hostnet\Component\WebpackBundle\Asset;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -7,7 +7,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
- * @covers \Hostnet\Component\WebpackBridge\Asset\Dumper
+ * @covers \Hostnet\Component\WebpackBundle\Asset\Dumper
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class DumperTest extends \PHPUnit_Framework_TestCase
