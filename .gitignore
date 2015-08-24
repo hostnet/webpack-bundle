@@ -1,3 +1,5 @@
+/test/Fixture/cache/webpack.asset_tracker.cache
+
 # PHPUnit
 /phpunit.xml
 coverage/
