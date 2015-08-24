@@ -35,6 +35,8 @@ class Configuration implements ConfigurationInterface
         $root_node    = $tree_builder->root(self::CONFIG_ROOT);
         $children     = $root_node->children();
 
+        $root_node->fixXmlConfig('bundle');
+
         $this->addNodeJSConfiguration($children);
         $this->addParentConfiguration($children);
         $this->addBundleConfiguration($children);
@@ -104,14 +106,6 @@ class Configuration implements ConfigurationInterface
     private function addBundleConfiguration(NodeBuilder $node)
     {
         $node
-            ->arrayNode('bundle')
-                ->addDefaultsIfNotSet()
-                ->children()
-                    ->scalarNode('resources_dir')->defaultValue('Resources')->end()
-                    ->scalarNode('asset_dir')->defaultValue('assets')->end()
-                    ->scalarNode('public_dir')->defaultValue('public')->end()
-                ->end()
-            ->end()
             ->arrayNode('bundles')
                 ->defaultValue($this->bundles)
                 ->prototype('scalar')

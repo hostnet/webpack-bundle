@@ -19,8 +19,8 @@ class WebpackCompilerPass implements CompilerPassInterface
         $bundles           = $container->getParameter('kernel.bundles');
         $config            = $container->getParameter('hostnet_webpack_config');
         $tracked_bundles   = $config['bundles'];
-        $asset_path        = $config['bundle']['resources_dir'] . DIRECTORY_SEPARATOR . $config['bundle']['asset_dir'];
-        $public_path       = $config['bundle']['resources_dir'] . DIRECTORY_SEPARATOR . $config['bundle']['public_dir'];
+        $asset_path        = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
+        $public_path       = 'Resources' . DIRECTORY_SEPARATOR . 'public';
         $dump_path         = $config['output']['dump_path'];
         $bundle_paths      = [];
 
@@ -31,7 +31,6 @@ class WebpackCompilerPass implements CompilerPassInterface
 
             $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
         }
-
 
         $asset_tracker->replaceArgument(4, $asset_path);
         $asset_tracker->replaceArgument(5, $bundle_paths);

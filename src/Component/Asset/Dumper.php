@@ -63,7 +63,8 @@ class Dumper
         // Copy on Windows must be set to true for safety reasons. Although symlinks are supported, they become hard-
         // links instead of soft-links. This means that removing a symlink would essentially also remove any and all
         // files from the source path.
-        $fs->mirror($path, $target_dir, null, ['override' => true, 'copy_on_windows' => true, 'delete' => true]);
+        $is_windows = strpos(strtoupper(php_uname('s')), 'WIN') === 0;
+        $fs->mirror($path, $target_dir, null, ['override' => true, 'copy_on_windows' => $is_windows, 'delete' => true]);
     }
 
     /**
