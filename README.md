@@ -17,21 +17,27 @@
 
 ## Introduction
 
-This package assumes you already have some basic knowledge about webpack; what it is and what it does for you. If this is not the case, please [read this first](http://webpack.github.io/docs/motivation.html). It will only take a minute, but it's worth it.
+This package assumes you already have some basic knowledge about webpack; what it is and what it does for you. If this
+is not the case, please [read this first](http://webpack.github.io/docs/motivation.html). It will only take a minute,
+but it's worth it.
 
-Instead of having all bundle-specific assets in one location, this package handles assets from __two__ different locations. The reasoning behind this decision is because webpack assets are compiled on the server and shouldn't be accessible from the browser.
+Instead of having all bundle-specific assets in one location, this package handles assets from __two__ different
+locations. The reasoning behind this decision is because webpack assets are compiled on the server and shouldn't be
+accessible from the browser.
 
  - `Resources/assets` contains files that are compiled by webpack.
  - `Resources/public` contains assets that are either symlinked or copied to `/web/bundles/<lowercased_bundle_name>/`
 
-Both of these directories are being watched when running in _debug mode_. When an asset has been added, modified or deleted, compiled sources are updated directly.
+Both of these directories are being watched when running in _debug mode_. When an asset has been added, modified or
+deleted, compiled sources are updated directly.
 
 The package comes with two _twig functions_:
 
  - `webpack_asset(url)` : Resolves compiled asset files. E.g.: `webpack_asset('@AppBundle/app.js')` resolves to `Resources/assets/app.js` in AppBundle.
  - `webpack_public(url)`: Resolves dumped public assets from the `Resources/public` directory. Bundle referencing works the same way as in `webpack_asset`.
 
-Please note that `webpack_asset` returns an array with two keys: `js` and `css`. More info on this in the [Quick how-to](#quick-how-to) example.
+Please note that `webpack_asset` returns an array with two keys: `js` and `css`. More info on this in the
+[Quick how-to](#quick-how-to) example.
 
 ## Installation
 
@@ -167,18 +173,6 @@ performance or security reasons.
 ```yaml
 webpack:
     bundles: ['AppBundle', 'YourBundle']
-```
-
-As previously mentioned, assets are located in two directories: `assets` and `public`. These options are configurable,
-but it's ___strongly recommended to leave this as is___. Vendor packages might not be aware of your custom configuration
-which results in not being able to resolve assets.
-
-```yaml
-webpack:
-    bundle:
-        resources_dir: 'Resources'
-        assets_dir: 'assets'
-        public_dir: 'public'
 ```
 
 ### Shared dependencies

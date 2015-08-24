@@ -1,3 +1,5 @@
+/test/Fixture/cache/
+
 # PHPUnit
 /phpunit.xml
 coverage/
