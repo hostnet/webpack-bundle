@@ -1,22 +1,22 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
+namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Bundle\WebpackBridge\WebpackBridgeBundle;
-use Hostnet\Fixture\WebpackBridge\Bundle\BarBundle\BarBundle;
-use Hostnet\Fixture\WebpackBridge\Bundle\FooBundle\FooBundle;
+use Hostnet\Bundle\WebpackBundle\WebpackBundle;
+use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
+use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\DependencyInjection\WebpackCompilerPass
+ * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
     public function testPass()
     {
-        $bundle      = new WebpackBridgeBundle();
+        $bundle      = new WebpackBundle();
         $container   = new ContainerBuilder();
         $extension   = $bundle->getContainerExtension();
         $fixture_dir = realpath(__DIR__ . '/../../Fixture');
@@ -53,7 +53,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadNoWebpack()
     {
-        $bundle      = new WebpackBridgeBundle();
+        $bundle      = new WebpackBundle();
         $container   = new ContainerBuilder();
         $extension   = $bundle->getContainerExtension();
         $fixture_dir = realpath(__DIR__ . '/../../Fixture');

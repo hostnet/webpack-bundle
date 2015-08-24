@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Plugin;
+namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBridge\Configuration\Plugin\DefinePlugin
+ * @covers Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class DefinePluginTest extends \PHPUnit_Framework_TestCase

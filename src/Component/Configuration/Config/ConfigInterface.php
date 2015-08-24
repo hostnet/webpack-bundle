@@ -1,5 +1,5 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Config;
+namespace Hostnet\Component\Webpack\Configuration\Config;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>

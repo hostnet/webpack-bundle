@@ -1,15 +1,15 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge;
+namespace Hostnet\Bundle\WebpackBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class WebpackBridgeBundle
+ * Class WebpackBundle
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackBridgeBundle extends Bundle
+class WebpackBundle extends Bundle
 {
     /** {@inheritdoc} */
     public function build(ContainerBuilder $container)

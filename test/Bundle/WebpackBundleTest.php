@@ -1,18 +1,18 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge;
+namespace Hostnet\Bundle\WebpackBundle;
 
-use Hostnet\Bundle\WebpackBridge\DependencyInjection\WebpackCompilerPass;
+use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\WebpackBridgeBundle
+ * @covers \Hostnet\Bundle\WebpackBundle\WebpackBundle
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackBridgeBundleTest extends \PHPUnit_Framework_TestCase
+class WebpackBundleTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuild()
     {
-        $bundle    = new WebpackBridgeBundle();
+        $bundle    = new WebpackBundle();
         $container = new ContainerBuilder();
         $this->assertInstanceOf(DependencyInjection\WebpackExtension::class, $bundle->getContainerExtension());
         $bundle->build($container);

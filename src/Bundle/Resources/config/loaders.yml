@@ -1,13 +1,13 @@
 services:
     hostnet_webpack.loader.css:
-        class: Hostnet\Component\WebpackBridge\Configuration\Loader\CSSLoader
+        class: Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
         tags:
             - { name: hostnet_webpack.config_extension }
     hostnet_webpack.loader.url:
-        class: Hostnet\Component\WebpackBridge\Configuration\Loader\UrlLoader
+        class: Hostnet\Component\Webpack\Configuration\Loader\UrlLoader
         tags:
             - { name: hostnet_webpack.config_extension }
     hostnet_webpack.loader.less:
-        class: Hostnet\Component\WebpackBridge\Configuration\Loader\LessLoader
+        class: Hostnet\Component\Webpack\Configuration\Loader\LessLoader
         tags:
             - { name: hostnet_webpack.config_extension }

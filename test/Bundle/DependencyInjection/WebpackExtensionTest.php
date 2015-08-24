@@ -1,12 +1,12 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\DependencyInjection;
+namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Component\WebpackBridge\Configuration\Loader\CSSLoader;
-use Hostnet\Component\WebpackBridge\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
+use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\DependencyInjection\WebpackExtension
+ * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackExtension
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class WebpackExtensionTest extends \PHPUnit_Framework_TestCase

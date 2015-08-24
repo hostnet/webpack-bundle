@@ -1,9 +1,9 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\Command;
+namespace Hostnet\Bundle\WebpackBundle\Command;
 
-use Hostnet\Component\WebpackBridge\Asset\Compiler;
-use Hostnet\Component\WebpackBridge\Asset\Dumper;
-use Hostnet\Component\WebpackBridge\Profiler\Profiler;
+use Hostnet\Component\Webpack\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Dumper;
+use Hostnet\Component\Webpack\Profiler\Profiler;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

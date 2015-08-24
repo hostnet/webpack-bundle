@@ -1,7 +1,7 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration;
+namespace Hostnet\Component\Webpack\Configuration;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 
 /**

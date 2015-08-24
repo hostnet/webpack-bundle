@@ -2,16 +2,16 @@
 # configuration file.
 services:
     hostnet_webpack.config.output:
-        class: Hostnet\Component\WebpackBridge\Configuration\Config\OutputConfig
+        class: Hostnet\Component\Webpack\Configuration\Config\OutputConfig
         tags:
             - { name: hostnet_webpack.config_extension }
 
     hostnet_webpack.config.resolve:
-        class: Hostnet\Component\WebpackBridge\Configuration\Config\ResolveConfig
+        class: Hostnet\Component\Webpack\Configuration\Config\ResolveConfig
         tags:
             - { name: hostnet_webpack.config_extension }
 
     hostnet_webpack.config.resolve_loader:
-        class: Hostnet\Component\WebpackBridge\Configuration\Config\ResolveLoaderConfig
+        class: Hostnet\Component\Webpack\Configuration\Config\ResolveLoaderConfig
         tags:
             - { name: hostnet_webpack.config_extension }

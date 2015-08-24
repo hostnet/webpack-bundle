@@ -6,7 +6,7 @@ imports:
 services:
 
     hostnet_webpack.bridge.generate_config_command:
-        class: Hostnet\Bundle\WebpackBridge\Command\CompileCommand
+        class: Hostnet\Bundle\WebpackBundle\Command\CompileCommand
         arguments:
             - '@hostnet_webpack.bridge.asset_compiler'
             - '@hostnet_webpack.bridge.asset_dumper'
@@ -17,10 +17,10 @@ services:
             - { name: console.command }
 
     hostnet_webpack.bridge.config_generator:
-        class: Hostnet\Component\WebpackBridge\Configuration\ConfigGenerator
+        class: Hostnet\Component\Webpack\Configuration\ConfigGenerator
 
     hostnet_webpack.bridge.asset_tracker:
-        class: Hostnet\Component\WebpackBridge\Asset\Tracker
+        class: Hostnet\Component\Webpack\Asset\Tracker
         arguments:
             - '@hostnet_webpack.bridge.profiler'
             - '@templating.finder'
@@ -29,7 +29,7 @@ services:
             - '' # asset_path
             - [] # bundles
     hostnet_webpack.bridge.asset_dumper:
-        class: Hostnet\Component\WebpackBridge\Asset\Dumper
+        class: Hostnet\Component\Webpack\Asset\Dumper
         arguments:
             - '@logger'
             - [] # bundles
@@ -43,13 +43,13 @@ services:
             - '' # Cache directory
 
     hostnet_webpack.bridge.asset_twig_parser:
-        class: Hostnet\Component\WebpackBridge\Asset\TwigParser
+        class: Hostnet\Component\Webpack\Asset\TwigParser
         arguments:
             - '@hostnet_webpack.bridge.asset_tracker'
             - '@twig'
 
     hostnet_webpack.bridge.asset_compiler:
-        class: Hostnet\Component\WebpackBridge\Asset\Compiler
+        class: Hostnet\Component\Webpack\Asset\Compiler
         arguments:
             - '@hostnet_webpack.bridge.profiler'
             - '@hostnet_webpack.bridge.asset_tracker'
@@ -61,7 +61,7 @@ services:
             - '@?debug.stopwatch'
 
     hostnet_webpack.bridge.twig_extension:
-        class: Hostnet\Bundle\WebpackBridge\Twig\TwigExtension
+        class: Hostnet\Bundle\WebpackBundle\Twig\TwigExtension
         arguments:
             - '' # public_path
             - '' # dump_path
@@ -69,6 +69,6 @@ services:
             - { name: twig.extension }
 
     hostnet_webpack.bridge.profiler:
-        class: Hostnet\Component\WebpackBridge\Profiler\Profiler
+        class: Hostnet\Component\Webpack\Profiler\Profiler
         tags:
-            - { name: data_collector, template: "WebpackBridgeBundle::profiler.html.twig", id: "webpack" }
+            - { name: data_collector, template: "WebpackBundle::profiler.html.twig", id: "webpack" }

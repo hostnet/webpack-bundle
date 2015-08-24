@@ -1,13 +1,13 @@
 <?php
-namespace Hostnet\Bundle\WebpackBridge\EventListener;
+namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
-use Hostnet\Component\WebpackBridge\Asset\Compiler;
-use Hostnet\Component\WebpackBridge\Asset\Dumper;
-use Hostnet\Component\WebpackBridge\Asset\Tracker;
+use Hostnet\Component\Webpack\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Dumper;
+use Hostnet\Component\Webpack\Asset\Tracker;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * @covers \Hostnet\Bundle\WebpackBridge\EventListener\RequestListener
+ * @covers \Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
  * @author Harold Iedema <harold@iedema.me>
  */
 class RequestListenerTest extends \PHPUnit_Framework_TestCase

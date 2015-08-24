@@ -1,6 +1,6 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Asset;
-use Hostnet\Bundle\WebpackBridge\Twig\TwigExtension;
+namespace Hostnet\Component\Webpack\Asset;
+use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Symfony\Component\Templating\EngineInterface;
 
 /**

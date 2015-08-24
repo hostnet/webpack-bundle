@@ -1,11 +1,11 @@
 <?php
-namespace Hostnet\Component\WebpackBridge\Configuration\Config;
+namespace Hostnet\Component\Webpack\Configuration\Config;
 
-use Hostnet\Component\WebpackBridge\Configuration\CodeBlock;
+use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\WebpackBridge\Configuration\Config\ResolveConfig
+ * @covers Hostnet\Component\Webpack\Configuration\Config\ResolveConfig
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class ResolveConfigTest extends \PHPUnit_Framework_TestCase

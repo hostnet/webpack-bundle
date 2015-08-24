@@ -1,6 +1,6 @@
 services:
 
     hostnet_webpack.plugin.define:
-        class: Hostnet\Component\WebpackBridge\Configuration\Plugin\DefinePlugin
+        class: Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
         tags:
             - { name: hostnet_webpack.config_extension }
