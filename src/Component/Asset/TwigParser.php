@@ -1,9 +1,9 @@
 <?php
 namespace Hostnet\Component\Webpack\Asset;
+
 use Hostnet\Bundle\WebpackBundle\Twig\Token\JavascriptTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\Token\StylesheetTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
-use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Parses twig templates to find split points.

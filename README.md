@@ -3,6 +3,7 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Quick how-to](#quick-how-to)
+- [Twig tags](#twig-tags)
 - [Configuration](#configuration)
   - [Node](#node)
     - [Multi-platform configuration](#multi-platform-configuration)
@@ -107,6 +108,39 @@ module.exports = function (src) {
     return '<img src="' + src + '">;
 };
 ```
+
+## Twig tags
+Apart from using the twig function `webpack_asset`, you can also use two webpack-tailored twig tags; 
+`{% webpack_javascripts %}` and `{% webpack_stylesheets %}`. These two blocks both share the exact same syntax and 
+functionality. The only difference is that one resolves javascript files while the other does stylesheets.
+
+The syntax works like this:
+```twig
+{% webpack_javascripts
+    '@AppBundle/file1.js'
+    '@AppBundle/file2.js'
+%}
+    <script src="{{ asset }}"></script>
+{% endwebpack_javascripts %}
+```
+
+The CSS equivalent:
+```twig
+{% webpack_javascripts
+    '@AppBundle/file1.js'
+    '@AppBundle/file2.js'
+%}
+    <link rel="stylesheet" href="{{ asset }}">
+{% endwebpack_javascripts %}
+```
+
+Note that the CSS variant also refers to javascript files. This is _not_ a mistake. Webpack compiles CSS files by
+extracting them from javascript files, if they are referenced there. Be aware that this only works if CSS extraction has
+been configured properly. See [CSS loader configuration](#css) for more information.
+
+> __Warning__: Due to the nature of split point detection, any expressions are not parsed! Only strings are accepted.
+> The reason behind this, as previously mentioned is performance. All twig templates are tokenized on request in debug-
+> mode. Just tokenizing them is a lot faster than actually parsing every single one of them.
 
 ## Configuration
 

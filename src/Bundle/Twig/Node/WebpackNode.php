@@ -1,7 +1,5 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\Twig\Node;
-use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
-use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
