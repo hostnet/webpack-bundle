@@ -1,5 +1,7 @@
 <?php
 namespace Hostnet\Component\Webpack\Asset;
+use Hostnet\Bundle\WebpackBundle\Twig\Token\JavascriptTokenParser;
+use Hostnet\Bundle\WebpackBundle\Twig\Token\StylesheetTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -34,22 +36,46 @@ class TwigParser
         $points = [];
 
         while (! $stream->isEOF() && $token = $stream->next()) {
+            // {{ webpack_asset(...) }}
             if ($token->test(\Twig_Token::NAME_TYPE, TwigExtension::FUNCTION_NAME)) {
                 // We found the webpack function!
-                $asset = $this->getAssetFromStream($template_file, $stream);
-                if (false === ($asset_path = $this->tracker->resolveResourcePath($asset))) {
-                    throw new \RuntimeException(sprintf(
-                        'The file "%s" referenced in "%s" at line %d could not be resolved.',
-                        $asset,
-                        $template_file,
-                        $token->getLine()
-                    ));
+                $asset          = $this->getAssetFromStream($template_file, $stream);
+                $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
+            }
+
+            // {% webpack_javascripts %} and {% webpack_stylesheets %}
+            if ($token->test(\Twig_Token::BLOCK_START_TYPE) && (
+                $stream->getCurrent()->test(\Twig_Token::NAME_TYPE, JavascriptTokenParser::TAG) ||
+                $stream->getCurrent()->test(\Twig_Token::NAME_TYPE, StylesheetTokenParser::TAG)
+            )) {
+                $stream->next();
+                while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
+                    $asset          = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();
+                    $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
                 }
-                $points[$asset] = $asset_path;
             }
         }
 
         return $points;
+    }
+
+    /**
+     * @param string      $asset
+     * @param string      $template_file
+     * @param \Twig_Token $token
+     */
+    private function resolveAssetPath($asset, $template_file, $token)
+    {
+        if (false === ($asset_path = $this->tracker->resolveResourcePath($asset))) {
+            throw new \RuntimeException(sprintf(
+                'The file "%s" referenced in "%s" at line %d could not be resolved.',
+                $asset,
+                $template_file,
+                $token->getLine()
+            ));
+        }
+
+        return $asset_path;
     }
 
     /**

@@ -55,7 +55,11 @@ class Dumper
 
         $this->logger->info(sprintf('Dumping public assets for "%s" to "%s"...', $name, $target_dir));
 
-        // Start by creating the output directory if it doesn't already exists.
+        if (! (false === $fs->symlink($path, $target_dir))) {
+            return;
+        }
+
+        // If symlinking fails, start by creating the output directory if it doesn't already exists.
         if (! $fs->exists($this->output_dir)) {
             $fs->mkdir($this->output_dir, 0775);
         }

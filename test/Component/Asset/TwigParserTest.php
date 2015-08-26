@@ -32,12 +32,23 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
 
     public function testParseValid()
     {
-        $this->tracker->expects($this->exactly(2))->method('resolveResourcePath')->willReturn('foobar');
+        // Call count expectations:
+        //  1: webpack_asset.js
+        //  2: webpack_asset.css
+        //  3: {% webpack_javascripts %}
+        //  4: {% webpack_javascripts %}
+        //  5: {% webpack_stylesheets %}
+        $this->tracker->expects($this->exactly(5))->method('resolveResourcePath')->willReturn('foobar');
 
         $parser = new TwigParser($this->tracker, $this->twig);
         $points = ($parser->findSplitPoints($this->path . '/Resources/template.html.twig'));
 
+        $this->assertCount(4, $points);
         $this->assertArrayHasKey('@BarBundle/app.js', $points);
+        $this->assertArrayHasKey('@BarBundle/app2.js', $points);
+        $this->assertArrayHasKey('@BarBundle/app3.js', $points);
+        $this->assertArrayHasKey('@BarBundle/app4.js', $points);
+
         $this->assertContains('foobar', $points);
     }
 
