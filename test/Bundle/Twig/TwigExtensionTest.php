@@ -13,7 +13,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('webpack', $extension->getName());
         $this->assertCount(2, $extension->getFunctions());
-        $this->assertCount(2, $extension->getTokenParsers());
+        $this->assertCount(1, $extension->getTokenParsers());
         $this->assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
     }
 }

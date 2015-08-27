@@ -40,10 +40,7 @@ class TwigExtension extends \Twig_Extension
     /** {@inheritdoc} */
     public function getTokenParsers()
     {
-        return [
-            new Token\JavascriptTokenParser($this),
-            new Token\StylesheetTokenParser($this)
-        ];
+        return [new Token\WebpackTokenParser($this)];
     }
 
     /** {@inheritdoc} */

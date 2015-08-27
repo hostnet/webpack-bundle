@@ -3,6 +3,7 @@ namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Bundle\WebpackBundle\Twig\Token\JavascriptTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\Token\StylesheetTokenParser;
+use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 
 /**
@@ -44,10 +45,8 @@ class TwigParser
             }
 
             // {% webpack_javascripts %} and {% webpack_stylesheets %}
-            if ($token->test(\Twig_Token::BLOCK_START_TYPE) && (
-                $stream->getCurrent()->test(\Twig_Token::NAME_TYPE, JavascriptTokenParser::TAG) ||
-                $stream->getCurrent()->test(\Twig_Token::NAME_TYPE, StylesheetTokenParser::TAG)
-            )) {
+            if ($token->test(\Twig_Token::BLOCK_START_TYPE) && $stream->getCurrent()->test(WebpackTokenParser::TAG_NAME)) {
+                $stream->next();
                 $stream->next();
                 while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
                     $asset          = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();

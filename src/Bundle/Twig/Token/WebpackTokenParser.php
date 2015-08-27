@@ -7,8 +7,13 @@ use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-abstract class TokenParser implements \Twig_TokenParserInterface
+class WebpackTokenParser implements \Twig_TokenParserInterface
 {
+    /**
+     * Tag name is declared as constant for easy accessibility by the TwigParser for split-point detection.
+     */
+    const TAG_NAME = 'webpack';
+
     /**
      * @var \Twig_Parser
      */
@@ -33,6 +38,11 @@ abstract class TokenParser implements \Twig_TokenParserInterface
         $this->parser = $parser;
     }
 
+    public function getTag()
+    {
+        return self::TAG_NAME;
+    }
+
     /** @inheritDoc */
     public function parse(\Twig_Token $token)
     {
@@ -40,10 +50,20 @@ abstract class TokenParser implements \Twig_TokenParserInterface
         $files  = [];
         $lineno = $stream->getCurrent()->getLine();
 
-        // {% <tag> 'file' 'file' ... %}
+        // Export type: "js" or "css"
+        $export_type = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
+        if (! in_array($export_type, ['js', 'css'])) {
+            // This exception will include the template filename by iteself.
+            throw new \Twig_Error_Syntax(sprintf(
+                'Expected export type "js" or "css", got "%s" at line %d.',
+                $export_type,
+                $lineno
+            ));
+        }
+
         while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
             $asset = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();
-            if (false === ($file = $this->extension->webpackAsset($asset)[$this->getAssetExtension()])) {
+            if (false === ($file = $this->extension->webpackAsset($asset)[$export_type])) {
                 continue;
             }
             $files[] = $file;
@@ -54,20 +74,4 @@ abstract class TokenParser implements \Twig_TokenParserInterface
 
         return new WebpackNode([$body], ['files' => $files], $lineno, $this->getTag());
     }
-
-    /**
-     * @param  \Twig_Token $token
-     * @return bool
-     */
-    public function decideEndBlock(\Twig_Token $token)
-    {
-        return $token->test(['end' . $this->getTag()]);
-    }
-
-    /**
-     * Returns the asset extension to resolve. Can be one of "js" or "css".
-     *
-     * @return string
-     */
-    abstract protected function getAssetExtension();
 }

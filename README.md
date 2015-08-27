@@ -3,7 +3,7 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Quick how-to](#quick-how-to)
-- [Twig tags](#twig-tags)
+- [Twig tag](#twig-tag)
 - [Configuration](#configuration)
   - [Node](#node)
     - [Multi-platform configuration](#multi-platform-configuration)
@@ -109,37 +109,41 @@ module.exports = function (src) {
 };
 ```
 
-## Twig tags
-Apart from using the twig function `webpack_asset`, you can also use two webpack-tailored twig tags; 
-`{% webpack_javascripts %}` and `{% webpack_stylesheets %}`. These two blocks both share the exact same syntax and 
-functionality. The only difference is that one resolves javascript files while the other does stylesheets.
+## Twig tag
 
-The syntax works like this:
+Aside from the `webpack_asset` twig function, you can also use the `webpack` tag to specify one or more entry points in
+a much more elegant fashion. The syntax of this tag works like this:
+
 ```twig
-{% webpack_javascripts
-    '@AppBundle/file1.js'
-    '@AppBundle/file2.js'
+{% webpack <type: css|js> <list-of-javascript-files> %}
+    {{ asset }}
+{% endwebpack %}
+```
+
+If you want to include javascript files, simply do this:
+```twig
+{% webpack js
+   '@AppBundle/file1.js'
+   '@AppBundle/file2.js'
 %}
     <script src="{{ asset }}"></script>
-{% endwebpack_javascripts %}
+{% endwebpack %}
 ```
 
-The CSS equivalent:
+The same method can be applied for CSS files.
 ```twig
-{% webpack_javascripts
-    '@AppBundle/file1.js'
-    '@AppBundle/file2.js'
-%}
+{% webpack css '@AppBundle/file1.js' %}
     <link rel="stylesheet" href="{{ asset }}">
-{% endwebpack_javascripts %}
+{% endwebpack %}
 ```
 
-Note that the CSS variant also refers to javascript files. This is _not_ a mistake. Webpack compiles CSS files by
-extracting them from javascript files, if they are referenced there. Be aware that this only works if CSS extraction has
-been configured properly. See [CSS loader configuration](#css) for more information.
+Note that in the CSS example, we're still referencing javascript files. _This is not a mistake._ Webpack extracts
+referenced CSS files from javascript (or any subset of it) files and places them in separate css files - if the bundle
+was configured to do so. If you want to include an already existing CSS file, just use the regular method of doing so.
+For more information about CSS file exportation, please refer to the (CSS loader configuration)[#css].
 
-> __Warning__: Due to the nature of split point detection, any expressions are not parsed! Only strings are accepted.
-> The reason behind this, as previously mentioned is performance. All twig templates are tokenized on request in debug-
+> __Warning__: Due to the nature of split point detection, expressions are not parsed! Only strings types are accepted.
+> The reason behind this - as previously mentioned - performance. All twig templates are tokenized on request in debug-
 > mode. Just tokenizing them is a lot faster than actually parsing every single one of them.
 
 ## Configuration
