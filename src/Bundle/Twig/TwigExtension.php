@@ -2,6 +2,7 @@
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
+use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Component\Webpack\Asset\Compiler;
 
 /**
@@ -40,7 +41,7 @@ class TwigExtension extends \Twig_Extension
     /** {@inheritdoc} */
     public function getTokenParsers()
     {
-        return [new Token\WebpackTokenParser($this)];
+        return [new WebpackTokenParser($this)];
     }
 
     /** {@inheritdoc} */

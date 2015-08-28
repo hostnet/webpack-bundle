@@ -55,20 +55,23 @@ class Dumper
 
         $this->logger->info(sprintf('Dumping public assets for "%s" to "%s"...', $name, $target_dir));
 
-        if (! (false === $fs->symlink($path, $target_dir))) {
+        // Always copy on windows.
+        if (strpos(strtoupper(php_uname('s')), 'WIN') === 0) {
+            $fs->mirror($path, $target_dir, null, [
+                'override'        => true,
+                'copy_on_windows' => true,
+                'delete'          => true
+            ]);
+
             return;
         }
 
-        // If symlinking fails, start by creating the output directory if it doesn't already exists.
-        if (! $fs->exists($this->output_dir)) {
-            $fs->mkdir($this->output_dir, 0775);
+        // Create a symlink for non-windows platforms.
+        try {
+            $fs->symlink($path, $target_dir);
+        } catch (IOException $e) {
+            $fs->mirror($path, $target_dir);
         }
-
-        // Copy on Windows must be set to true for safety reasons. Although symlinks are supported, they become hard-
-        // links instead of soft-links. This means that removing a symlink would essentially also remove any and all
-        // files from the source path.
-        $is_windows = strpos(strtoupper(php_uname('s')), 'WIN') === 0;
-        $fs->mirror($path, $target_dir, null, ['override' => true, 'copy_on_windows' => $is_windows, 'delete' => true]);
     }
 
     /**
