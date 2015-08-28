@@ -32,18 +32,19 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
         $this->extension = $extension;
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function setParser(\Twig_Parser $parser)
     {
         $this->parser = $parser;
     }
 
+    /** {@inheritDoc} */
     public function getTag()
     {
         return self::TAG_NAME;
     }
 
-    /** @inheritDoc */
+    /** {@inheritDoc} */
     public function parse(\Twig_Token $token)
     {
         $stream = $this->parser->getStream();
@@ -53,7 +54,7 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
         // Export type: "js" or "css"
         $export_type = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
         if (! in_array($export_type, ['js', 'css'])) {
-            // This exception will include the template filename by iteself.
+            // This exception will include the template filename by itself.
             throw new \Twig_Error_Syntax(sprintf(
                 'Expected export type "js" or "css", got "%s" at line %d.',
                 $export_type,

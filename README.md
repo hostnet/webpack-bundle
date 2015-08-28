@@ -138,7 +138,7 @@ The same method can be applied for CSS files.
 ```
 
 Note that in the CSS example, we're still referencing javascript files. _This is not a mistake._ Webpack extracts
-referenced CSS files from javascript (or any subset of it) files and places them in separate css files - if the bundle
+referenced CSS files from javascript files and places them in separate css files - if the bundle
 was configured to do so. If you want to include an already existing CSS file, just use the regular method of doing so.
 For more information about CSS file exportation, please refer to the [CSS loader configuration](#css).
 
