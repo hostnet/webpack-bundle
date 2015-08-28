@@ -3,6 +3,7 @@
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Quick how-to](#quick-how-to)
+- [Twig tag](#twig-tag)
 - [Configuration](#configuration)
   - [Node](#node)
     - [Multi-platform configuration](#multi-platform-configuration)
@@ -107,6 +108,43 @@ module.exports = function (src) {
     return '<img src="' + src + '">;
 };
 ```
+
+## Twig tag
+
+Aside from the `webpack_asset` twig function, you can also use the `webpack` tag to specify one or more entry points in
+a much more elegant fashion. The syntax of this tag works like this:
+
+```twig
+{% webpack <type: css|js> <list-of-javascript-files> %}
+    {{ asset }}
+{% endwebpack %}
+```
+
+If you want to include javascript files, simply do this:
+```twig
+{% webpack js
+   '@AppBundle/file1.js'
+   '@AppBundle/file2.js'
+%}
+    <script src="{{ asset }}"></script>
+{% endwebpack %}
+```
+
+The same method can be applied for CSS files.
+```twig
+{% webpack css '@AppBundle/file1.js' %}
+    <link rel="stylesheet" href="{{ asset }}">
+{% endwebpack %}
+```
+
+Note that in the CSS example, we're still referencing javascript files. _This is not a mistake._ Webpack extracts
+referenced CSS files from javascript files and places them in separate css files - if the bundle
+was configured to do so. If you want to include an already existing CSS file, just use the regular method of doing so.
+For more information about CSS file exportation, please refer to the [CSS loader configuration](#css).
+
+> __Warning__: Due to the nature of split point detection, expressions are not parsed! Only strings types are accepted.
+> The reason behind this - as previously mentioned - performance. All twig templates are tokenized on request in debug-
+> mode. Just tokenizing them is a lot faster than actually parsing every single one of them.
 
 ## Configuration
 

@@ -1,4 +1,14 @@
-// A template.
+{# Method one: webpack_asset. #}
 
 <script src="{{ webpack_asset('@BarBundle/app.js').js }}"></script>
 <link rel="stylesheet" href="{{ webpack_asset('@BarBundle/app.js').css }}">
+
+{# Method two: webpack js #}
+{% webpack js '@BarBundle/app2.js' '@BarBundle/app3.js' %}
+    <script src="{{ asset }}"></script>
+{% endwebpack %}
+
+{# and webpack css #}
+{% webpack css '@BarBundle/app4.js' %}
+    <link rel="stylesheet" href="{{ asset }}">
+{% endwebpack %}

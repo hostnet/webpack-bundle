@@ -2,6 +2,7 @@
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
+use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Component\Webpack\Asset\Compiler;
 
 /**
@@ -38,6 +39,12 @@ class TwigExtension extends \Twig_Extension
     }
 
     /** {@inheritdoc} */
+    public function getTokenParsers()
+    {
+        return [new WebpackTokenParser($this)];
+    }
+
+    /** {@inheritdoc} */
     public function getFunctions()
     {
         return [
@@ -46,6 +53,13 @@ class TwigExtension extends \Twig_Extension
         ];
     }
 
+    /**
+     * Returns an array containing a 'js' and 'css' key that refer to the path of the compiled asset from a browser
+     * perspective.
+     *
+     * @param  string $asset
+     * @return array
+     */
     public function webpackAsset($asset)
     {
         $asset_id      = rtrim($this->public_path, '/') . '/' . Compiler::getAliasId($asset);
@@ -57,6 +71,19 @@ class TwigExtension extends \Twig_Extension
         ];
     }
 
+    /**
+     * Returns the mapped url for the given resource.
+     *
+     * For example:
+     *      given url: "@AppBundle/images/foo.png"
+     *      real path: "AppBundle/Resources/public/images/foo.png"
+     *      mapped to: "/bundles/app/images/foo.png"
+     *
+     * The mapped url is either a symlink or copied asset that resides in the web/bundles directory.
+     *
+     * @param  string $url
+     * @return string
+     */
     public function webpackPublic($url)
     {
         $document_root = realpath(isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '');

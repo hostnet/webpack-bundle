@@ -12,11 +12,7 @@
         {% endif %}
     {% endset %}
 
-    {% if not collector.get('compiler.successful') %}
-        {% set text %}
-            <pre style="font-size: 10px; background: #444; color: #eee;">{{ collector.get('compiler.last_output')|raw }}</pre>
-        {% endset %}
-    {% elseif collector.get('compiler.executed') %}
+    {% if collector.get('compiler.executed') %}
         {% set text %}
             <div class="sf-toolbar-info-piece">
                 <b>Analyze time</b>
