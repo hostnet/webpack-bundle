@@ -24,6 +24,14 @@ class BabelLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('enabled', $config['babel']);
     }
 
+    public function testGetCodeBlockDefault()
+    {
+        $config = new BabelLoader();
+        $block  = $config->getCodeBlocks()[0];
+
+        $this->assertFalse($block->has(CodeBlock::LOADER));
+    }
+
     public function testGetCodeBlockDisabled()
     {
         $config = new BabelLoader(['loaders' => ['babel' => ['enabled' => false]]]);

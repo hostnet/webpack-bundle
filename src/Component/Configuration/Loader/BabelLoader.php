@@ -17,7 +17,9 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
      */
     public function __construct(array $config = [])
     {
-        $this->config = $config['loaders']['babel'];
+        $this->config = isset($config['loaders']['babel'])
+            ? $config['loaders']['babel']
+            : ['enabled' => false];
     }
 
     /** {@inheritdoc} */
