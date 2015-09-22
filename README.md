@@ -10,6 +10,7 @@
   - [Bundle configuration](#bundle-configuration)
   - [Shared dependencies](#shared-dependencies)
   - [Asset output directories](#asset-output-directories)
+  - [Ideal configuration](#ideal-configuration)
 - [Loaders](#loaders)
   - [CSS](#css)
   - [Less](#less)
@@ -234,7 +235,7 @@ webpack:
 webpack:
     output:
         path: '%kernel.root_dir%/../web'
-        dump_dir: '%kernel.root_dir%/../web/bundles'
+        dump_path: '%kernel.root_dir%/../web/bundles'
         public_path: '/'
 ```
 
@@ -243,6 +244,65 @@ that exists inside the DOCUMENT_ROOT directory.
 
 For example, if the `output.path` value is `%kernel.root_dir/../web/packed`, the value of `output.public_path` must be
 set to `/packed`.
+
+### Ideal configuration
+
+The following configuration requires the following modules to be present in your `node_modules` directory.
+
+ - webpack-extract-text-plugin
+ - style-loader
+ - css-loader
+ - less-loader
+ - url-loader
+ - babel-loader
+
+Because we're creating shared chunks of javascript files, you'll need to include '`/compiled/shared.js`' manually in
+your base template. The same might also be the case for your CSS files, depending on what you include and where you do
+it.
+
+config.yml
+```yaml
+webpack:
+    node:
+        binary: '/path/to/node'
+        node_modules_path: '%kernel.root_dir%/../node_modules'
+    output:
+        path: '%kernel.root_dir%/../web/compiled'
+        dump_path: '%kernel.root_dir%/../web/bundles'
+        public_path: '/compiled'
+        common_id: 'shared'
+    loaders:
+        css:
+            enabled: true
+            all_chunks: true
+            filename: '[name].css'
+        less:
+            enabled: true
+            all_chunks: true
+            filename: '[name].css'
+        url:
+            enabled: true
+        babel:
+            enabled: true
+```
+
+base.html.twig
+```html
+<head>
+    <script src="/compiled/shared.js"></script>
+</head>
+```
+
+Somewhere in your twig templates
+```twig
+{% webpack js "@YourBundle/SomeModule.js" %}
+    <script src="{{ asset }}"></script>
+{% endwebpack %}
+
+{% webpack css "@YourBundle/SomeModule.js" %}
+    <link rel="stylesheet" href="{{ asset }}">
+{% endwebpack %}
+```
 
 ## Loaders
 
@@ -257,6 +317,8 @@ Each loader has its own configuration under the `loaders` section.
 ### CSS
 
 Enables loading CSS files.
+
+> You need the `css-loader` and `style-loader` node module for this to work.
 
 ```yaml
 webpack:
@@ -283,6 +345,8 @@ Enables loading less files.
 
 This plugin shares the exact same configuration settings as the CSS loader.
 
+> You need the `less-loader`, `css-loader` and `style-loader` node modules for this to work.
+
 ```webpack
 webpack:
     loaders:
@@ -300,8 +364,23 @@ This plugin only has an `enabled` setting. It is disabled by default.
 ```yaml
 webpack:
     loaders:
-       less:
+       url:
            enabled: true
+```
+
+### Babel
+
+The Babel Loader transpiles ECMAScript 6 code to ECMAScript 5 code, allowing it to run in older browsers. The loader
+compiles `.jsx` files instead of `.js` files, because not all files need to be compiled. Once ES6 hits mainstream, all
+you would need to do is gradually rename your jsx files to js files and everything _should_ still work.
+
+> You need the `babel-loader` node module for this to work.
+
+```yaml
+webpack:
+    loaders:
+        babel:
+            enabled: true
 ```
 
 ## Plugins
