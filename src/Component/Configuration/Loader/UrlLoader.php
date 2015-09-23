@@ -41,12 +41,12 @@ final class UrlLoader implements LoaderInterface, ConfigExtensionInterface
             return [new CodeBlock()];
         }
 
-        $extensions = explode(',', str_replace(' ', '', $this->config['extensions']));
+        $extensions = str_replace([' ', ','], ['', '|'], $this->config['extensions']);
         $limit      = $this->config['limit'];
 
         return [(new CodeBlock())->set(CodeBlock::LOADER, [sprintf(
             '{ test: /\.(%s)$/, loader: \'url-loader?limit=%d&name=[name]-[hash].[ext]\' }',
-            implode('|', $extensions),
+            $extensions,
             $limit
         )])];
     }
