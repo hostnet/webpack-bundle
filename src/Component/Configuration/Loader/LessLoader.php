@@ -17,7 +17,7 @@ final class LessLoader implements LoaderInterface, ConfigExtensionInterface
      */
     public function __construct(array $config = [])
     {
-        $this->config = $config['loaders']['less'];
+        $this->config = $config;
     }
 
     /** {@inheritdoc} */
@@ -37,7 +37,10 @@ final class LessLoader implements LoaderInterface, ConfigExtensionInterface
     /** {@inheritdoc} */
     public function getCodeBlocks()
     {
-        if (! $this->config['enabled']) {
+        $config      = $this->config['loaders']['less'];
+        $code_blocks = [];
+
+        if (! $config['enabled']) {
             return [new CodeBlock()];
         }
 
@@ -49,7 +52,7 @@ final class LessLoader implements LoaderInterface, ConfigExtensionInterface
             $fn = 'fn_extract_text_plugin_less';
             $code_blocks[] = (new CodeBlock())
                 ->set(CodeBlock::HEADER, 'var '.$fn.' = require("extract-text-webpack-plugin");')
-                ->set(CodeBlock::LOADER, '{ test: /\.less$/, loader: '.$fn.'.extract("less-loader") }')
+                ->set(CodeBlock::LOADER, '{ test: /\.less$/, loader: '.$fn.'.extract("css!less") }')
                 ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. ($config['all_chunks'] ? 'allChunks: true' : '') . '})');
 
             // If a common_filename is set, apply the CommonsChunkPlugin.

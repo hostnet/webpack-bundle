@@ -34,7 +34,7 @@ class UrlLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCodeBlock()
     {
-        $config = new UrlLoader(['loaders' => ['url' => ['enabled' => true]]]);
+        $config = new UrlLoader(['loaders' => ['url' => ['enabled' => true, 'extensions' => 'png', 'limit' => 100]]]);
         $block  = $config->getCodeBlocks()[0];
 
         $this->assertTrue($block->has(CodeBlock::LOADER));
