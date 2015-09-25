@@ -31,6 +31,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
         $finder->expects($this->once())->method('findAllTemplates')->willReturn([
             new TemplateReference('dont_parse_me', 'php'),
             new TemplateReference('@FooBundle/foo.html.twig', 'twig'),
+            new TemplateReference('@AcmeBundle/foo.html.twig', 'twig'),
             new TemplateReference('template.html.twig', 'twig'),
             new TemplateReference('i_dont_exist', 'twig')
         ]);
