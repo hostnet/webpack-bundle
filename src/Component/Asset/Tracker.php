@@ -4,7 +4,6 @@ namespace Hostnet\Component\Webpack\Asset;
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 /**
@@ -273,6 +272,7 @@ class Tracker
     public function resolvePath($path)
     {
         // Find and replace the @BundleName with the absolute path to the bundle.
+        $matches = [];
         preg_match('/@(\w+)/', $path, $matches);
         if (isset($matches[0]) && isset($matches[1])) {
             $resolved_path = realpath(str_replace($matches[0], $this->bundle_paths[$matches[1]], $path));
@@ -281,7 +281,7 @@ class Tracker
 
         // The path doesn't contain a bundle name. In this case it must exist in %kernel.root_dir%/Resources
         $path2 = $this->root_dir . DIRECTORY_SEPARATOR . trim($this->asset_dir, "\\/") . DIRECTORY_SEPARATOR . $path;
-        if (file_exists($path2 )) {
+        if (file_exists($path2)) {
             return $path2;
         }
 
@@ -290,6 +290,7 @@ class Tracker
 
     public function resolveResourcePath($path)
     {
+        $matches = [];
         preg_match('/@(\w+)/', $path, $matches);
         if (isset($matches[0]) && isset($matches[1])) {
             $template = realpath(str_replace(

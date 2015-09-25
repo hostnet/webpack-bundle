@@ -51,7 +51,7 @@ class CodeBlock
           OUTPUT         = 'output';
 
     // Available types to allow easy validation
-    private $types  = [
+    private $types = [
         'entry', 'header', 'resolve', 'resolve_loader', 'plugin', 'pre_loader', 'loader', 'post_loader', 'output'
     ];
 

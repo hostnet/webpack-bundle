@@ -89,7 +89,7 @@ class TwigExtension extends \Twig_Extension
         $document_root = realpath(isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '');
         $public_dir    = substr(realpath($this->dump_path), strlen($document_root));
 
-        $url = preg_replace_callback('/^@(\w+)/', function($match) {
+        $url = preg_replace_callback('/^@(\w+)/', function ($match) {
             $str = $match[1];
             if (substr($str, strlen($str) - 6) === 'Bundle') {
                 $str = substr($str, 0, strlen($str) - 6);

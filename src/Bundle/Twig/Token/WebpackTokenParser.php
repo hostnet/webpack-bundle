@@ -70,7 +70,9 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
             $files[] = $file;
         }
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
-        $body = $this->parser->subparse(function($token) { return $token->test(['end' . $this->getTag()]); }, true);
+        $body = $this->parser->subparse(function ($token) {
+            return $token->test(['end' . $this->getTag()]);
+        }, true);
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
         return new WebpackNode([$body], ['files' => $files], $lineno, $this->getTag());

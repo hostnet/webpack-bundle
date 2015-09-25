@@ -68,7 +68,7 @@ Lets start with the twig template.
 {# src/AppBundle/Resources/views/base.html.twig #}
 
 The quick variant:
-<script src="webpack_asset('@AppBundle/app.js').js"></script>
+<script src="{{ webpack_asset('@AppBundle/app.js').js }}"></script>
 
 The more maintainable variant: Store the result to a variable for easy access.
 {% set asset = webpack_asset('@AppBundle/app.js') %}
@@ -106,7 +106,7 @@ Here is a simple image module that returns an image HTML-tag as string.
 ```javascript
 // src/AppBundle/Resources/assets/image.js
 module.exports = function (src) {
-    return '<img src="' + src + '">;
+    return '<img src="' + src + '">';
 };
 ```
 

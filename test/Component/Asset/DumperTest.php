@@ -2,9 +2,7 @@
 namespace Hostnet\Component\Webpack\Asset;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\Dumper
@@ -26,7 +24,7 @@ class DumperTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->fixture_path = realpath(__DIR__ . '/../../Fixture');
-        $this->dumper = new Dumper(
+        $this->dumper       = new Dumper(
             $this->getMock(LoggerInterface::class),
             [
                 'FooBundle' => $this->fixture_path . '/Bundle/FooBundle',

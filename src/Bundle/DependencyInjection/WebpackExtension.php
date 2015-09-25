@@ -24,7 +24,7 @@ class WebpackExtension extends Extension
 
         // Retrieve all configuration entities
         $bundles              = $container->getParameter('kernel.bundles');
-        $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');;
+        $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
         $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
         $config_definitions   = [];
         $config_class_names   = [];
@@ -39,7 +39,7 @@ class WebpackExtension extends Extension
         $container->addResource(new FileResource((new \ReflectionClass(Configuration::class))->getFileName()));
 
         // Select the correct node binary for the platform we're currently running on.
-        $config['node']['binary'] = $config['node']['binary'][$this->getPlatformKey()];
+        $config['node']['binary']            = $config['node']['binary'][$this->getPlatformKey()];
         $config['node']['node_modules_path'] = ! empty($config['node']['node_modules_path'])
             ? $config['node']['node_modules_path']
             : getenv('NODE_PATH');
@@ -78,7 +78,7 @@ class WebpackExtension extends Extension
 
         return 'fallback';
     }
-    
+
     /** {@inheritdoc} */
     public function getNamespace()
     {

@@ -15,14 +15,14 @@ class WebpackCompilerPass implements CompilerPassInterface
     /** {@inheritdoc} */
     public function process(ContainerBuilder $container)
     {
-        $asset_tracker     = $container->getDefinition('hostnet_webpack.bridge.asset_tracker');
-        $bundles           = $container->getParameter('kernel.bundles');
-        $config            = $container->getParameter('hostnet_webpack_config');
-        $tracked_bundles   = $config['bundles'];
-        $asset_path        = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
-        $public_path       = 'Resources' . DIRECTORY_SEPARATOR . 'public';
-        $dump_path         = $config['output']['dump_path'];
-        $bundle_paths      = [];
+        $asset_tracker   = $container->getDefinition('hostnet_webpack.bridge.asset_tracker');
+        $bundles         = $container->getParameter('kernel.bundles');
+        $config          = $container->getParameter('hostnet_webpack_config');
+        $tracked_bundles = $config['bundles'];
+        $asset_path      = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
+        $public_path     = 'Resources' . DIRECTORY_SEPARATOR . 'public';
+        $dump_path       = $config['output']['dump_path'];
+        $bundle_paths    = [];
 
         foreach ($bundles as $name => $class) {
             if (! in_array($name, $tracked_bundles)) {
