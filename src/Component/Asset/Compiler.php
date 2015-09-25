@@ -70,14 +70,14 @@ class Compiler
         /* array */     $bundles,
         Stopwatch       $stopwatch = null
     ) {
-        $this->profiler     = $profiler;
-        $this->tracker      = $tracker;
-        $this->twig_parser  = $twig_parser;
-        $this->generator    = $generator;
-        $this->process      = $process;
-        $this->cache_dir    = $cache_dir;
-        $this->bundles      = $bundles;
-        $this->stopwatch    = $stopwatch !== null ? $stopwatch : new Stopwatch();
+        $this->profiler    = $profiler;
+        $this->tracker     = $tracker;
+        $this->twig_parser = $twig_parser;
+        $this->generator   = $generator;
+        $this->process     = $process;
+        $this->cache_dir   = $cache_dir;
+        $this->bundles     = $bundles;
+        $this->stopwatch   = $stopwatch !== null ? $stopwatch : new Stopwatch();
     }
 
     /**
@@ -125,8 +125,8 @@ class Compiler
     private function addResolveConfig()
     {
         $aliases = $this->tracker->getAliases();
-        $this->generator->addBlock((new CodeBlock())
-            ->set(CodeBlock::RESOLVE, ['alias' => $aliases, 'root' => array_values($aliases)])
+        $this->generator->addBlock(
+            (new CodeBlock())->set(CodeBlock::RESOLVE, ['alias' => $aliases, 'root' => array_values($aliases)])
         );
     }
 

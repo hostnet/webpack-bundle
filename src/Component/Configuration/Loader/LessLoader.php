@@ -49,7 +49,7 @@ final class LessLoader implements LoaderInterface, ConfigExtensionInterface
             $code_blocks[] = (new CodeBlock())->set(CodeBlock::LOADER, '{ test: /\.less$/, loader: \'style!css!less\' }');
         } else {
             // If a filename is set, apply the ExtractTextPlugin
-            $fn = 'fn_extract_text_plugin_less';
+            $fn            = 'fn_extract_text_plugin_less';
             $code_blocks[] = (new CodeBlock())
                 ->set(CodeBlock::HEADER, 'var '.$fn.' = require("extract-text-webpack-plugin");')
                 ->set(CodeBlock::LOADER, '{ test: /\.less$/, loader: '.$fn.'.extract("css!less") }')

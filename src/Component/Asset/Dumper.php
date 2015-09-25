@@ -1,5 +1,6 @@
 <?php
 namespace Hostnet\Component\Webpack\Asset;
+
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;

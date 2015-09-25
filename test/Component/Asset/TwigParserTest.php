@@ -75,6 +75,4 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $parser = new TwigParser($this->tracker, $this->twig);
         $parser->findSplitPoints($this->path . '/Resources/template.html.twig');
     }
-
-
 }

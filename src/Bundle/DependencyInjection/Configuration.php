@@ -63,8 +63,8 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->beforeNormalization()
                     ->ifString()
-                        ->then(function($value) { return
-                            [
+                        ->then(function ($value) {
+                            return [
                                 'win32'     => $value,
                                 'win64'     => $value,
                                 'linux_x32' => $value,

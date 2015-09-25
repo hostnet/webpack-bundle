@@ -1,5 +1,6 @@
 <?php
 namespace Hostnet\Component\Webpack\Asset;
+
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Templating\TemplateReference;

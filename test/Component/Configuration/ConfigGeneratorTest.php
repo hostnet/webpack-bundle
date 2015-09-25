@@ -29,13 +29,15 @@ class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
         // Add loaders...
         $config->addBlock((new CodeBlock())->set(CodeBlock::LOADER, '{ test: /\.css$/, loader: "style!some-loader" }'));
         $config->addBlock((new CodeBlock())->set(CodeBlock::POST_LOADER, '{ test: /\.inl$/, loader: "style" }'));
-        $config->addBlock((new CodeBlock())
-            ->set(CodeBlock::HEADER, 'var preLoader1 = require("pre-loader-1");')
-            ->set(CodeBlock::PRE_LOADER, '{ test: /\.css$/, loader: preLoader1.execute("a", "b") }')
+        $config->addBlock(
+            (new CodeBlock())
+                ->set(CodeBlock::HEADER, 'var preLoader1 = require("pre-loader-1");')
+                ->set(CodeBlock::PRE_LOADER, '{ test: /\.css$/, loader: preLoader1.execute("a", "b") }')
         );
-        $config->addBlock((new CodeBlock())
-            ->set(CodeBlock::HEADER, 'var preLoader2 = require("pre-loader-2");')
-            ->set(CodeBlock::PRE_LOADER, '{ test: /\.less$/, loader: preLoader2.execute("c", "d") }')
+        $config->addBlock(
+            (new CodeBlock())
+                ->set(CodeBlock::HEADER, 'var preLoader2 = require("pre-loader-2");')
+                ->set(CodeBlock::PRE_LOADER, '{ test: /\.less$/, loader: preLoader2.execute("c", "d") }')
         );
 
         // And some plugins
