@@ -274,7 +274,7 @@ class Tracker
         // Find and replace the @BundleName with the absolute path to the bundle.
         $matches = [];
         preg_match('/@(\w+)/', $path, $matches);
-        if (isset($matches[0]) && isset($matches[1])) {
+        if (isset($matches[0]) && isset($matches[1]) && isset($this->bundle_paths[$matches[1]])) {
             $resolved_path = realpath(str_replace($matches[0], $this->bundle_paths[$matches[1]], $path));
             return $resolved_path;
         }
