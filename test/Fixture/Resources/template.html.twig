@@ -12,3 +12,13 @@
 {% webpack css '@BarBundle/app4.js' %}
     <link rel="stylesheet" href="{{ asset }}">
 {% endwebpack %}
+
+{# and webpack inline #}
+{% webpack inline %}
+    <script type="text/javascript">
+        console.log("HENK");
+    </script>
+{% endwebpack %}
+{% webpack inline %}
+    console.log("HENK");
+{% endwebpack %}
