@@ -28,6 +28,7 @@ services:
             - '%kernel.root_dir%'
             - '' # asset_path
             - [] # bundles
+
     hostnet_webpack.bridge.asset_dumper:
         class: Hostnet\Component\Webpack\Asset\Dumper
         arguments:
@@ -47,6 +48,7 @@ services:
         arguments:
             - '@hostnet_webpack.bridge.asset_tracker'
             - '@twig'
+            - '%kernel.cache_dir%'
 
     hostnet_webpack.bridge.asset_compiler:
         class: Hostnet\Component\Webpack\Asset\Compiler

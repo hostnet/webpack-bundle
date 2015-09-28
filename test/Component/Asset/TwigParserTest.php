@@ -22,12 +22,18 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
      */
     private $path;
 
+    /**
+     * @var string
+     */
+    private $cache_dir;
+
     /** {@inheritdoc} */
     protected function setUp()
     {
-        $this->tracker = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
-        $this->twig    = new \Twig_Environment();
-        $this->path    = realpath(__DIR__ . '/../../Fixture');
+        $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
+        $this->twig      = new \Twig_Environment();
+        $this->path      = realpath(__DIR__ . '/../../Fixture');
+        $this->cache_dir = '/tmp';
     }
 
     public function testParseValid()
@@ -35,19 +41,24 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         // Call count expectations:
         //  1: webpack_asset.js
         //  2: webpack_asset.css
-        //  3: {% webpack_javascripts %}
-        //  4: {% webpack_javascripts %}
-        //  5: {% webpack_stylesheets %}
-        $this->tracker->expects($this->exactly(5))->method('resolveResourcePath')->willReturn('foobar');
+        //  3: {% webpack js %}
+        //  4: {% webpack js %}
+        //  5: {% webpack css %}
+        //  6: {% webpack inline %}
+        //  7: {% webpack inline %}
+        $this->tracker->expects($this->exactly(7))->method('resolveResourcePath')->willReturn('foobar');
 
-        $parser = new TwigParser($this->tracker, $this->twig);
-        $points = ($parser->findSplitPoints($this->path . '/Resources/template.html.twig'));
+        $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
+        $file   = $this->path . '/Resources/template.html.twig';
+        $points = ($parser->findSplitPoints($file));
 
-        $this->assertCount(4, $points);
+        $this->assertCount(6, $points);
         $this->assertArrayHasKey('@BarBundle/app.js', $points);
         $this->assertArrayHasKey('@BarBundle/app2.js', $points);
         $this->assertArrayHasKey('@BarBundle/app3.js', $points);
         $this->assertArrayHasKey('@BarBundle/app4.js', $points);
+        $this->assertArrayHasKey('cache/' . md5($file . 0) . '.js', $points);
+        $this->assertArrayHasKey('cache/' . md5($file . 1) . '.js', $points);
 
         $this->assertContains('foobar', $points);
     }
@@ -60,7 +71,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
     {
         $this->tracker->expects($this->never())->method('resolveResourcePath');
 
-        $parser = new TwigParser($this->tracker, $this->twig);
+        $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
         $parser->findSplitPoints($this->path . '/Resources/template_parse_error.html.twig');
     }
 
@@ -72,7 +83,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
     {
         $this->tracker->expects($this->once())->method('resolveResourcePath')->willReturn(false);
 
-        $parser = new TwigParser($this->tracker, $this->twig);
+        $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
         $parser->findSplitPoints($this->path . '/Resources/template.html.twig');
     }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace Hostnet\Component\Webpack\Asset;
 
-use Hostnet\Bundle\WebpackBundle\Twig\Token\JavascriptTokenParser;
-use Hostnet\Bundle\WebpackBundle\Twig\Token\StylesheetTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 
@@ -15,14 +13,16 @@ class TwigParser
 {
     private $tracker;
     private $twig;
+    private $cache_dir;
 
     /**
      * @param Tracker $tracker
      */
-    public function __construct(Tracker $tracker, \Twig_Environment $twig)
+    public function __construct(Tracker $tracker, \Twig_Environment $twig, $cache_dir)
     {
-        $this->tracker = $tracker;
-        $this->twig    = $twig;
+        $this->tracker   = $tracker;
+        $this->twig      = $twig;
+        $this->cache_dir = $cache_dir;
     }
 
     /**
@@ -33,8 +33,9 @@ class TwigParser
      */
     public function findSplitPoints($template_file)
     {
-        $stream = $this->twig->tokenize(file_get_contents($template_file));
-        $points = [];
+        $inline_blocks = 0;
+        $stream        = $this->twig->tokenize(file_get_contents($template_file));
+        $points        = [];
 
         while (! $stream->isEOF() && $token = $stream->next()) {
             // {{ webpack_asset(...) }}
@@ -47,10 +48,27 @@ class TwigParser
             // {% webpack_javascripts %} and {% webpack_stylesheets %}
             if ($token->test(\Twig_Token::BLOCK_START_TYPE) && $stream->getCurrent()->test(WebpackTokenParser::TAG_NAME)) {
                 $stream->next();
-                $stream->next();
-                while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
-                    $asset          = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();
-                    $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
+
+                if ($stream->getCurrent()->getValue() === 'inline') {
+                    $stream->next();
+                    $stream->next();
+
+                    $file_name = md5($template_file . $inline_blocks). ".js";
+
+                    file_put_contents(
+                        $this->cache_dir . '/' . $file_name,
+                        $this->stripScript($stream->getCurrent()->getValue())
+                    );
+
+                    $asset                   = $file_name;
+                    $points['cache/'.$asset] = $this->resolveAssetPath($this->cache_dir . '/' . $asset, $template_file, $token);
+                    $inline_blocks++;
+                } else {
+                    $stream->next();
+                    while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
+                        $asset          = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();
+                        $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
+                    }
                 }
             }
         }
@@ -104,5 +122,15 @@ class TwigParser
                 \Twig_Token::typeToEnglish($token->getType())
             ));
         }
+    }
+
+    private function stripScript($str)
+    {
+        $matches = [];
+        if (preg_match('/^\s*<script(\s.+?)?>(.*)<\/script>\s*$/s', $str, $matches)) {
+            return $matches[2];
+        }
+
+        return $str;
     }
 }
