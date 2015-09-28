@@ -120,6 +120,12 @@ a much more elegant fashion. The syntax of this tag works like this:
     {{ asset }}
 {% endwebpack %}
 ```
+Or if you want to have inline javascript code without including a file:
+```twig
+{% webpack <type: inline> %}
+    <javascript code>
+{% endwebpack %}
+```
 
 If you want to include javascript files, simply do this:
 ```twig
@@ -128,6 +134,14 @@ If you want to include javascript files, simply do this:
    '@AppBundle/file2.js'
 %}
     <script src="{{ asset }}"></script>
+{% endwebpack %}
+```
+Or the inline variant:
+```twig
+{% webpack inline %}
+<script type="text/javascript">
+    console.log("Hello world!");
+</script>
 {% endwebpack %}
 ```
 
