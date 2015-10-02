@@ -66,13 +66,15 @@ class WebpackExtension extends Extension
      */
     private function getPlatformKey()
     {
-        if (strtoupper(substr(php_uname('s'), 0, 3)) === 'WIN') {
+        $platform = php_uname('s');
+
+        if (strtoupper(substr($platform, 0, 3)) === 'WIN') {
             return PHP_INT_SIZE === 8 ? 'win64' : 'win32';
         }
-        if (strtoupper(substr(php_uname('s'), 0, 5)) === 'LINUX') {
+        if (strtoupper(substr($platform, 0, 5)) === 'LINUX') {
             return PHP_INT_SIZE === 8 ? 'linux_x64' : 'linux_x32';
         }
-        if (strtoupper(substr(php_uname('s', 0, 6))) === 'DARWIN') {
+        if (strtoupper(substr($platform, 0, 6)) === 'DARWIN') {
             return 'darwin';
         }
 
