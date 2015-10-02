@@ -72,7 +72,7 @@ class WebpackExtension extends Extension
         if (strtoupper(substr(php_uname('s'), 0, 5)) === 'LINUX') {
             return PHP_INT_SIZE === 8 ? 'linux_x64' : 'linux_x32';
         }
-        if (strtoupper(substr(php_uname('s', 0, 6))) === 'DARWIN') {
+        if (strtoupper(substr(php_uname('s'), 0, 6)) === 'DARWIN') {
             return 'darwin';
         }
 
