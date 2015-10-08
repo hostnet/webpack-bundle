@@ -118,7 +118,7 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
             $this->inline_blocks[$file] = 0;
         }
 
-        $file_name = md5($file . $this->inline_blocks[$file]). '.' . 'js';
+        $file_name = md5($file . $this->inline_blocks[$file]) . '.js';
         $assets    = $this->extension->webpackAsset('cache.' . $file_name);
 
         $this->inline_blocks[$file]++;
