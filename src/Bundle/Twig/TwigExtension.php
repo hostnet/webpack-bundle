@@ -62,12 +62,20 @@ class TwigExtension extends \Twig_Extension
      */
     public function webpackAsset($asset)
     {
-        $asset_id      = rtrim($this->public_path, '/') . '/' . Compiler::getAliasId($asset);
-        $document_root = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+        // @FIXME: This method is used by the compiler which may or may not run from a CLI-environment. In this case the
+        //         variable DOCUMENT_ROOT isn't available and this method may produce unexpected behavior.
+
+        $asset_id        = rtrim($this->public_path, '/') . '/' . Compiler::getAliasId($asset);
+        $document_root   = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+        $full_asset_path = $document_root . '/' . $asset_id;
 
         return [
-            'js'  => file_exists($document_root . '/' . $asset_id . '.js') ? $asset_id . '.js' : false,
-            'css' => file_exists($document_root . '/' . $asset_id . '.css') ? $asset_id . '.css' : false
+            'js'  => file_exists($full_asset_path . '.js')
+                ? $asset_id . '.js?' . filemtime($full_asset_path . '.js')
+                : false,
+            'css' => file_exists($full_asset_path . '.css')
+                ? $asset_id . '.css?' . filemtime($full_asset_path . '.css')
+                : false
         ];
     }
 
