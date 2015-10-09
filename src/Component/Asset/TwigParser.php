@@ -51,17 +51,25 @@ class TwigParser
 
                 if ($stream->getCurrent()->getValue() === 'inline') {
                     $stream->next();
-                    $stream->next();
 
-                    $file_name = md5($template_file . $inline_blocks). ".js";
+                    $token     = $stream->next();
+                    $file_name = md5($template_file . $inline_blocks);
+
+                    // Are we dealing with a custom extension? If not, fallback to javascript.
+                    $extension = 'js'; // Default
+                    if ($token->test(\Twig_Token::NAME_TYPE)) {
+                        $extension = $token->getValue();
+                        $stream->next();
+                    }
 
                     file_put_contents(
-                        $this->cache_dir . '/' . $file_name,
+                        $this->cache_dir . '/' . $file_name . '.' . $extension,
                         $this->stripScript($stream->getCurrent()->getValue())
                     );
 
-                    $asset                   = $file_name;
-                    $points['cache/'.$asset] = $this->resolveAssetPath($this->cache_dir . '/' . $asset, $template_file, $token);
+                    $asset       = $file_name . '.' . $extension;
+                    $id          = 'cache/' . $asset;
+                    $points[$id] = $this->resolveAssetPath($this->cache_dir . '/' . $asset, $template_file, $token);
                     $inline_blocks++;
                 } else {
                     $stream->next();
@@ -128,6 +136,10 @@ class TwigParser
     {
         $matches = [];
         if (preg_match('/^\s*<script(\s.+?)?>(.*)<\/script>\s*$/s', $str, $matches)) {
+            return $matches[2];
+        }
+
+        if (preg_match('/^\s*<style(\s.+?)?>(.*)<\/style>\s*$/s', $str, $matches)) {
             return $matches[2];
         }
 

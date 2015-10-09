@@ -120,10 +120,10 @@ a much more elegant fashion. The syntax of this tag works like this:
     {{ asset }}
 {% endwebpack %}
 ```
-Or if you want to have inline javascript code without including a file:
+Or if you want to have inline code without including a file:
 ```twig
-{% webpack <type: inline> %}
-    <javascript code>
+{% webpack <type: inline> [file-type] %}
+    <javascript, css, less, ... code>
 {% endwebpack %}
 ```
 
@@ -160,6 +160,37 @@ For more information about CSS file exportation, please refer to the [CSS loader
 > __Warning__: Due to the nature of split point detection, expressions are not parsed! Only strings types are accepted.
 > The reason behind this - as previously mentioned - performance. All twig templates are tokenized on request in debug-
 > mode. Just tokenizing them is a lot faster than actually parsing every single one of them.
+
+### More about the inline variant
+
+As mentioned in the example above, you may optionally specify a file type along with the `inline` type. This can be any
+type of file extension, just make sure you have the appropriate loaders enabled.
+
+For example, `js` will always work by default. However, `css` will only work if the `css-loader` is enabled. If you have
+the `less-loader` enabled, you can do something like this:
+
+```twig
+<section>
+    {% webpack inline less %}
+    <style>
+    @color: #f00;
+    @size: 42px;
+    
+    body {
+        color: @color;
+        section : {
+            size: @size;
+        }
+    }
+    </style>
+    {% endwebpack %}
+</section>
+```
+
+The compiler will automatically strip away the `<style>`- and/or `<script>`-tags and save the contents of the block to
+a file. This fill will then be used for inclusion in your template by utilizing either a `link`-tag or a `script` tag
+that refer to the compiled file.
+
 
 ## Configuration
 

@@ -46,19 +46,23 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         //  5: {% webpack css %}
         //  6: {% webpack inline %}
         //  7: {% webpack inline %}
-        $this->tracker->expects($this->exactly(7))->method('resolveResourcePath')->willReturn('foobar');
+        //  8: {% webpack inline less %}
+        //  9: {% webpack inline css %}
+        $this->tracker->expects($this->exactly(9))->method('resolveResourcePath')->willReturn('foobar');
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
         $file   = $this->path . '/Resources/template.html.twig';
         $points = ($parser->findSplitPoints($file));
 
-        $this->assertCount(6, $points);
+        $this->assertCount(8, $points);
         $this->assertArrayHasKey('@BarBundle/app.js', $points);
         $this->assertArrayHasKey('@BarBundle/app2.js', $points);
         $this->assertArrayHasKey('@BarBundle/app3.js', $points);
         $this->assertArrayHasKey('@BarBundle/app4.js', $points);
         $this->assertArrayHasKey('cache/' . md5($file . 0) . '.js', $points);
         $this->assertArrayHasKey('cache/' . md5($file . 1) . '.js', $points);
+        $this->assertArrayHasKey('cache/' . md5($file . 2) . '.less', $points);
+        $this->assertArrayHasKey('cache/' . md5($file . 3) . '.css', $points);
 
         $this->assertContains('foobar', $points);
     }

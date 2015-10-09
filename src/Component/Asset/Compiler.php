@@ -103,8 +103,11 @@ class Compiler
 
         $output = $this->process->getOutput() . $this->process->getErrorOutput();
         $this->profiler->set('compiler.executed', true);
-        $this->profiler->set('compiler.successful', strpos($output, 'Error:') === false);
         $this->profiler->set('compiler.last_output', $output);
+        $this->profiler->set('compiler.successful',
+            strpos($output, 'Error:') === false &&
+            strpos($output, 'parse failed') === false
+        );
 
         if ($this->profiler->get('compiler.successful')) {
             $this->tracker->rebuild();

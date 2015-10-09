@@ -71,6 +71,7 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
         if ($export_type === "inline") {
             return $this->parseInline($stream, $lineno);
         }
+
         return $this->parseType($stream, $lineno, $export_type);
     }
 
@@ -99,6 +100,10 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
 
     private function parseInline(\Twig_TokenStream $stream, $lineno)
     {
+        if ($stream->test(\Twig_Token::NAME_TYPE)) {
+            $stream->next();
+        }
+
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
         $this->parser->subparse(function ($token) {
@@ -109,11 +114,11 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
 
         $file = $this->parser->getEnvironment()->getLoader()->getCacheKey($stream->getFilename());
 
-        if (!isset($this->inline_blocks[$file])) {
+        if (! isset($this->inline_blocks[$file])) {
             $this->inline_blocks[$file] = 0;
         }
 
-        $file_name = md5($file . $this->inline_blocks[$file]). ".js";
+        $file_name = md5($file . $this->inline_blocks[$file]) . '.js';
         $assets    = $this->extension->webpackAsset('cache.' . $file_name);
 
         $this->inline_blocks[$file]++;

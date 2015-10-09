@@ -13,12 +13,27 @@
     <link rel="stylesheet" href="{{ asset }}">
 {% endwebpack %}
 
-{# and webpack inline #}
+{# and webpack inline with no extension given. It must fallback to "js" by default. #}
 {% webpack inline %}
     <script type="text/javascript">
         console.log("HENK");
     </script>
 {% endwebpack %}
-{% webpack inline %}
+
+{# Specified an extension. Webpack will also parse the contents by the given type. #}
+{% webpack inline js %}
     console.log("HENK");
+{% endwebpack %}
+
+{# Parse the contents as it were a LESS file. #}
+{% webpack inline less %}
+    @size: 42px;
+    * { font-size: @size; }
+{% endwebpack %}
+
+{# Parse the contents as it were a CSS file. Also, feel free to use style tags (for IDE syntax highlighting)... #}
+{% webpack inline css %}
+<style>
+    * { font-size: 42px; }
+</style>
 {% endwebpack %}
