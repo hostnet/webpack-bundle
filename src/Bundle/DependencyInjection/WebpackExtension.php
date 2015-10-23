@@ -23,19 +23,15 @@ class WebpackExtension extends Extension
         (new YamlFileLoader($container, (new FileLocator(__DIR__ . '/../Resources/config'))))->load('webpack.yml');
 
         // Retrieve all configuration entities
-        $bundles              = $container->getParameter('kernel.bundles');
         $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
         $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
         $config_definitions   = [];
-        $config_class_names   = [];
 
         foreach ($config_extension_ids as $id) {
             $config_definitions[$id] = $container->getDefinition($id);
-            $config_class_names[$id] = $container->getDefinition($id)->getClass();
         }
 
-        $configuration = new Configuration(array_keys($bundles), $config_class_names);
-        $config        = $this->processConfiguration($configuration, $config);
+        $config = $this->processConfiguration($this->getConfiguration($config, $container), $config);
         $container->addResource(new FileResource((new \ReflectionClass(Configuration::class))->getFileName()));
 
         // Select the correct node binary for the platform we're currently running on.
@@ -79,6 +75,27 @@ class WebpackExtension extends Extension
         }
 
         return 'fallback';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration(array $config, ContainerBuilder $container)
+    {
+        $bundles              = $container->getParameter('kernel.bundles');
+        $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
+        $config_class_names   = [];
+
+        foreach ($config_extension_ids as $id) {
+            $config_class_names[$id] = $container->getDefinition($id)->getClass();
+        }
+
+        $configuration = new Configuration(array_keys($bundles), $config_class_names);
+
+        $r = new \ReflectionClass(get_class($configuration));
+        $container->addResource(new FileResource($r->getFileName()));
+
+        return $configuration;
     }
 
     /** {@inheritdoc} */
