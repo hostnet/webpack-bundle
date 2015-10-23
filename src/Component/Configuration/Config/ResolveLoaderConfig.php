@@ -33,7 +33,8 @@ final class ResolveLoaderConfig implements ConfigInterface, ConfigExtensionInter
             ->arrayNode('resolve_loader')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->scalarNode('root')->end()
+                    ->arrayNode('root')
+                        ->prototype('scalar')->end()
                 ->end()
             ->end();
     }
