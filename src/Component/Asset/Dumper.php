@@ -6,7 +6,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * Exports resources from the 'public' directory to web/bundles/<bundle_name> whenever a resource has been changed.
+ * Exports resources from the 'public' directory to <dump_path>/<bundle_name> whenever a resource has been changed.
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
  */

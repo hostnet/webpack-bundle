@@ -1,6 +1,8 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle;
 
+use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass;
+use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -16,12 +18,12 @@ class WebpackBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new DependencyInjection\WebpackCompilerPass());
+        $container->addCompilerPass(new WebpackCompilerPass());
     }
 
     /** {@inheritdoc} */
     public function getContainerExtension()
     {
-        return new DependencyInjection\WebpackExtension();
+        return new WebpackExtension();
     }
 }

@@ -28,7 +28,7 @@ locations. The reasoning behind this decision is because webpack assets are comp
 accessible from the browser.
 
  - `Resources/assets` contains files that are compiled by webpack.
- - `Resources/public` contains assets that are either symlinked or copied to `/web/bundles/<lowercased_bundle_name>/`
+ - `Resources/public` contains assets that are either symlinked or copied to `/<dump_path>/<lowercased_bundle_name>/`
 
 Both of these directories are being watched when running in _debug mode_. When an asset has been added, modified or
 deleted, compiled sources are updated directly.
@@ -50,6 +50,9 @@ Install using [composer](https://getcomposer.org/).
 }
 ```
 Once installed, enable the bundle `Hostnet\Bundle\WebpackBundle\WebpackBundle` in the `AppKernel` class.
+
+> ___Warning___: In order to have the webpack twig tag detect the compiled files, webpack has to be compiled already. Therefore
+>  it's mandatory to run the compile command `webpack:compile` __before__ the cache warmpup.
 
 ## Quick how-to
 
@@ -99,7 +102,7 @@ and AMD-style loading of files. As you might have noticed, the example above ref
 referencing dependencies throughout the entire application.
 
 The `logo.png` file, located in the `Resources/public` directory will be symlinked or copied to
-`/web/bundles/<lowercased_bundle_name>` automatically. You should place any file that does not need processing in the
+`/<dump_path>/<lowercased_bundle_name>` automatically. You should place any file that does not need processing in the
 public directory to avoid unnecessary load times in debug mode (app_dev).
 
 Here is a simple image module that returns an image HTML-tag as string.
@@ -280,12 +283,12 @@ webpack:
 webpack:
     output:
         path: '%kernel.root_dir%/../web'
-        dump_path: '%kernel.root_dir%/../web/bundles'
+        dump_path: '/bundles'            # public assets will be copied to '%kernel.root_dir%/../web/bundles'
         public_path: '/'
 ```
 
-The `public_path` value represents the asset paths from a client-side perspective. Therefore, it must specify a path
-that exists inside the DOCUMENT_ROOT directory.
+The `public_path` value represents the asset paths from a client-side perspective. Therefore, it must specify the path
+of your app(_dev).php as exposed from the web e.g. somedomain.com/my-web/app.php would make it `%kernel.root_dir%/../web/my-app`
 
 For example, if the `output.path` value is `%kernel.root_dir/../web/packed`, the value of `output.public_path` must be
 set to `/packed`.
@@ -313,7 +316,7 @@ webpack:
         node_modules_path: '%kernel.root_dir%/../node_modules'
     output:
         path: '%kernel.root_dir%/../web/compiled'
-        dump_path: '%kernel.root_dir%/../web/bundles'
+        dump_path: '/bundles'
         public_path: '/compiled'
         common_id: 'shared'
     loaders:

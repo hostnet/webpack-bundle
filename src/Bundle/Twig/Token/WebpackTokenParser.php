@@ -26,13 +26,12 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
     private $extension;
 
     /**
-     * @var int
+     * @var int[]
      */
     private $inline_blocks = [];
 
     /**
      * @param TwigExtension $extension
-     * @param string        $cache_dird
      */
     public function __construct(TwigExtension $extension)
     {
@@ -75,6 +74,13 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
         return $this->parseType($stream, $lineno, $export_type);
     }
 
+    /**
+     * @param \Twig_TokenStream $stream
+     * @param int               $lineno
+     * @param string            $export_type
+     * @return WebpackNode
+     * @throws \Twig_Error_Syntax
+     */
     private function parseType(\Twig_TokenStream $stream, $lineno, $export_type)
     {
         $files = [];
@@ -98,6 +104,12 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
         return new WebpackNode([$body], ['files' => $files], $lineno, $this->getTag());
     }
 
+    /**
+     * @param \Twig_TokenStream $stream
+     * @param int               $lineno
+     * @return WebpackInlineNode
+     * @throws \Twig_Error_Syntax
+     */
     private function parseInline(\Twig_TokenStream $stream, $lineno)
     {
         if ($stream->test(\Twig_Token::NAME_TYPE)) {
