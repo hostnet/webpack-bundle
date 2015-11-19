@@ -1,11 +1,8 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Bundle\WebpackBundle\EventListener\RequestListener;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
@@ -55,18 +52,6 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
             ->replaceArgument(0, $config['output']['public_path'])
             ->replaceArgument(1, $config['output']['dump_path']);
-
-        // Enable the request listener if we're running in debug mode.
-        if ($container->getParameter('kernel.debug') === true) {
-            $container->setDefinition(
-                'hostnet_webpack.bridge.request_listener',
-                (new Definition(RequestListener::class, [
-                    new Reference('hostnet_webpack.bridge.asset_tracker'),
-                    new Reference('hostnet_webpack.bridge.asset_compiler'),
-                    new Reference('hostnet_webpack.bridge.asset_dumper')
-                ]))->addTag('kernel.event_listener', ['event' => 'kernel.request', 'method' => 'onRequest'])
-            );
-        }
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
         if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {

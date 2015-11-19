@@ -18,7 +18,7 @@ class CompilerTest extends \PHPUnit_Framework_TestCase
     private $process;
     private $cache_path;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->profiler    = $this->getMockBuilder(Profiler::class)->disableOriginalConstructor()->getMock();
         $this->tracker     = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();

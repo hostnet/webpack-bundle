@@ -12,19 +12,22 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class Dumper
 {
+    private $fs;
     private $logger;
     private $bundle_paths;
     private $public_dir;
     private $output_dir;
 
     /**
+     * @param Filesystem      $fs
      * @param LoggerInterface $logger
      * @param array           $bundle_paths
      * @param string          $public_dir
      * @param string          $output_dir
      */
-    public function __construct(LoggerInterface $logger, array $bundle_paths, $public_dir, $output_dir)
+    public function __construct(Filesystem $fs, LoggerInterface $logger, array $bundle_paths, $public_dir, $output_dir)
     {
+        $this->fs           = $fs;
         $this->logger       = $logger;
         $this->bundle_paths = $bundle_paths;
         $this->public_dir   = $public_dir;
@@ -32,33 +35,31 @@ class Dumper
     }
 
     /**
-     * Iterates through resources and dump all modified resources to the bundle directory in web/
-     *
-     * @param Filesystem $fs
+     * Iterates through resources and dump all modified resources to the bundle directory in the public dir.
      */
-    public function dump(Filesystem $fs)
+    public function dump()
     {
         foreach ($this->bundle_paths as $name => $path) {
             if (file_exists($path . DIRECTORY_SEPARATOR . $this->public_dir)) {
-                $this->dumpBundle($fs, $name, $path . DIRECTORY_SEPARATOR . $this->public_dir);
+                $this->dumpBundle($name, $path . DIRECTORY_SEPARATOR . $this->public_dir);
             }
         }
     }
 
     /**
      * @param string $name
-     * @param string $files
+     * @param string $path
      */
-    private function dumpBundle(Filesystem $fs, $name, $path)
+    private function dumpBundle($name, $path)
     {
         $target_dir = $this->normalize($this->getTargetDir($name));
         $path       = $this->normalize($path);
 
-        $this->logger->info(sprintf('Dumping public assets for "%s" to "%s"...', $name, $target_dir));
+        $this->logger->info(sprintf('Dumping public assets for "%s" to "%s".', $name, $target_dir));
 
         // Always copy on windows.
         if (strpos(strtoupper(php_uname('s')), 'WIN') === 0) {
-            $fs->mirror($path, $target_dir, null, [
+            $this->fs->mirror($path, $target_dir, null, [
                 'override'        => true,
                 'copy_on_windows' => true,
                 'delete'          => true
@@ -69,9 +70,9 @@ class Dumper
 
         // Create a symlink for non-windows platforms.
         try {
-            $fs->symlink($path, $target_dir);
+            $this->fs->symlink($path, $target_dir);
         } catch (IOException $e) {
-            $fs->mirror($path, $target_dir);
+            $this->fs->mirror($path, $target_dir);
         }
     }
 
@@ -88,6 +89,12 @@ class Dumper
         return $this->output_dir . DIRECTORY_SEPARATOR . strtolower($name);
     }
 
+    /**
+     * Makes sure the path is always the OS directory separator.
+     *
+     * @param string $path
+     * @return mixed
+     */
     private function normalize($path)
     {
         return str_replace(['\\', '/'], DIRECTORY_SEPARATOR, $path);

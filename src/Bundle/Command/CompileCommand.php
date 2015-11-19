@@ -8,7 +8,6 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @TODO Add some decent logging interface to allow optional verbose output.
@@ -59,7 +58,7 @@ class CompileCommand extends Command
         $this->compiler->compile();
 
         $this->logger->info('[WEBPACK]: Dumping assets...');
-        $this->dumper->dump(new Filesystem());
+        $this->dumper->dump();
 
         $this->logger->debug($this->profiler->get('compiler.last_output'));
     }

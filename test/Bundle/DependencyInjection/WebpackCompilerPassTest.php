@@ -7,6 +7,7 @@ use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass
@@ -22,9 +23,10 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $fixture_dir = realpath(__DIR__ . '/../../Fixture');
 
         $container->setParameter('kernel.bundles', ['FooBundle' => FooBundle::class, 'BarBundle' => BarBundle::class]);
-        $container->setParameter('kernel.debug', true);
+        $container->setParameter('kernel.environment', 'dev');
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
+        $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
         $container->set('twig', $this->getMock(\Twig_Environment::class));
         $container->set('logger', $this->getMock(LoggerInterface::class));
@@ -59,9 +61,10 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $fixture_dir = realpath(__DIR__ . '/../../Fixture');
 
         $container->setParameter('kernel.bundles', ['FooBundle' => FooBundle::class, 'BarBundle' => BarBundle::class]);
-        $container->setParameter('kernel.debug', true);
+        $container->setParameter('kernel.environment', 'dev');
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
+        $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
         $container->set('twig', $this->getMock(\Twig_Environment::class));
         $container->set('logger', $this->getMock(LoggerInterface::class));

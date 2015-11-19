@@ -20,7 +20,13 @@ class WebpackExtension extends Extension
     public function load(array $config, ContainerBuilder $container)
     {
         // Load configuration
-        (new YamlFileLoader($container, (new FileLocator(__DIR__ . '/../Resources/config'))))->load('webpack.yml');
+        $loader = new YamlFileLoader($container, (new FileLocator(__DIR__ . '/../Resources/config')));
+        $loader->load('webpack.yml');
+
+        // Enable the request listener if we're running in dev.
+        if ($container->getParameter('kernel.environment') === 'dev') {
+            $loader->load('dev.yml');
+        }
 
         // Retrieve all configuration entities
         $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
@@ -92,8 +98,7 @@ class WebpackExtension extends Extension
 
         $configuration = new Configuration(array_keys($bundles), $config_class_names);
 
-        $r = new \ReflectionClass(get_class($configuration));
-        $container->addResource(new FileResource($r->getFileName()));
+        $container->addResource(new FileResource((new \ReflectionClass(get_class($configuration)))->getFileName()));
 
         return $configuration;
     }
