@@ -20,11 +20,11 @@ class DumperTest extends \PHPUnit_Framework_TestCase
      */
     private $fixture_path;
 
-    /** {@inheritdoc} */
-    public function setUp()
+    protected function setUp()
     {
         $this->fixture_path = realpath(__DIR__ . '/../../Fixture');
         $this->dumper       = new Dumper(
+            $this->getMock(Filesystem::class),
             $this->getMock(LoggerInterface::class),
             [
                 'FooBundle' => $this->fixture_path . '/Bundle/FooBundle',
@@ -42,6 +42,6 @@ class DumperTest extends \PHPUnit_Framework_TestCase
 
     public function testDumpDefaults()
     {
-        $this->dumper->dump($this->getMock(Filesystem::class));
+        $this->dumper->dump();
     }
 }

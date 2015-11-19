@@ -32,6 +32,7 @@ services:
     hostnet_webpack.bridge.asset_dumper:
         class: Hostnet\Component\Webpack\Asset\Dumper
         arguments:
+            - '@filesystem'
             - '@logger'
             - [] # bundles
             - '' # 'public' dir
@@ -70,7 +71,3 @@ services:
         tags:
             - { name: twig.extension }
 
-    hostnet_webpack.bridge.profiler:
-        class: Hostnet\Component\Webpack\Profiler\Profiler
-        tags:
-            - { name: data_collector, template: "WebpackBundle::profiler.html.twig", id: "webpack" }

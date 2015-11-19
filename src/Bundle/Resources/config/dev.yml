@@ -1,0 +1,15 @@
+services:
+
+    hostnet_webpack.bridge.request_listener:
+        class: Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
+        arguments:
+            - '@hostnet_webpack.bridge.asset_tracker'
+            - '@hostnet_webpack.bridge.asset_compiler'
+            - '@hostnet_webpack.bridge.asset_dumper'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest}
+
+    hostnet_webpack.bridge.profiler:
+        class: Hostnet\Component\Webpack\Profiler\Profiler
+        tags:
+            - { name: data_collector, template: WebpackBundle::profiler.html.twig, id: webpack }
