@@ -39,7 +39,7 @@ class TwigParser
 
         while (! $stream->isEOF() && $token = $stream->next()) {
             // {{ webpack_asset(...) }}
-            if ($token->test(\Twig_Token::NAME_TYPE, TwigExtension::FUNCTION_NAME)) {
+            if ($token->test(\Twig_Token::NAME_TYPE, 'webpack_asset')) {
                 // We found the webpack function!
                 $asset          = $this->getAssetFromStream($template_file, $stream);
                 $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);

@@ -11,7 +11,7 @@ class WebpackTokenParserTest extends \PHPUnit_Framework_TestCase
 {
     public function testParser()
     {
-        $extension = $this->getMock(TwigExtension::class);
+        $extension = new TwigExtension(__DIR__, '/', '/bundles');
         $parser    = new WebpackTokenParser($extension);
 
         $this->assertEquals(WebpackTokenParser::TAG_NAME, $parser->getTag());

@@ -19,9 +19,11 @@ class WebpackCompilerPass implements CompilerPassInterface
         $bundles         = $container->getParameter('kernel.bundles');
         $config          = $container->getParameter('hostnet_webpack_config');
         $tracked_bundles = $config['bundles'];
-        $asset_path      = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
-        $public_path     = 'Resources' . DIRECTORY_SEPARATOR . 'public';
+        $asset_res_path  = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
+        $public_res_path = 'Resources' . DIRECTORY_SEPARATOR . 'public';
+        $public_path     = $config['output']['public_path'];
         $dump_path       = $config['output']['dump_path'];
+        $web_dir         = $config['output']['path'];
         $bundle_paths    = [];
 
         foreach ($bundles as $name => $class) {
@@ -32,7 +34,7 @@ class WebpackCompilerPass implements CompilerPassInterface
             $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
         }
 
-        $asset_tracker->replaceArgument(4, $asset_path);
+        $asset_tracker->replaceArgument(4, $asset_res_path);
         $asset_tracker->replaceArgument(5, $bundle_paths);
 
         // Configure the compiler process.
@@ -44,8 +46,8 @@ class WebpackCompilerPass implements CompilerPassInterface
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_dumper')
             ->replaceArgument(1, $bundle_paths)
-            ->replaceArgument(2, $public_path)
-            ->replaceArgument(3, $dump_path);
+            ->replaceArgument(2, $public_res_path)
+            ->replaceArgument(3, rtrim($web_dir, '\\/') . DIRECTORY_SEPARATOR . $dump_path);
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_compiler')
@@ -53,8 +55,9 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
-            ->replaceArgument(0, $config['output']['public_path'])
-            ->replaceArgument(1, $config['output']['dump_path']);
+            ->replaceArgument(0, $web_dir)
+            ->replaceArgument(1, $public_path)
+            ->replaceArgument(2, $dump_path);
 
         // Enable the request listener if we're running in debug mode.
         if ($container->getParameter('kernel.debug') === true) {
