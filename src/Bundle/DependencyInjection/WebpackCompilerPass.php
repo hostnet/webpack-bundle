@@ -42,9 +42,9 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_dumper')
-            ->replaceArgument(1, $bundle_paths)
-            ->replaceArgument(2, $public_res_path)
-            ->replaceArgument(3, rtrim($web_dir, '\\/') . DIRECTORY_SEPARATOR . $dump_path);
+            ->replaceArgument(2, $bundle_paths)
+            ->replaceArgument(3, $public_res_path)
+            ->replaceArgument(4, rtrim($web_dir, '\\/') . DIRECTORY_SEPARATOR . $dump_path);
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_compiler')
