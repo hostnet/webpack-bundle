@@ -72,3 +72,6 @@ services:
         tags:
             - { name: twig.extension }
 
+
+    hostnet_webpack.bridge.profiler:
+        class: Hostnet\Component\Webpack\Profiler\Profiler

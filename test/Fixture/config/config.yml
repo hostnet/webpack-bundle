@@ -1,0 +1,14 @@
+framework:
+    secret: test
+    templating:
+        engine: [twig]
+    router:
+        resource: %kernel.root_dir%/config/routing.yml
+
+webpack:
+    node:
+        node_modules_path: %kernel.root_dir%/node_modules
+    output:
+        path: %kernel.root_dir%
+        dump_path: /bundles
+        public_path: /

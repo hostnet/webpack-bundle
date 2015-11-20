@@ -9,7 +9,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest}
 
-    hostnet_webpack.bridge.profiler:
-        class: Hostnet\Component\Webpack\Profiler\Profiler
+    hostnet_webpack.bridge.data_collector:
+        class: Hostnet\Component\Webpack\Profiler\WebpackDataCollector
+        arguments:
+            - '@hostnet_webpack.bridge.profiler'
         tags:
             - { name: data_collector, template: WebpackBundle::profiler.html.twig, id: webpack }

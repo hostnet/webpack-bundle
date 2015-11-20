@@ -1,32 +1,15 @@
 <?php
 namespace Hostnet\Component\Webpack\Profiler;
 
-use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
-use Hostnet\Component\Webpack\Asset\Compiler;
-use Hostnet\Component\Webpack\Asset\Tracker;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
-use Symfony\Component\Stopwatch\Stopwatch;
-use Symfony\Component\Stopwatch\StopwatchEvent;
-
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class Profiler implements DataCollectorInterface
+class Profiler
 {
-    private $data = [];
-
-    /** {@inheritdoc} */
-    public function getName()
-    {
-        return Configuration::CONFIG_ROOT;
-    }
-
-    /** {@inheritdoc} */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
-    {
-    }
+    /**
+     * @var string[]
+     */
+    private $logs = [];
 
     /**
      * @param string $key
@@ -34,16 +17,15 @@ class Profiler implements DataCollectorInterface
      */
     public function set($key, $value)
     {
-        $this->data[$key] = $value;
+        $this->logs[$key] = $value;
     }
 
     /**
      * @param  string $id
-     * @param  mixed  $default
      * @return mixed
      */
-    public function get($id, $default = false)
+    public function get($id)
     {
-        return isset($this->data[$id]) ? $this->data[$id] : $default;
+        return isset($this->logs[$id]) ? $this->logs[$id] : null;
     }
 }
