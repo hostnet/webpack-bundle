@@ -1,4 +1,5 @@
 /test/Fixture/cache/
+/test/Fixture/logs/
 
 # PHPUnit
 /phpunit.xml

@@ -5,6 +5,9 @@
         colors                        = "true"
         bootstrap                     = "vendor/autoload.php"
         >
+    <php>
+        <server name="KERNEL_DIR" value="test/Fixture"/>
+    </php>
     <testsuites>
         <testsuite name="webpack-bundle">
             <directory>./test</directory>

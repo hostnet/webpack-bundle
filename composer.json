@@ -19,6 +19,8 @@
         "symfony/process"              : "^2.7|^3.0",
         "symfony/stopwatch"            : "^2.7|^3.0",
         "symfony/yaml"                 : "^2.7|^3.0",
+        "symfony/twig-bundle"          : "^2.7|^3.0",
+        "symfony/monolog-bundle"       : "^2.7|^3.0",
         "twig/twig"                    : "^1.18"
     },
     "require-dev" : {
