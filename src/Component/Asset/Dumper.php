@@ -15,23 +15,23 @@ class Dumper
     private $fs;
     private $logger;
     private $bundle_paths;
-    private $public_dir;
+    private $public_res_path;
     private $output_dir;
 
     /**
      * @param Filesystem      $fs
      * @param LoggerInterface $logger
      * @param array           $bundle_paths
-     * @param string          $public_dir
+     * @param string          $public_res_path
      * @param string          $output_dir
      */
-    public function __construct(Filesystem $fs, LoggerInterface $logger, array $bundle_paths, $public_dir, $output_dir)
+    public function __construct(Filesystem $fs, LoggerInterface $logger, array $bundle_paths, $public_res_path, $output_dir)
     {
-        $this->fs           = $fs;
-        $this->logger       = $logger;
-        $this->bundle_paths = $bundle_paths;
-        $this->public_dir   = $public_dir;
-        $this->output_dir   = $output_dir;
+        $this->fs              = $fs;
+        $this->logger          = $logger;
+        $this->bundle_paths    = $bundle_paths;
+        $this->public_res_path = $public_res_path;
+        $this->output_dir      = $output_dir;
     }
 
     /**
@@ -40,8 +40,8 @@ class Dumper
     public function dump()
     {
         foreach ($this->bundle_paths as $name => $path) {
-            if (file_exists($path . DIRECTORY_SEPARATOR . $this->public_dir)) {
-                $this->dumpBundle($name, $path . DIRECTORY_SEPARATOR . $this->public_dir);
+            if (file_exists($path . DIRECTORY_SEPARATOR . $this->public_res_path)) {
+                $this->dumpBundle($name, $path . DIRECTORY_SEPARATOR . $this->public_res_path);
             }
         }
     }

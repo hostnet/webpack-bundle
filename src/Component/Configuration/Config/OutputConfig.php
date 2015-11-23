@@ -26,10 +26,17 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
     {
         $node_builder
             ->arrayNode('output')
+                ->validate()
+                    ->ifTrue(function ($c) {
+                        return !preg_match(sprintf('~(?<web_dir>.*)%s$~', rtrim($c['public_path'], '\\/')), rtrim($c['path'], '\\/'));
+                    })
+                    ->thenInvalid('webpack.output.public_path must be equal to the end of the webpack.output.path.')
+                ->end()
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->scalarNode('path')->defaultValue('%kernel.root_dir%/../web')->end()
-                    ->scalarNode('dump_path')->defaultValue('/bundles')->end()
+                    ->scalarNode('path')->defaultValue('%kernel.root_dir%/../web/compiled/')->end()
+                    ->scalarNode('dump_path')->defaultValue('%kernel.root_dir%/../web/bundles/')->end()
+                    ->scalarNode('public_path')->defaultValue('/compiled/')->end()
                     ->scalarNode('filename')->defaultValue('[name].js')->end()
                     ->scalarNode('common_id')->defaultValue('common')->end()
                     ->scalarNode('chunk_filename')->defaultValue('[name].[hash].chunk.js')->end()
@@ -39,7 +46,6 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                     ->booleanNode('devtool_line_to_line')->defaultFalse()->end()
                     ->scalarNode('hot_update_chunk_filename')->defaultValue('[id].[hash].hot-update.js')->end()
                     ->scalarNode('hot_update_main_filename')->defaultValue('[hash].hot-update.json')->end()
-                    ->scalarNode('public_path')->defaultValue('/')->end()
                     ->scalarNode('jsonp_function')->defaultValue('webpackJsonp')->end()
                     ->scalarNode('hot_update_function')->defaultValue('webpackHotUpdate')->end()
                     ->booleanNode('path_info')->defaultFalse()->end()

@@ -26,9 +26,9 @@ class TwigExtension extends \Twig_Extension
     private $dump_path;
 
     /**
-     * @param string $web_dir     webpack.output.path
-     * @param string $public_path webpack.output.public_path
-     * @param string $dump_path   webpack.output.dump_path
+     * @param string $web_dir
+     * @param string $public_path
+     * @param string $dump_path
      */
     public function __construct($web_dir, $public_path, $dump_path)
     {
@@ -67,8 +67,8 @@ class TwigExtension extends \Twig_Extension
      */
     public function webpackAsset($asset)
     {
-        $asset_id        = rtrim($this->public_path, '/\\') . '/' . Compiler::getAliasId($asset);
-        $full_asset_path = rtrim($this->web_dir, '/\\') . '/' . ltrim($asset_id, '/\\');
+        $asset_id        = $this->public_path . '/' . Compiler::getAliasId($asset);
+        $full_asset_path = $this->web_dir . '/' . $asset_id;
 
         return [
             'js'  => file_exists($full_asset_path . '.js')
@@ -95,7 +95,7 @@ class TwigExtension extends \Twig_Extension
      */
     public function webpackPublic($url)
     {
-        $public_dir = rtrim($this->public_path, '/\\') . '/' . ltrim($this->dump_path, '/\\');
+        $public_dir = '/' . ltrim($this->dump_path, '/');
 
         $url = preg_replace_callback('/^@(?<bundle>\w+)/', function ($match) {
             $str = $match['bundle'];
@@ -105,6 +105,6 @@ class TwigExtension extends \Twig_Extension
             return strtolower($str);
         }, $url);
 
-        return rtrim(str_replace('\\', '/', $public_dir), '/') . '/' . $url;
+        return rtrim($public_dir, '/') . '/' . ltrim($url, '/');
     }
 }
