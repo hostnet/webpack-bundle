@@ -7,20 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
  */
 class CompileTest extends KernelTestCase
 {
-    /** @dataProvider envProvider */
-    public function testContainer($env)
-    {
-        static::bootKernel(['environment' => $env, 'debug' => false]);
 
-        $twig_ext = static::$kernel->getContainer()->get('hostnet_webpack.bridge.twig_extension');
-
-        $this->assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
-    }
-
-    public function envProvider()
-    {
-        return [['dev'], ['test']];
-    }
 
     public function testDevCollector()
     {

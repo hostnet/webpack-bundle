@@ -275,23 +275,24 @@ webpack:
 
 ### Asset output directories
 
-- Dumped assets from the "public" directory are symlinked or copied to the `<output.path>/<output.dump_dir>` directory.
+- Dumped assets from the "public" directory are symlinked or copied to the `<output.dump_dir>` directory.
 - Compiled assets from the "assets" directory are written to the `<output.path>` directory.
 - The twig function `webpack_asset` returns compiled file names prefixed with the `<output.public_path>` directory.
 
 ```yaml
 webpack:
     output:
-        path: '%kernel.root_dir%/../web'
-        dump_path: '/bundles'            # public assets will be copied to '%kernel.root_dir%/../web/bundles'
-        public_path: '/'
+        path: '%kernel.root_dir%/../web/compiled/'
+        dump_path: '%kernel.root_dir%/../web/bundles/'
+        public_path: '/compiled/'
 ```
 
-The `public_path` value represents the asset paths from a client-side perspective. Therefore, it must specify the path
-of your app(_dev).php as exposed from the web e.g. somedomain.com/my-web/app.php would make it `%kernel.root_dir%/../web/my-app`
+The `path` value represents the asset paths from a client-side perspective. Therefore, it must specify the path
+of your app(_dev).php as exposed from the web e.g. somedomain.com/my-web/app.php would make it
+`%kernel.root_dir%/../web/my-app/compiled/` with the above example.
 
-For example, if the `output.path` value is `%kernel.root_dir/../web/packed`, the value of `output.public_path` must be
-set to `/packed`.
+If the `output.path` value is `%kernel.root_dir/../web/packed/`, the value of `output.public_path` must be
+set to `/packed/`.
 
 ### Ideal configuration
 
@@ -315,9 +316,9 @@ webpack:
         binary: '/path/to/node'
         node_modules_path: '%kernel.root_dir%/../node_modules'
     output:
-        path: '%kernel.root_dir%/../web/compiled'
-        dump_path: '/bundles'
-        public_path: '/compiled'
+        path: '%kernel.root_dir%/../web/compiled/'
+        dump_path: '%kernel.root_dir%/../web/bundles/'
+        public_path: '/compiled/'
         common_id: 'shared'
     loaders:
         css:

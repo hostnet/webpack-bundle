@@ -1,6 +1,7 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -18,9 +19,10 @@ class WebpackCompilerPass implements CompilerPassInterface
         $tracked_bundles = $config['bundles'];
         $asset_res_path  = 'Resources' . DIRECTORY_SEPARATOR . 'assets';
         $public_res_path = 'Resources' . DIRECTORY_SEPARATOR . 'public';
-        $public_path     = $config['output']['public_path'];
-        $dump_path       = $config['output']['dump_path'];
-        $web_dir         = $config['output']['path'];
+        $public_path     = rtrim($config['output']['public_path'], '\\/');
+        $dump_path       = rtrim($config['output']['dump_path'], '\\/');
+        $path            = rtrim($config['output']['path'], '\\/');
+        $web_dir         = rtrim(substr($path, 0, strlen($path) - strlen($public_path)), '/\\');
         $bundle_paths    = [];
 
         foreach ($bundles as $name => $class) {
@@ -44,7 +46,7 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->getDefinition('hostnet_webpack.bridge.asset_dumper')
             ->replaceArgument(2, $bundle_paths)
             ->replaceArgument(3, $public_res_path)
-            ->replaceArgument(4, rtrim($web_dir, '\\/') . DIRECTORY_SEPARATOR . $dump_path);
+            ->replaceArgument(4, $dump_path);
 
         $container
             ->getDefinition('hostnet_webpack.bridge.asset_compiler')
@@ -54,7 +56,7 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
             ->replaceArgument(0, $web_dir)
             ->replaceArgument(1, $public_path)
-            ->replaceArgument(2, $dump_path);
+            ->replaceArgument(2, str_replace($web_dir, '', $dump_path));
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
         if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {
