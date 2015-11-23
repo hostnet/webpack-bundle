@@ -54,11 +54,20 @@ class CompileCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('Webpack [1/2]: Compiling Assets');
         $this->logger->info('[WEBPACK]: Compiling assets...');
         $this->compiler->compile();
 
+
+        $output->writeln('Webpack [2/2]: Dumping Assets');
         $this->logger->info('[WEBPACK]: Dumping assets...');
         $this->dumper->dump();
+
+        $message = $this->profiler->get('compiler.successful')
+            ? sprintf('<info>Compilation done in %d ms.</info>', $this->profiler->get('compiler.performance.total'))
+            : sprintf('<error>%s</error>', $this->profiler->get('compiler.last_output'));
+
+        $output->writeln($message);
 
         $this->logger->debug($this->profiler->get('compiler.last_output'));
     }

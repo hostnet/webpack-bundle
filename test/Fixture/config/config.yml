@@ -12,3 +12,10 @@ webpack:
         path: %kernel.root_dir%/cache/compiled/
         dump_path: %kernel.root_dir%/cache/bundles/
         public_path: /compiled/
+
+monolog:
+    handlers:
+        console:
+            type: console
+            verbosity_levels:
+                VERBOSITY_NORMAL: notice
