@@ -1,4 +1,5 @@
 <?php
+use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -22,6 +23,7 @@ class AssetTest extends KernelTestCase
     {
         static::bootKernel();
 
+        /** @var $twig_ext TwigExtension */
         $twig_ext = static::$kernel->getContainer()->get('hostnet_webpack.bridge.twig_extension');
 
         $this->assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
@@ -29,13 +31,14 @@ class AssetTest extends KernelTestCase
 
     public function testCompiledAsset()
     {
+        /** @var $twig_ext TwigExtension */
         $container = static::$kernel->getContainer();
         $twig_ext  = $container->get('hostnet_webpack.bridge.twig_extension');
 
-//        $this->assertEquals([
-//            'js'  => false,
-//            'css' => false,
-//        ], $twig_ext->webpackAsset('henk'));
+        $this->assertEquals([
+            'js'  => false,
+            'css' => false,
+        ], $twig_ext->webpackAsset('henk'));
 
         touch($this->compiled . 'app.henk.js');
         touch($this->compiled . 'app.henk.css');
@@ -47,8 +50,8 @@ class AssetTest extends KernelTestCase
 
     protected function tearDown()
     {
-        parent::tearDown();
-
         `rm -rf {$this->compiled}`;
+
+        parent::tearDown();
     }
 }

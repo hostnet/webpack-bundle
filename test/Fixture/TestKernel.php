@@ -17,6 +17,8 @@ class TestKernel extends Kernel
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Hostnet\Bundle\WebpackBundle\WebpackBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
+            new Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle(),
+            new Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle(),
         );
     }
     /**

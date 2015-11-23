@@ -51,7 +51,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->exactly(9))->method('resolveResourcePath')->willReturn('foobar');
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $file   = $this->path . '/Resources/template.html.twig';
+        $file   = $this->path . '/Resources/views/template.html.twig';
         $points = ($parser->findSplitPoints($file));
 
         $this->assertCount(8, $points);
@@ -76,7 +76,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->never())->method('resolveResourcePath');
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $parser->findSplitPoints($this->path . '/Resources/template_parse_error.html.twig');
+        $parser->findSplitPoints($this->path . '/Resources/views/template_parse_error.html.twig');
     }
 
     /**
@@ -88,6 +88,6 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->once())->method('resolveResourcePath')->willReturn(false);
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $parser->findSplitPoints($this->path . '/Resources/template.html.twig');
+        $parser->findSplitPoints($this->path . '/Resources/views/template.html.twig');
     }
 }

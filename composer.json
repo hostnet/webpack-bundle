@@ -6,7 +6,7 @@
     "minimum-stability" : "dev",
     "prefer-stable"     : true,
     "type"              : "symfony-bundle",
-    "keywords"          : ["symfony2", "webpack"],
+    "keywords"          : ["symfony", "webpack", "bundle", "asset", "resources", "javascript", "css", "less", "content"],
     "require"           : {
         "php"                          : "^5.5|^7.0",
         "symfony/dependency-injection" : "^2.7|^3.0",
@@ -21,6 +21,7 @@
         "symfony/yaml"                 : "^2.7|^3.0",
         "symfony/twig-bundle"          : "^2.7|^3.0",
         "symfony/monolog-bundle"       : "^2.7|^3.0",
+        "symfony/monolog-bridge"       : "^2.7|^3.0",
         "twig/twig"                    : "^1.18"
     },
     "require-dev" : {
@@ -34,9 +35,9 @@
     },
     "autoload-dev" : {
         "psr-4" : {
-            "Hostnet\\Fixture\\WebpackBundle\\"   : "test/Fixture",
-            "Hostnet\\Bundle\\WebpackBundle\\"    : "test/Bundle",
-            "Hostnet\\Component\\Webpack\\" : "test/Component"
+            "Hostnet\\Fixture\\WebpackBundle\\" : "test/Fixture",
+            "Hostnet\\Bundle\\WebpackBundle\\"  : "test/Bundle",
+            "Hostnet\\Component\\Webpack\\"     : "test/Component"
         }
     },
     "archive": {
