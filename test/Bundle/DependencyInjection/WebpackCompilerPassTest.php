@@ -28,7 +28,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
-        $container->set('twig', $this->getMock(\Twig_Environment::class));
+        $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
         $container->set('logger', $this->getMock(LoggerInterface::class));
 
         $bundle->build($container);
@@ -66,7 +66,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
-        $container->set('twig', $this->getMock(\Twig_Environment::class));
+        $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
         $container->set('logger', $this->getMock(LoggerInterface::class));
 
         $bundle->build($container);
