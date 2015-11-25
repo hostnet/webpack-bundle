@@ -3,7 +3,6 @@
     "description"       : "Integrates Webpack with Symfony2",
     "authors"           : [{ "name": "Harold Iedema", "email" : "hiedema@hostnet.nl" }],
     "license"           : "MIT",
-    "prefer-stable"     : true,
     "type"              : "symfony-bundle",
     "keywords"          : ["symfony", "webpack", "bundle", "asset", "resources", "javascript", "css", "less", "content"],
     "require"           : {
