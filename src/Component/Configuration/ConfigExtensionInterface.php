@@ -6,7 +6,7 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-interface ConfigExtensionInterface
+interface ConfigExtensionInterface extends CodeBlockProviderInterface
 {
     /**
      * Applies plugin-specific configuration to the TreeBuilder used to parse configuration from the application. This
@@ -19,11 +19,4 @@ interface ConfigExtensionInterface
      * @return string
      */
     public static function applyConfiguration(NodeBuilder $node_builder);
-
-    /**
-     * Returns the CodeBlock for this plugin.
-     *
-     * @return CodeBlock[]
-     */
-    public function getCodeBlocks();
 }

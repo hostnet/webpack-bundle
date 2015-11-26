@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Class WebpackExtension
@@ -29,7 +28,6 @@ class WebpackExtension extends Extension
         }
 
         // Retrieve all configuration entities
-        $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
         $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
         $config_definitions   = [];
 
@@ -49,7 +47,6 @@ class WebpackExtension extends Extension
         // Parse application config into the config generator
         foreach ($config_definitions as $id => $definition) {
             /* @var $definition Definition */
-            $builder_definition->addMethodCall('addExtension', [new Reference($id)]);
             $definition->addArgument($config);
         }
 
