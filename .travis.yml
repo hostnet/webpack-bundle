@@ -6,29 +6,30 @@ cache:
   directories:
     - "$HOME/.composer/cache"
 
-php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
+#php:
+#  - 5.5
+#  - 5.6
+#  - 7.0
+#  - hhvm
 
 matrix:
   include:
     # Symfony 2.7.0
-    - php: 5.5
-      env: COMPOSER_FLAGS="--prefer-lowest"
+#    - php: 5.5
+#      env: COMPOSER_FLAGS="--prefer-lowest"
     # Symfony 2.8
-    - php: 5.6
-      env: SYMFONY_VERSION="2.8.*@dev"
+#    - php: 5.6
+#      env: SYMFONY_VERSION="2.8.*@dev"
     # Symfony 3.0
     - php: 5.6
-      env: DEPS="dev"
+      env: DEPS=dev
 
 before_install:
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then phpenv config-rm xdebug.ini; fi
   - composer self-update
   - if [ "$SYMFONY_VERSION" != "" ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi
-  - if [ "$DEPS" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi
+  - if [ "$DEPS" == "dev" ]; then echo "dev!"; fi
+  - perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json;
 
 install: composer update $COMPOSER_FLAGS --prefer-dist
 

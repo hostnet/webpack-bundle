@@ -3,7 +3,6 @@
     "description"       : "Integrates Webpack with Symfony2",
     "authors"           : [{ "name": "Harold Iedema", "email" : "hiedema@hostnet.nl" }],
     "license"           : "MIT",
-    "prefer-stable"     : true,
     "type"              : "symfony-bundle",
     "keywords"          : ["symfony", "webpack", "bundle", "asset", "resources", "javascript", "css", "less", "content"],
     "require"           : {
@@ -21,10 +20,11 @@
         "symfony/twig-bundle"          : "^2.7|^3.0",
         "symfony/monolog-bundle"       : "^2.7|^3.0",
         "symfony/monolog-bridge"       : "^2.7|^3.0",
-        "twig/twig"                    : "^1.18"
+        "twig/twig"                    : "^1.18|^2.0"
     },
     "require-dev" : {
-        "phpunit/phpunit" : "^4.7|^5.0"
+        "phpunit/phpunit" : "^4.7|^5.0",
+        "symfony/phpunit-bridge": "^2.7|^3.0"
     },
     "autoload" : {
         "psr-4" : {

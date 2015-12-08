@@ -34,9 +34,7 @@ class CompileTest extends KernelTestCase
         $tracker = static::$kernel->getContainer()->get('hostnet_webpack.bridge.asset_tracker');
         $tracker->rebuild();
 
-        $templates = array_map(function ($path) {
-            return $this->relative($path);
-        }, $tracker->getTemplates());
+        $templates = array_map(array($this, 'relative'), $tracker->getTemplates());
 
         $this->assertContains('/test/Fixture/Bundle/FooBundle/Resources/views/foo.html.twig', $templates);
         $this->assertContains('/test/Fixture/Resources/views/template.html.twig', $templates);
@@ -49,6 +47,11 @@ class CompileTest extends KernelTestCase
 
     private function relative($path)
     {
-        return str_replace(str_replace('/test/Fixture', '', static::$kernel->getContainer()->getParameter('kernel.root_dir')), '', $path);
+        return str_replace(str_replace('/test/Fixture', '', $this->normalize(static::$kernel->getContainer()->getParameter('kernel.root_dir'))), '', $this->normalize($path));
+    }
+
+    private function normalize($path)
+    {
+        return str_replace('\\', '/', $path);
     }
 }

@@ -31,9 +31,9 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
-        $this->twig      = new \Twig_Environment();
+        $this->twig      = new \Twig_Environment(new \Twig_Loader_Array(array()));
         $this->path      = realpath(__DIR__ . '/../../Fixture');
-        $this->cache_dir = '/tmp';
+        $this->cache_dir = sys_get_temp_dir();
     }
 
     public function testParseValid()
