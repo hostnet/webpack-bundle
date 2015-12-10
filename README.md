@@ -14,6 +14,7 @@
 - [Loaders](#loaders)
   - [CSS](#css)
   - [Less](#less)
+  - [Sass](#sass)
   - [URL](#url)
 - [Plugins](#plugins)
 
@@ -82,7 +83,7 @@ The more maintainable variant: Store the result to a variable for easy access.
 {% endif %}
 ```
 
-Use the twig function `webpack_asset(url)` in your template to specify an 
+Use the twig function `webpack_asset(url)` in your template to specify an
 [entry-point](http://webpack.github.io/docs/configuration.html#entry). In short, an entry-point is an asset that will be
 compiled and exported to the output path. This path defaults to `%kernel.root_dir%/../web`. The compiled file will be
 named `app_bundle.app.js` by default. Both of these settings are configurable.
@@ -126,7 +127,7 @@ a much more elegant fashion. The syntax of this tag works like this:
 Or if you want to have inline code without including a file:
 ```twig
 {% webpack <type: inline> [file-type] %}
-    <javascript, css, less, ... code>
+    <javascript, css, less, scss, ... code>
 {% endwebpack %}
 ```
 
@@ -170,7 +171,9 @@ As mentioned in the example above, you may optionally specify a file type along 
 type of file extension, just make sure you have the appropriate loaders enabled.
 
 For example, `js` will always work by default. However, `css` will only work if the `css-loader` is enabled. If you have
-the `less-loader` enabled, you can do something like this:
+the `less-loader` or `sass-loader` enabled, you can do something like this:
+
+Less version
 
 ```twig
 <section>
@@ -178,7 +181,7 @@ the `less-loader` enabled, you can do something like this:
     <style>
     @color: #f00;
     @size: 42px;
-    
+
     body {
         color: @color;
         section : {
@@ -190,8 +193,28 @@ the `less-loader` enabled, you can do something like this:
 </section>
 ```
 
+Sass Version
+
+```twig
+<section>
+    {% webpack inline sass %}
+    <style>
+    $color: #f00;
+    $size: 42px;
+
+    body {
+        color: $color;
+        section : {
+            size: $size;
+        }
+    }
+    </style>
+    {% endwebpack %}
+</section>
+```
+
 The compiler will automatically strip away the `<style>`- and/or `<script>`-tags and save the contents of the block to
-a file. This fill will then be used for inclusion in your template by utilizing either a `link`-tag or a `script` tag
+a file. This file will then be used for inclusion in your template by utilizing either a `link`-tag or a `script` tag
 that refer to the compiled file.
 
 
@@ -302,6 +325,7 @@ The following configuration requires the following modules to be present in your
  - style-loader
  - css-loader
  - less-loader
+ - sass-loader
  - url-loader
  - babel-loader
 
@@ -326,6 +350,10 @@ webpack:
             all_chunks: true
             filename: '[name].css'
         less:
+            enabled: true
+            all_chunks: true
+            filename: '[name].css'
+        sass:
             enabled: true
             all_chunks: true
             filename: '[name].css'
@@ -355,11 +383,12 @@ Somewhere in your twig templates
 
 ## Loaders
 
-Loaders allow you to `require` files other than javascript. This package comes with 3 default loaders. 
+Loaders allow you to `require` files other than javascript. This package comes with 4 default loaders.
 
  - `CSSLoader` : include CSS files
  - `UrlLoader` : include images (converted to base64)
  - `LessLoader`: include less files.
+ - `SassLoader`: include sass files.
 
 Each loader has its own configuration under the `loaders` section.
 
@@ -377,7 +406,7 @@ webpack:
             filename: '[name].css'
             all_chunks: true
 ```
- 
+
 If `filename` and `all_chunks` are omitted, any CSS is converted to a style-tag in the document rather than being
 exported to a separate CSS file. If the `output.common_id` setting is specified - which allows extracting shared code -
 the [CommonsChunkPlugin](http://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin) will be used
@@ -400,6 +429,23 @@ This plugin shares the exact same configuration settings as the CSS loader.
 webpack:
     loaders:
        less:
+           enabled: true
+           filename: '[name].css'
+           all_chunks: true
+```
+
+### Sass
+
+Enables loading sass files.
+
+This plugin shares the exact same configuration settings as the CSS loader.
+
+> You need the `sass-loader`, `css-loader` and `style-loader` node modules for this to work.
+
+```webpack
+webpack:
+    loaders:
+       sass:
            enabled: true
            filename: '[name].css'
            all_chunks: true
@@ -462,7 +508,7 @@ if (ENVIRONMENT === 'dev') {
 These variable declarations are parsed by webpack. Once the code is compiled and minified, these variables are left out
 completely in the final code.
 
-This means that the code on your development machine would result in something like this: 
+This means that the code on your development machine would result in something like this:
 ```javascript
 // start
 console.log('Hello World');

@@ -11,6 +11,10 @@ services:
         class: Hostnet\Component\Webpack\Configuration\Loader\LessLoader
         tags:
             - { name: hostnet_webpack.config_extension }
+    hostnet_webpack.loader.sass:
+        class: Hostnet\Component\Webpack\Configuration\Loader\SassLoader
+        tags:
+            - { name: hostnet_webpack.config_extension }
     hostnet_webpack.loader.babel:
         class: Hostnet\Component\Webpack\Configuration\Loader\BabelLoader
         tags:
