@@ -4,3 +4,7 @@ services:
         class: Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
         tags:
             - { name: hostnet_webpack.config_extension }
+    hostnet_webpack.plugin.provide:
+        class: Hostnet\Component\Webpack\Configuration\Plugin\ProvidePlugin
+        tags:
+            - { name: hostnet_webpack.config_extension }
