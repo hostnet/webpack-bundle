@@ -17,6 +17,8 @@
   - [Sass](#sass)
   - [URL](#url)
 - [Plugins](#plugins)
+  - [DefinePlugin](#defineplugin)
+  - [ProvidePlugin](#provideplugin)
 
 ## Introduction
 
@@ -521,3 +523,36 @@ And in production
 // end
 ```
 Note that the comments are only here for illustrating this example. Compiled and minified code won't contain these.
+
+### ProvidePlugin
+
+Automatically load module and assign it to a global variable like `$` for jquery.
+See the [provideplugin documentation](https://github.com/webpack/docs/wiki/list-of-plugins#provideplugin) for more
+information.
+
+In the example below, imagine you want to access jquery through "$" or "jQuery". You just need to add this configuration and the plugin will do the rest for you.
+
+```yaml
+plugins:
+    provides:
+        "$": "jquery"
+        "jQuery": "jquery"
+```
+
+Now you can add you javascript in an inline script and webpack will automatically require "jquery" for you.
+
+
+```javascript
+{% webpack inline %}
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+{% endwebpack %}
+```
+__Important:__ 
+
+Don't forget to install jquery via npm
+`npm install jquery`.
+As all `node_modules` are resolved in `webpack.config.js` it will find it automatically. 
