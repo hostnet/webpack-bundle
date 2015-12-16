@@ -2,7 +2,6 @@
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
-use Hostnet\Component\Webpack\Configuration\Loader\SassLoader;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
