@@ -8,11 +8,11 @@ class MockLoader implements CodeBlockProviderInterface
 {
     const BLOCK_CONTENT = 'Webpack mock loader sample block content';
 
-    public $getCodeBlocksCalled = false;
+    public $code_blocks_called = false;
 
     public function getCodeBlocks()
     {
-        $this->getCodeBlocksCalled = true;
+        $this->code_blocks_called = true;
         return [(new CodeBlock())->set(CodeBlock::LOADER, self::BLOCK_CONTENT)];
     }
 }
