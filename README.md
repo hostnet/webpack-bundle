@@ -399,7 +399,6 @@ Enables loading CSS files.
 webpack:
     loaders:
         css:
-            enabled: true
             filename: '[name].css'
             all_chunks: true
 ```
@@ -422,11 +421,10 @@ This plugin shares the exact same configuration settings as the CSS loader.
 
 > You need the `less-loader`, `css-loader` and `style-loader` node modules for this to work.
 
-```webpack
+```yaml
 webpack:
     loaders:
        less:
-           enabled: true
            filename: '[name].css'
            all_chunks: true
 ```
@@ -439,11 +437,10 @@ This plugin shares the exact same configuration settings as the CSS loader.
 
 > You need the `sass-loader`, `css-loader` and `style-loader` node modules for this to work.
 
-```webpack
+```yaml
 webpack:
     loaders:
        sass:
-           enabled: true
            filename: '[name].css'
            all_chunks: true
 ```
@@ -456,8 +453,7 @@ This plugin only has an `enabled` setting. It is disabled by default.
 ```yaml
 webpack:
     loaders:
-       url:
-           enabled: true
+       url: ~
 ```
 
 ### Babel
@@ -471,8 +467,7 @@ you would need to do is gradually rename your jsx files to js files and everythi
 ```yaml
 webpack:
     loaders:
-        babel:
-            enabled: true
+        babel: ~
 ```
 
 ## Plugins
