@@ -12,6 +12,25 @@ webpack:
         path: %kernel.root_dir%/cache/compiled/
         dump_path: %kernel.root_dir%/cache/bundles/
         public_path: /compiled/
+    loaders:
+       sass:
+           filename: '[name].css'
+           all_chunks: true
+       less:
+           filename: '[name].css'
+           all_chunks: true
+       css:
+           filename: '[name].css'
+           all_chunks: true
+       url: ~
+       babel: ~
+    plugins:
+        constants:
+            ENVIRONMENT: functional_tests
+        provides:
+            '$': 'jquery'
+            'jQuery': 'jquery'
+
 
 monolog:
     handlers:

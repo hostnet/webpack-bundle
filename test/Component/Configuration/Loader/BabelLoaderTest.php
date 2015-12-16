@@ -5,7 +5,7 @@ use Hostnet\Component\Webpack\Configuration\CodeBlock;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Loader\UrlLoader
+ * @covers Hostnet\Component\Webpack\Configuration\Loader\BabelLoader
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class BabelLoaderTest extends \PHPUnit_Framework_TestCase

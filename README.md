@@ -348,21 +348,16 @@ webpack:
         common_id: 'shared'
     loaders:
         css:
-            enabled: true
             all_chunks: true
             filename: '[name].css'
         less:
-            enabled: true
             all_chunks: true
             filename: '[name].css'
         sass:
-            enabled: true
             all_chunks: true
             filename: '[name].css'
-        url:
-            enabled: true
-        babel:
-            enabled: true
+        url: ~
+        babel: ~
 ```
 
 base.html.twig
@@ -535,8 +530,8 @@ In the example below, imagine you want to access jquery through "$" or "jQuery".
 ```yaml
 plugins:
     provides:
-        "$": "jquery"
-        "jQuery": "jquery"
+        '$': 'jquery'
+        'jQuery': 'jquery'
 ```
 
 Now you can add you javascript in an inline script and webpack will automatically require "jquery" for you.
