@@ -2,11 +2,14 @@
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Bundle\WebpackBundle\WebpackBundle;
+use Hostnet\Component\Webpack\Configuration\CodeBlockProviderInterface;
 use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
 use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -31,6 +34,13 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
         $container->set('logger', $this->getMock(LoggerInterface::class));
 
+
+        $container->setDefinition(
+            'webpack_extension',
+            (new Definition(CodeBlockProviderInterface::class))
+                ->addTag('hostnet_webpack.config_extension')
+        );
+
         $bundle->build($container);
 
         $extension->load([
@@ -47,6 +57,9 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
         $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
         $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
+
+        $method_calls = $container->getDefinition('hostnet_webpack.bridge.config_generator')->getMethodCalls();
+        $this->assertArraySubset([['addExtension', [new Reference('webpack_extension')]]], $method_calls);
     }
 
     /**

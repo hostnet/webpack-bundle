@@ -1,9 +1,9 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
@@ -67,6 +67,12 @@ class WebpackCompilerPass implements CompilerPassInterface
             ->getDefinition('hostnet_webpack.bridge.compiler_process')
             ->replaceArgument(0, $config['node']['binary'] . ' ' . $webpack)
             ->replaceArgument(1, $container->getParameter('kernel.cache_dir'));
+
+        $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
+        $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
+        foreach ($config_extension_ids as $id) {
+            $builder_definition->addMethodCall('addExtension', [new Reference($id)]);
+        }
 
         // Unfortunately, we need to specify some additional environment variables to pass to the compiler process. We
         // need this because there is a big chance that populating the $_ENV variable is disabled on most machines.

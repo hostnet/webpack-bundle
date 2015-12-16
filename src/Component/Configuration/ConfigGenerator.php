@@ -12,10 +12,10 @@ class ConfigGenerator
     private $blocks;
 
     /**
-     * @param  ConfigExtensionInterface $entity
+     * @param  CodeBlockProviderInterface $entity
      * @return ConfigGenerator
      */
-    public function addExtension(ConfigExtensionInterface $entity)
+    public function addExtension(CodeBlockProviderInterface $entity)
     {
         foreach ($entity->getCodeBlocks() as $block) {
             $this->addBlock($block);
