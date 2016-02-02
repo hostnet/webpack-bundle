@@ -1,3 +1,6 @@
+parameters:
+    show_warnings_in_uglify: 'true'
+
 framework:
     secret: test
     templating:
@@ -30,7 +33,10 @@ webpack:
         provides:
             '$': 'jquery'
             'jQuery': 'jquery'
-
+        uglifyjs: >
+            {
+                compress: { warnings: %show_warnings_in_uglify% }
+            }
 
 monolog:
     handlers:
