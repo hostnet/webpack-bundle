@@ -1,3 +1,6 @@
+parameters:
+    show_warnings_in_uglify: 'true'
+
 framework:
     secret: test
     templating:
@@ -30,6 +33,31 @@ webpack:
         provides:
             '$': 'jquery'
             'jQuery': 'jquery'
+        uglifyjs:
+            compress:
+                sequences: ~
+                properties: ~
+                dead_code: ~
+                drop_debugger: ~
+                unsafe: ~
+                conditionals: ~
+                comparisons: ~
+                evaluate: ~
+                booleans: ~
+                loops: ~
+                unused: ~
+                hoist_funs: ~
+                hoist_vars: ~
+                if_return: ~
+                join_vars: ~
+                cascade: ~
+                side_effects: ~
+                warnings: ~
+                global_defs:
+                    DEBUG: false
+            test: /\.js($|\?)/i
+            mangle_except: ~
+            minimize: ~
 
 
 monolog:
