@@ -5,6 +5,16 @@ imports:
 
 services:
 
+    hostnet_webpack.bridge.cache_warmer:
+        class: Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
+        arguments:
+            - '@hostnet_webpack.bridge.asset_compiler'
+            - '@hostnet_webpack.bridge.asset_dumper'
+            - '@logger'
+            - '@hostnet_webpack.bridge.profiler'
+        tags:
+            - { name: kernel.cache_warmer, priority: 10 }
+
     hostnet_webpack.bridge.generate_config_command:
         class: Hostnet\Bundle\WebpackBundle\Command\CompileCommand
         arguments:
@@ -12,7 +22,6 @@ services:
             - '@hostnet_webpack.bridge.asset_dumper'
             - '@logger'
             - '@hostnet_webpack.bridge.profiler'
-            - []
         tags:
             - { name: console.command }
 

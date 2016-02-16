@@ -20,11 +20,6 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    private $path;
-
-    /**
-     * @var string
-     */
     private $cache_dir;
 
     /** {@inheritdoc} */
@@ -32,7 +27,6 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
     {
         $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
         $this->twig      = new \Twig_Environment(new \Twig_Loader_Array(array()));
-        $this->path      = realpath(__DIR__ . '/../../Fixture');
         $this->cache_dir = sys_get_temp_dir();
     }
 
@@ -51,7 +45,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->exactly(9))->method('resolveResourcePath')->willReturn('foobar');
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $file   = $this->path . '/Resources/views/template.html.twig';
+        $file   = __DIR__ . '/Fixtures/template.html.twig';
         $points = ($parser->findSplitPoints($file));
 
         $this->assertCount(8, $points);
@@ -76,7 +70,7 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->never())->method('resolveResourcePath');
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $parser->findSplitPoints($this->path . '/Resources/views/template_parse_error.html.twig');
+        $parser->findSplitPoints(__DIR__ . '/Fixtures/template_parse_error.html.twig');
     }
 
     /**
@@ -88,6 +82,6 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->once())->method('resolveResourcePath')->willReturn(false);
 
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
-        $parser->findSplitPoints($this->path . '/Resources/views/template.html.twig');
+        $parser->findSplitPoints(__DIR__ . '/Fixtures/template.html.twig');
     }
 }
