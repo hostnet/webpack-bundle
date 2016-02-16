@@ -38,7 +38,6 @@ class CompileTest extends KernelTestCase
 
         $this->assertContains('/test/Fixture/Bundle/FooBundle/Resources/views/foo.html.twig', $templates);
         $this->assertContains('/test/Fixture/Resources/views/template.html.twig', $templates);
-        $this->assertContains('/test/Fixture/Resources/views/template_parse_error.html.twig', $templates);
 
         $aliases = $tracker->getAliases();
 
