@@ -298,6 +298,18 @@ webpack:
         common_id: 'shared'
 ```
 
+In your templates you will be able to retrieve the path to your common javascript file via `webpack_common_js()` and 
+`webpack_common_css()`.
+
+```twig
+<script src="{{ webpack_common_js() }}"></script>
+<link rel="stylesheet" href="{{ webpack_common_css() }}">
+
+{# will give the following output based on output.common_id #}
+<script src="/compiled/shared.js"></script>
+<link rel="stylesheet" href="/compiled/shared.css">
+```
+
 ### Asset output directories
 
 - Dumped assets from the "public" directory are symlinked or copied to the `<output.dump_dir>` directory.
