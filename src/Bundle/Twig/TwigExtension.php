@@ -26,15 +26,29 @@ class TwigExtension extends \Twig_Extension
     private $dump_path;
 
     /**
+     * @var string
+     */
+    private $common_js;
+
+    /**
+     * @var string
+     */
+    private $common_css;
+
+    /**
      * @param string $web_dir
      * @param string $public_path
      * @param string $dump_path
+     * @param string $common_js
+     * @param string $common_css
      */
-    public function __construct($web_dir, $public_path, $dump_path)
+    public function __construct($web_dir, $public_path, $dump_path, $common_js, $common_css)
     {
         $this->web_dir     = $web_dir;
         $this->public_path = $public_path;
         $this->dump_path   = $dump_path;
+        $this->common_js   = $common_js;
+        $this->common_css  = $common_css;
     }
 
     /** {@inheritdoc} */
@@ -55,6 +69,8 @@ class TwigExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFunction('webpack_asset', [$this, 'webpackAsset']),
             new \Twig_SimpleFunction('webpack_public', [$this, 'webpackPublic']),
+            new \Twig_SimpleFunction('webpack_common_js', [$this, 'webpackCommonJs']),
+            new \Twig_SimpleFunction('webpack_common_css', [$this, 'webpackCommonCss']),
         ];
     }
 
@@ -106,5 +122,25 @@ class TwigExtension extends \Twig_Extension
         }, $url);
 
         return rtrim($public_dir, '/') . '/' . ltrim($url, '/');
+    }
+
+    /**
+     * Example: "<output_path>/<common_id>.js".
+     *
+     * @return string
+     */
+    public function webpackCommonJs()
+    {
+        return $this->common_js;
+    }
+
+    /**
+     * Example: "<output_path>/<common_id>.css".
+     *
+     * @return string
+     */
+    public function webpackCommonCss()
+    {
+        return $this->common_css;
     }
 }

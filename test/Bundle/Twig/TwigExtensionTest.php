@@ -9,12 +9,12 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 {
     public function testExtension()
     {
-        $extension = new TwigExtension(__DIR__, '/', '/bundles');
+        $extension = new TwigExtension(__DIR__, '/', '/bundles', '/shared.js', '/shared.css');
 
         $this->assertEquals('webpack', $extension->getName());
-        $this->assertCount(2, $extension->getFunctions());
-        $this->assertCount(1, $extension->getTokenParsers());
         $this->assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
+        $this->assertEquals('/shared.js', $extension->webpackCommonJs());
+        $this->assertEquals('/shared.css', $extension->webpackCommonCss());
     }
 
     /**
@@ -22,7 +22,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAssets($expected, $asset, $web_dir, $dump_path, $public_path)
     {
-        $extension = new TwigExtension($web_dir, $public_path, $dump_path);
+        $extension = new TwigExtension($web_dir, $public_path, $dump_path, '', '');
         $this->assertEquals($expected, $extension->webpackPublic($asset));
     }
 
