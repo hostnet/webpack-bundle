@@ -13,8 +13,8 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('webpack', $extension->getName());
         $this->assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
-        $this->assertEquals('/shared.js', $extension->webpackCommonJs());
-        $this->assertEquals('/shared.css', $extension->webpackCommonCss());
+        $this->assertEquals('/shared.js?0', $extension->webpackCommonJs());
+        $this->assertEquals('/shared.css?0', $extension->webpackCommonCss());
     }
 
     /**

@@ -131,7 +131,9 @@ class TwigExtension extends \Twig_Extension
      */
     public function webpackCommonJs()
     {
-        return $this->common_js;
+        $file          = $this->web_dir . '/' . $this->common_js;
+        $modified_time = file_exists($this->web_dir . '/' . $this->common_js) ? filemtime($file) : 0;
+        return $this->common_js . '?' . $modified_time;
     }
 
     /**
@@ -141,6 +143,8 @@ class TwigExtension extends \Twig_Extension
      */
     public function webpackCommonCss()
     {
-        return $this->common_css;
+        $file          = $this->web_dir . '/' . $this->common_css;
+        $modified_time = file_exists($this->web_dir . '/' . $this->common_css) ? filemtime($file) : 0;
+        return $this->common_css . '?' . $modified_time;
     }
 }

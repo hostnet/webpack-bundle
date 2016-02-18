@@ -12,7 +12,7 @@ class TwigTest extends KernelTestCase
         $twig = static::$kernel->getContainer()->get('templating');
         $html = $twig->render('/common_id.html.twig');
 
-        $this->assertContains('src="/compiled/shared.js"', $html);
-        $this->assertContains('href="/compiled/shared.css"', $html);
+        $this->assertRegExp('~src="/compiled/shared\.js\?[0-9]+"~', $html);
+        $this->assertRegExp('~href="/compiled/shared\.css\?[0-9]+"~', $html);
     }
 }
