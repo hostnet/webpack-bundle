@@ -8,6 +8,7 @@
   - [Node](#node)
     - [Multi-platform configuration](#multi-platform-configuration)
   - [Bundle configuration](#bundle-configuration)
+    - [Adding app resources to the tracked assets](#adding-app-resources-to-the-tracked-assets)
   - [Shared dependencies](#shared-dependencies)
   - [Asset output directories](#asset-output-directories)
   - [Ideal configuration](#ideal-configuration)
@@ -285,6 +286,22 @@ performance or security reasons.
 ```yaml
 webpack:
     bundles: ['AppBundle', 'YourBundle']
+```
+
+#### Adding app resources to the tracked assets
+
+If you decide to add your assets in app/Resources/assets, all you have to do is add an alias and it can be loaded via
+the webpack loading mechanism.
+
+```yml
+webpack:
+    resolve:
+        alias:
+            app: %kernel.root_dir%/Resources/assets
+```
+```javascript
+# can be loaded via
+require('app/base.js');
 ```
 
 ### Shared dependencies

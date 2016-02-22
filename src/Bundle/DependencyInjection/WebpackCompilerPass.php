@@ -25,6 +25,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         $web_dir         = rtrim(substr($path, 0, strlen($path) - strlen($public_path)), '/\\');
         $bundle_paths    = [];
 
+        // add all configured bundles to the tracker
         foreach ($bundles as $name => $class) {
             if (! in_array($name, $tracked_bundles)) {
                 continue;
@@ -35,6 +36,16 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $asset_tracker->replaceArgument(4, $asset_res_path);
         $asset_tracker->replaceArgument(5, $bundle_paths);
+
+        // add all aliases to the tracker
+        if (isset($config['resolve']['alias']) && is_array($config['resolve']['alias'])) {
+            foreach ($config['resolve']['alias'] as $alias => $path) {
+                if (!file_exists($path)) {
+                    continue;
+                }
+                $asset_tracker->addMethodCall('addPath', [$path]);
+            }
+        }
 
         // Configure the compiler process.
         $env_vars = [
