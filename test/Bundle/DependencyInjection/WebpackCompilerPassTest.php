@@ -49,7 +49,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
                     'node_modules_path' => $fixture_dir . '/node_modules',
                 ],
                 'bundles' => ['FooBundle'],
-                'resolve' => ['alias' => ['foo' => __DIR__]],
+                'resolve' => ['alias' => ['foo' => __DIR__, 'bar' => __DIR__ . '/fake']],
             ]
         ], $container);
         $container->compile();
@@ -63,7 +63,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->assertArraySubset([['addExtension', [new Reference('webpack_extension')]]], $method_calls);
 
         $method_calls = $container->getDefinition('hostnet_webpack.bridge.asset_tracker')->getMethodCalls();
-        $this->assertArraySubset([['addPath', [__DIR__]]], $method_calls);
+        $this->assertEquals([['addPath', [__DIR__]]], $method_calls);
     }
 
     /**

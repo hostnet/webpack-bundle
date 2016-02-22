@@ -31,6 +31,7 @@ webpack:
     resolve:
         alias:
             app: %kernel.root_dir%/Resources/assets
+            fake: %kernel.root_dir%/fake
     plugins:
         constants:
             ENVIRONMENT: functional_tests
