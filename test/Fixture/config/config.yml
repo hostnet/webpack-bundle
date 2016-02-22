@@ -28,6 +28,9 @@ webpack:
            all_chunks: true
        url: ~
        babel: ~
+    resolve:
+        alias:
+            app: %kernel.root_dir%/Resources/assets
     plugins:
         constants:
             ENVIRONMENT: functional_tests
