@@ -40,6 +40,9 @@ class WebpackCompilerPass implements CompilerPassInterface
         // add all aliases to the tracker
         if (isset($config['resolve']['alias']) && is_array($config['resolve']['alias'])) {
             foreach ($config['resolve']['alias'] as $alias => $path) {
+                if (!file_exists($path)) {
+                    continue;
+                }
                 $asset_tracker->addMethodCall('addPath', [$path]);
             }
         }
