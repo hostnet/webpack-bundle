@@ -352,7 +352,7 @@ set to `/packed/`.
 
 The following configuration requires the following modules to be present in your `node_modules` directory.
 
- - webpack-extract-text-plugin
+ - extract-text-webpack-plugin
  - style-loader
  - css-loader
  - less-loader
