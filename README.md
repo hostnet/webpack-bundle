@@ -386,7 +386,9 @@ webpack:
             all_chunks: true
             filename: '[name].css'
         url: ~
-        babel: ~
+        babel:
+            presets:
+                - "es2015"
 ```
 
 base.html.twig
@@ -496,7 +498,9 @@ you would need to do is gradually rename your jsx files to js files and everythi
 ```yaml
 webpack:
     loaders:
-        babel: ~
+        babel:
+            presets:
+                - "es2015"
 ```
 
 ## Plugins
