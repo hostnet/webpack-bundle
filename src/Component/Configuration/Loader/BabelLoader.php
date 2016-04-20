@@ -28,6 +28,12 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
         $node_builder
             ->arrayNode('babel')
                 ->canBeDisabled()
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('presets')
+                        ->prototype('scalar')->end()
+                    ->end()
+                ->end()
             ->end();
     }
 
@@ -38,9 +44,18 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
             return [new CodeBlock()];
         }
 
+        $presets_query = '';
+        if (! empty($this->config['presets'])) {
+            foreach ($this->config['presets'] as $preset) {
+                $presets_query .= sprintf(',presets[]=%s', $preset);
+            }
+        }
+
         return [(new CodeBlock())->set(
-            CodeBlock::LOADER,
-            '{ test: /\.jsx$/, loader: \'babel-loader?cacheDirectory\' }'
+            CodeBlock::LOADER, sprintf(
+                '{ test: /\.jsx$/, loader: \'babel-loader?cacheDirectory%s\' }',
+                $presets_query
+            )
         )];
     }
 }
