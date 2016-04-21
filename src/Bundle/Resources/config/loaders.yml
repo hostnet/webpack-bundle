@@ -19,3 +19,7 @@ services:
         class: Hostnet\Component\Webpack\Configuration\Loader\BabelLoader
         tags:
             - { name: hostnet_webpack.config_extension }
+    hostnet_webpack.loader.vue:
+        class: Hostnet\Component\Webpack\Configuration\Loader\VueLoader
+        tags:
+            - { name: hostnet_webpack.config_extension }
