@@ -28,7 +28,6 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
         $node_builder
             ->arrayNode('babel')
                 ->canBeDisabled()
-                ->addDefaultsIfNotSet()
                 ->children()
                     ->arrayNode('presets')
                         ->prototype('scalar')->end()

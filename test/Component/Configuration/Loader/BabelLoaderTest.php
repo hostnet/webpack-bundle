@@ -42,10 +42,33 @@ class BabelLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetPresetsCodeBlock()
     {
-        $config = new BabelLoader(['loaders' => ['babel' => ['enabled' => true, 'presets' => ['es2015', 'react']]]]);
-        $block  = $config->getCodeBlocks()[0];
+        $data = [
+            [
+                "source" => ['loaders' => ['babel' => ['enabled' => true]]],
+                "output" => "{ test: /\.jsx$/, loader: 'babel-loader?cacheDirectory' }"
+            ],
+            [
+                "source" => ['loaders' => ['babel' => ['enabled' => true, 'presets' => NULL]]],
+                "output" => "{ test: /\.jsx$/, loader: 'babel-loader?cacheDirectory' }"
+            ],
+            [
+                "source" => ['loaders' => ['babel' => ['enabled' => true, 'presets' => []]]],
+                "output" => "{ test: /\.jsx$/, loader: 'babel-loader?cacheDirectory' }"
+            ],
+            [
+                "source" => ['loaders' => ['babel' => ['enabled' => true, 'presets' => ['es2015', 'react']]]],
+                "output" => "{ test: /\.jsx$/, loader: 'babel-loader?cacheDirectory,presets[]=es2015,presets[]=react' }"
+            ]
+        ];
 
-        $this->assertTrue($block->has(CodeBlock::LOADER));
+        foreach ($data as $d) {
+            $config = new BabelLoader($d['source']);
+            $block  = $config->getCodeBlocks()[0];
+            $this->assertTrue($block->has(CodeBlock::LOADER));
+
+            $loader = $block->get(CodeBlock::LOADER);
+            $this->assertEquals($loader, $d['output']);
+        }
     }
 
     public function testGetCodeBlock()
