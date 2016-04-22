@@ -387,8 +387,10 @@ webpack:
             filename: '[name].css'
         url: ~
         babel:
+            exclude:
+                - 'node_modules'
             presets:
-                - "es2015"
+                - 'es2015'
 ```
 
 base.html.twig
@@ -499,8 +501,10 @@ you would need to do is gradually rename your jsx files to js files and everythi
 webpack:
     loaders:
         babel:
+            exclude:
+                - 'node_modules'
             presets:
-                - "es2015"
+                - 'es2015'
 ```
 
 ## Plugins

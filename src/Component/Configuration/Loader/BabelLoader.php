@@ -32,6 +32,7 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
                     ->arrayNode('presets')
                         ->prototype('scalar')->end()
                     ->end()
+                    ->scalarNode('exclude')->defaultNull()->end()
                 ->end()
             ->end();
     }
@@ -50,9 +51,19 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
             }
         }
 
+        $exclude = '';
+        if (! empty($this->config['exclude'])) {
+            $inner = '';
+            foreach ($this->config['exclude'] as $ex) {
+                $inner .= (($inner ? '|' : '') . $ex);
+            }
+            $exclude = sprintf(' exclude: /(%s)/,', $inner);
+        }
+
         return [(new CodeBlock())->set(
             CodeBlock::LOADER, sprintf(
-                '{ test: /\.jsx$/, loader: \'babel-loader?cacheDirectory%s\' }',
+                '{ test: /\.jsx$/,%s loader: \'babel-loader?cacheDirectory%s\' }',
+                $exclude,
                 $presets_query
             )
         )];
