@@ -32,7 +32,9 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
                     ->arrayNode('presets')
                         ->prototype('scalar')->end()
                     ->end()
-                    ->scalarNode('exclude')->defaultNull()->end()
+                    ->arrayNode('exclude')
+                        ->prototype('scalar')->end()
+                    ->end()
                 ->end()
             ->end();
     }
