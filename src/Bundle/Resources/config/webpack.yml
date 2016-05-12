@@ -8,25 +8,27 @@ services:
     hostnet_webpack.bridge.cache_warmer:
         class: Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
         arguments:
-            - '@hostnet_webpack.bridge.asset_compiler'
-            - '@hostnet_webpack.bridge.asset_dumper'
-            - '@logger'
-            - '@hostnet_webpack.bridge.profiler'
+            - '@hostnet_webpack.bridge.asset_cacheguard'
         tags:
             - { name: kernel.cache_warmer, priority: 10 }
 
     hostnet_webpack.bridge.generate_config_command:
         class: Hostnet\Bundle\WebpackBundle\Command\CompileCommand
         arguments:
-            - '@hostnet_webpack.bridge.asset_compiler'
-            - '@hostnet_webpack.bridge.asset_dumper'
-            - '@logger'
-            - '@hostnet_webpack.bridge.profiler'
+            - '@hostnet_webpack.bridge.asset_cacheguard'
         tags:
             - { name: console.command }
 
     hostnet_webpack.bridge.config_generator:
         class: Hostnet\Component\Webpack\Configuration\ConfigGenerator
+
+    hostnet_webpack.bridge.asset_cacheguard:
+        class: Hostnet\Component\Webpack\Asset\CacheGuard
+        arguments:
+            - '@hostnet_webpack.bridge.asset_compiler'
+            - '@hostnet_webpack.bridge.asset_dumper'
+            - '@hostnet_webpack.bridge.asset_tracker'
+            - '@logger'
 
     hostnet_webpack.bridge.asset_tracker:
         class: Hostnet\Component\Webpack\Asset\Tracker

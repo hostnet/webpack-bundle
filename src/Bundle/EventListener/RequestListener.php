@@ -1,9 +1,7 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
-use Hostnet\Component\Webpack\Asset\Compiler;
-use Hostnet\Component\Webpack\Asset\Dumper;
-use Hostnet\Component\Webpack\Asset\Tracker;
+use Hostnet\Component\Webpack\Asset\CacheGuard;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -12,34 +10,27 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 class RequestListener
 {
     /**
-     * @var Tracker
+     * Guards the cache and is able to rebuild/update it.
+     *
+     * @var CacheGuard
      */
-    private $tracker;
+    private $guard;
 
     /**
-     * @var Compiler
+     * Create the listener
+     *
+     * @param CacheGuard $guard Guards the cache and is able to rebuild/update it.
      */
-    private $compiler;
-
-    /**
-     * @var Dumper
-     */
-    private $dumper;
-
-    /**
-     * @param Tracker  $tracker
-     * @param Compiler $compiler
-     * @param Dumper   $dumper
-     */
-    public function __construct(Tracker $tracker, Compiler $compiler, Dumper $dumper)
+    public function __construct(CacheGuard $guard)
     {
-        $this->tracker  = $tracker;
-        $this->compiler = $compiler;
-        $this->dumper   = $dumper;
+        $this->guard = $guard;
     }
 
+
     /**
-     * @param GetResponseEvent $event
+     * On Request received check the validity of the webpack cache.
+     *
+     * @param GetResponseEvent $event the response to send to te browser, we don't we only ensure the cache is there.
      */
     public function onRequest(GetResponseEvent $event)
     {
@@ -47,10 +38,6 @@ class RequestListener
             return;
         }
 
-        if ($this->tracker->isOutdated()) {
-            $this->compiler->compile();
-        }
-
-        $this->dumper->dump();
+        $this->guard->validate();
     }
 }

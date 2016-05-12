@@ -3,9 +3,7 @@ services:
     hostnet_webpack.bridge.request_listener:
         class: Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
         arguments:
-            - '@hostnet_webpack.bridge.asset_tracker'
-            - '@hostnet_webpack.bridge.asset_compiler'
-            - '@hostnet_webpack.bridge.asset_dumper'
+            - '@hostnet_webpack.bridge.asset_cacheguard'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest}
 
