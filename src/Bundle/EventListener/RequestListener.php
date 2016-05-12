@@ -38,6 +38,6 @@ class RequestListener
             return;
         }
 
-        $this->guard->validate();
+        $this->guard->rebuild();
     }
 }

@@ -31,7 +31,7 @@ class WebpackCompileCacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cache_dir)
     {
-        $this->guard->validate();
+        $this->guard->rebuild();
     }
 
     /**

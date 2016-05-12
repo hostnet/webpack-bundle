@@ -17,7 +17,7 @@ class CompileCommandTest extends \PHPUnit_Framework_TestCase
     public function testCompileCommand()
     {
         $guard = $this->prophesize(CacheGuard::class);
-        $guard->validate()->shouldBeCalled();
+        $guard->rebuild()->shouldBeCalled();
 
         $compile_command = new CompileCommand($guard->reveal());
 

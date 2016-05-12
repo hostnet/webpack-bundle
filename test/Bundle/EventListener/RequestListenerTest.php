@@ -30,7 +30,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testRequestNoMasterRequest()
     {
-        $this->guard->expects($this->never())->method('validate');
+        $this->guard->expects($this->never())->method('rebuild');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(false);
 
         (new RequestListener($this->guard))->onRequest($this->event);
@@ -38,7 +38,7 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testRequestMasterRequest()
     {
-        $this->guard->expects($this->once())->method('validate');
+        $this->guard->expects($this->once())->method('rebuild');
         $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
 
         (new RequestListener($this->guard))->onRequest($this->event);

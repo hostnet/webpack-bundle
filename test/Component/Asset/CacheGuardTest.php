@@ -34,7 +34,7 @@ class CacheGuardTest extends \PHPUnit_Framework_TestCase
         $logger->debug('some debug output')->shouldBeCalled();
 
         $cache_guard = new CacheGuard($compiler->reveal(), $dumper->reveal(), $tracker->reveal(), $logger->reveal());
-        $cache_guard->validate();
+        $cache_guard->rebuild();
     }
 
     /**
@@ -57,6 +57,6 @@ class CacheGuardTest extends \PHPUnit_Framework_TestCase
         $logger->info('[Webpack]: Cache still up-to-date.')->shouldBeCalled();
 
         $cache_guard = new CacheGuard($compiler->reveal(), $dumper->reveal(), $tracker->reveal(), $logger->reveal());
-        $cache_guard->validate();
+        $cache_guard->rebuild();
     }
 }

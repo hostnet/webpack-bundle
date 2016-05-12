@@ -4,7 +4,7 @@ namespace Hostnet\Component\Webpack\Asset;
 use Psr\Log\LoggerInterface;
 
 /**
- * Gards the cache, updates or creates the cache when needed.
+ * Guards the cache, updates or creates the cache when needed.
  */
 class CacheGuard
 {
@@ -54,9 +54,9 @@ class CacheGuard
     }
 
     /**
-     * Validate the cache, check to see if it's still valid and rebuild if it's outdated.
+     * Rebuild the cache, check to see if it's still valid and rebuild if it's outdated.
      */
-    public function validate()
+    public function rebuild()
     {
         if ($this->tracker->isOutdated()) {
             $this->logger->info('[Webpack 1/2]: Compiling assets.');
