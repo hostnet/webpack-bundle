@@ -1,10 +1,7 @@
 <?php
 namespace Hostnet\Bundle\WebpackBundle\CacheWarmer;
 
-use Hostnet\Component\Webpack\Asset\Compiler;
-use Hostnet\Component\Webpack\Asset\Dumper;
-use Hostnet\Component\Webpack\Profiler\Profiler;
-use Psr\Log\LoggerInterface;
+use Hostnet\Component\Webpack\Asset\CacheGuard;
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 
 /**
@@ -13,32 +10,20 @@ use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
 class WebpackCompileCacheWarmer implements CacheWarmerInterface
 {
     /**
-     * @var Compiler
+     * Guards the cache and is able to rebuild/update it.
+     *
+     * @var CacheGuard
      */
-    private $compiler;
+    private $guard;
 
     /**
-     * @var Dumper
+     * Create the cache warmer.
+     *
+     * @param CacheGuard $guard Guards the cache and is able to rebuild/update it.
      */
-    private $dumper;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var Profiler
-     */
-    private $profiler;
-
-
-    public function __construct(Compiler $compiler, Dumper $dumper, LoggerInterface $logger, Profiler $profiler)
+    public function __construct(CacheGuard $guard)
     {
-        $this->compiler = $compiler;
-        $this->dumper   = $dumper;
-        $this->logger   = $logger;
-        $this->profiler = $profiler;
+        $this->guard = $guard;
     }
 
     /**
@@ -46,14 +31,7 @@ class WebpackCompileCacheWarmer implements CacheWarmerInterface
      */
     public function warmUp($cache_dir)
     {
-        $this->logger->info('[WEBPACK]: Compiling assets.');
-        $this->compiler->compile();
-
-
-        $this->logger->info('[WEBPACK]: Dumping assets.');
-        $this->dumper->dump();
-
-        $this->logger->debug($this->profiler->get('compiler.last_output'));
+        $this->guard->validate();
     }
 
     /**
