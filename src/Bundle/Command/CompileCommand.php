@@ -38,6 +38,6 @@ class CompileCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->guard->validate();
+        $this->guard->rebuild();
     }
 }

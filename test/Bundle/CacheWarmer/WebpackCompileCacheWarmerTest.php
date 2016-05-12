@@ -15,12 +15,12 @@ class WebpackCompileCacheWarmerTest extends \PHPUnit_Framework_TestCase
     public function testWebpackCompileCacheWarmer()
     {
         $guard = $this->prophesize(CacheGuard::class);
-        $guard->validate()->shouldBeCalled();
+        $guard->rebuild()->shouldBeCalled();
 
         $webpack_compile_cache_warmer = new WebpackCompileCacheWarmer($guard->reveal());
 
         //Cache warmer is optional...
         self::assertTrue($webpack_compile_cache_warmer->isOptional());
-        $webpack_compile_cache_warmer->warmUp('/tmp/random/name');
+        $webpack_compile_cache_warmer->warmUp(sys_get_temp_dir());
     }
 }
