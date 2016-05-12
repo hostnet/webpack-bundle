@@ -54,7 +54,7 @@ class CacheGuard
     }
 
     /**
-     * Rebuikd the cache, check to see if it's still valid and rebuild if it's outdated.
+     * Rebuild the cache, check to see if it's still valid and rebuild if it's outdated.
      */
     public function rebuild()
     {
