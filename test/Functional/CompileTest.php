@@ -32,7 +32,6 @@ class CompileTest extends KernelTestCase
 
         /** @var $tracker Tracker */
         $tracker = static::$kernel->getContainer()->get('hostnet_webpack.bridge.asset_tracker');
-        $tracker->rebuild();
 
         $templates = array_map(array($this, 'relative'), $tracker->getTemplates());
 
@@ -46,7 +45,17 @@ class CompileTest extends KernelTestCase
 
     private function relative($path)
     {
-        return str_replace(str_replace('/test/Fixture', '', $this->normalize(static::$kernel->getContainer()->getParameter('kernel.root_dir'))), '', $this->normalize($path));
+        return str_replace(
+            str_replace(
+                '/test/Fixture',
+                '',
+                $this->normalize(
+                    static::$kernel->getContainer()->getParameter('kernel.root_dir')
+                )
+            ),
+            '',
+            $this->normalize($path)
+        );
     }
 
     private function normalize($path)

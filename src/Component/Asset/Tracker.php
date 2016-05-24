@@ -4,6 +4,7 @@ namespace Hostnet\Component\Webpack\Asset;
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 /**
@@ -13,12 +14,17 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
  */
 class Tracker
 {
+
     /**
+     * The key-value store used to present 'logging' in the symfony-profiler bar.
+     *
      * @var Profiler
      */
     private $profiler;
 
     /**
+     * Sevice used for finding all the templates which needs to be tracked.
+     *
      * @var TemplateFinderInterface
      */
     private $finder;
@@ -31,29 +37,27 @@ class Tracker
     private $bundle_paths;
 
     /**
-     * @var string
-     */
-    private $cache_file;
-
-    /**
+     * The '%kernel.root_dir%' root directory of the application the tracker is used in.
+     *
      * @var string
      */
     private $root_dir;
 
     /**
-     * Collection of tracked paths. This consists of directories as well as files.
+     * Collection of tracked paths, this consists of directories as well as files.
      *
      * @var string[]
      */
     private $paths;
 
     /**
+     *
      * @var array
      */
     private $aliases = [];
 
     /**
-     * Asset directory to resolve assets from. This directory is resolved relative from the bundle path.
+     * Asset directory to resolve assets from, this directory is resolved relative from the bundle path.
      *
      * @var string
      */
@@ -67,45 +71,50 @@ class Tracker
     private $templates = [];
 
     /**
-     * A list of untracked templates that can't be resolved to an absolute path. These will be shown in the profiler
-     * as a warning to the developer.
+     * Is this Tracker 'runtime'-initialized.
      *
-     * @var string[]
-     */
-    private $untracked_templates = [];
-
-    /**
      * @var bool
      */
     private $booted = false;
 
     /**
-     * @param Profiler                $profiler
-     * @param TemplateFinderInterface $finder
-     * @param string                  $cache_dir
-     * @param string                  $root_dir
-     * @param string                  $asset_dir
-     * @param array                   $bundle_paths
+     * The directory where the compiled resources are stored, used to determine the latest compilation-run time.
+     *
+     * @var string
+     */
+    private $output_dir;
+
+    /**
+     * Create new Tracker.
+     *
+     * @param Profiler $profiler key-value store used to present 'logging' in the symfony-profiler bar.
+     * @param TemplateFinderInterface $finder used to find all the templates which needs to be tracked.
+     * @param string $root_dir '%kernel.root_dir%' root directory of the application.
+     * @param string $asset_dir directory to resolve assets, directory is resolved relative from the bundle path.
+     * @param string $output_dir The directory where the compiled resources are stored.
+     * @param array $bundle_paths the optional associative mapping between bundle names and their absolute paths.
      */
     public function __construct(
-        Profiler                $profiler,
+        Profiler $profiler,
         TemplateFinderInterface $finder,
-        /* string */            $cache_dir,
-        /* string */            $root_dir,
-        /* string */            $asset_dir,
-        array                   $bundle_paths = []
+        /* string */ $root_dir,
+        /* string */ $asset_dir,
+        /* string */ $output_dir,
+        array        $bundle_paths = []
     ) {
         $this->profiler     = $profiler;
         $this->finder       = $finder;
-        $this->cache_file   = rtrim($cache_dir, "\\/") . DIRECTORY_SEPARATOR . 'webpack.asset_tracker.cache';
         $this->root_dir     = $root_dir;
         $this->asset_dir    = $asset_dir;
+        $this->output_dir   = $output_dir;
         $this->bundle_paths = $bundle_paths;
     }
 
     /**
-     * @param  string $path
-     * @return Tracker
+     * Add a path to the list of tracked paths (this can be both dir's or files).
+     *
+     * @param string $path the path to track.
+     * @return Tracker this instance.
      */
     public function addPath($path)
     {
@@ -120,74 +129,28 @@ class Tracker
     /**
      * Returns true if the cache is outdated.
      *
-     * @return bool
+     * @return bool true, cache is outdated of non exsitant.
      */
     public function isOutdated()
     {
         $this->boot();
 
-        // If there is no cache file, presume the cache is outdated.
-        if (! file_exists($this->cache_file)) {
-            $this->profiler->set('tracker.reason', 'Cache data not present.');
+        $compiled_tracked_files = new TrackedFiles([$this->output_dir]);
+        $current_tracked_files  = new TrackedFiles($this->paths);
 
+        if ($current_tracked_files->modifiedAfter($compiled_tracked_files)) {
+            $this->profiler->set('tracker.reason', 'One of the tracked files has been modified.');
             return true;
         }
 
-        // The cache holds last modified timestamps indexed by absolute file path.
-        $cache = json_decode(file_get_contents($this->cache_file), true);
-        $files = [];
-
-        foreach ($this->paths as $path) {
-            $files += $this->scan($path);
-        }
-
-        // If the length of the arrays don't match; something has changed.
-        if (count($cache) !== count($files)) {
-            $this->profiler->set('tracker.reason', 'A file has been added, moved or deleted.');
-
-            return true;
-        }
-
-        // Iterate over the files and cross-reference their modification times with the cached entries.
-        foreach ($files as $file => $mtime) {
-            // Is the file new?
-            if (! isset($cache[$file])) {
-                $this->profiler->set('tracker.reason', 'The file "' . $file . '" has been added.');
-
-                return true;
-            }
-
-            // Is the file modified recently?
-            if ($mtime > $cache[$file]) {
-                $this->profiler->set('tracker.reason', 'The file "' . $file . '" has been modified.');
-
-                return true;
-            }
-        }
         $this->profiler->set('tracker.reason', false);
-
         return false;
     }
 
     /**
-     * Rebuilds the tracker cache.
-     */
-    public function rebuild()
-    {
-        $this->boot();
-
-        $files = [];
-
-        foreach ($this->paths as $path) {
-            $files = array_merge($files, $this->scan($path));
-        }
-
-        $this->profiler->set('tracker.file_count', count($files));
-        file_put_contents($this->cache_file, json_encode($files));
-    }
-
-    /**
-     * @return array
+     * Get the tracked aliases
+     *
+     * @return array the tracked aliases.
      */
     public function getAliases()
     {
@@ -197,7 +160,7 @@ class Tracker
     /**
      * Returns a list of twig templates that are being tracked.
      *
-     * @return string[]
+     * @return string[] list of twig templates.
      */
     public function getTemplates()
     {
@@ -207,17 +170,8 @@ class Tracker
     }
 
     /**
-     * Returns an associative array of file modification times indexed by absolute file paths.
-     *
-     * @return array
+     * Runtime initialize this tracker.
      */
-    public function getCacheEntries()
-    {
-        return file_exists($this->cache_file)
-            ? json_decode(file_get_contents($this->cache_file), true)
-            : [];
-    }
-
     private function boot()
     {
         if ($this->booted) {
@@ -237,41 +191,17 @@ class Tracker
             }
         }
 
-
         $this->profiler->set('bundles', $this->aliases);
         $this->profiler->set('templates', $this->templates);
     }
 
     /**
-     * Returns an associative array of file modification times indexed by absolute filename.
+     * Find the full path to a requested path, this can be bundle configurations like @BundleName/
      *
-     * @param  string $dir
-     * @param  array  $files
-     * @return array
+     * @param string $path the path to resolv.
+     * @return string the full path to the requested resource or false if not found.
      */
-    private function scan($dir, $files = [])
-    {
-        if (is_file($dir)) {
-            return [$dir => filemtime($dir)];
-        }
-
-        foreach (glob($dir . DIRECTORY_SEPARATOR . '*') as $file) {
-            if (is_file($file) && is_readable($file)) {
-                $files[$file] = filemtime($file);
-                continue;
-            }
-
-            $files = array_merge($files, $this->scan($file));
-        }
-
-        return $files;
-    }
-
-    /**
-     * @param  string $path
-     * @return bool|string
-     */
-    public function resolvePath($path)
+    private function resolvePath($path)
     {
         // Find and replace the @BundleName with the absolute path to the bundle.
         $matches = [];
@@ -289,16 +219,27 @@ class Tracker
         return false;
     }
 
+    /**
+     * Find the full path to a requested resource, this can be bundle configurations like @BundleName/resource.twig
+     *
+     * @param string $path the path resolve
+     * @return string the full path to the requested resource or false if not found.
+     */
     public function resolveResourcePath($path)
     {
         $matches = [];
         preg_match('/@(\w+)/', $path, $matches);
         if (isset($matches[0], $matches[1])) {
-            $template = realpath(str_replace(
-                $matches[0],
-                $this->bundle_paths[$matches[1]] . DIRECTORY_SEPARATOR . trim($this->asset_dir, "\\/"),
-                $path
-            ));
+            if (!isset($this->bundle_paths[$matches[1]])) {
+                return false;
+            }
+            $template = realpath(
+                str_replace(
+                    $matches[0],
+                    $this->bundle_paths[$matches[1]] . DIRECTORY_SEPARATOR . trim($this->asset_dir, "\\/"),
+                    $path
+                )
+            );
             return $template;
         }
 
@@ -308,8 +249,8 @@ class Tracker
     /**
      * Adds twig templates to the tracker.
      *
-     * @param  TemplateReferenceInterface $reference
-     * @return Tracker
+     * @param TemplateReferenceInterface $reference the reference to the twig template to be added.
+     * @return Tracker this instance
      */
     private function addTemplate(TemplateReferenceInterface $reference)
     {
@@ -321,10 +262,6 @@ class Tracker
             $this->templates[] = $path;
             return $this->addPath($path);
         }
-
-        // Can't resolve the template. This shouldn't happen, unless somebody placed a template in a very weird place.
-        $this->untracked_templates[] = $reference->getPath();
-
         return $this;
     }
 }
