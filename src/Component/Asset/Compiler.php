@@ -104,19 +104,19 @@ class Compiler
         $output = $this->process->getOutput() . $this->process->getErrorOutput();
         $this->profiler->set('compiler.executed', true);
         $this->profiler->set('compiler.last_output', $output);
-        $this->profiler->set('compiler.successful',
+        $this->profiler->set(
+            'compiler.successful',
             strpos($output, 'Error:') === false &&
             strpos($output, 'parse failed') === false
         );
 
-        if ($this->profiler->get('compiler.successful')) {
-            $this->tracker->rebuild();
-        }
-
         // Finally, write some logging for later use.
         file_put_contents($this->cache_dir . DIRECTORY_SEPARATOR . 'webpack.compiler.log', $output);
 
-        $this->profiler->set('compiler.performance.compiler', $this->stopwatch->stop('webpack.compiler')->getDuration());
+        $this->profiler->set(
+            'compiler.performance.compiler',
+            $this->stopwatch->stop('webpack.compiler')->getDuration()
+        );
         $this->profiler->set('compiler.performance.total', $this->stopwatch->stop('webpack.total')->getDuration());
 
         return $output;

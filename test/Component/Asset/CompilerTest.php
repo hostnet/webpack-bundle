@@ -33,7 +33,6 @@ class CompilerTest extends \PHPUnit_Framework_TestCase
         $this->tracker->expects($this->once())->method('getTemplates')->willReturn(['foobar']);
         $this->tracker->expects($this->once())->method('getAliases')->willReturn(['@AppBundle' => 'foobar']);
         $this->twig_parser->expects($this->once())->method('findSplitPoints')->willReturn(['@AppBundle/app.js' => 'a']);
-        $this->profiler->expects($this->once())->method('get')->willReturn(true);
 
         (new Compiler(
             $this->profiler,

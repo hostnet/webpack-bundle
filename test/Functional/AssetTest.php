@@ -49,26 +49,6 @@ class AssetTest extends KernelTestCase
         $this->assertContains('app.henk.css?', (string) $resources['css']);
     }
 
-    public function testAliasAssetTracking()
-    {
-        /** @var $tracker Tracker */
-        $container = static::$kernel->getContainer();
-        $tracker   = $container->get('hostnet_webpack.bridge.asset_tracker');
-        $tracker->rebuild();
-
-        $found = false;
-        foreach ($tracker->getCacheEntries() as $file_name => $timestamp) {
-            // as set under alias "app" in config.yml
-            if (preg_match('~/test/Fixture/Resources/assets/base\.js$~', $file_name)) {
-                $found = true;
-            }
-        }
-
-        if (!$found) {
-            $this->fail('/test/Fixture/Resources/assets/base.js was not found in the tracker cache.');
-        }
-    }
-
     protected function tearDown()
     {
         `rm -rf {$this->compiled}`;

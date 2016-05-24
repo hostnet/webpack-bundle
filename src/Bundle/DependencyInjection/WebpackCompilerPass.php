@@ -34,16 +34,17 @@ class WebpackCompilerPass implements CompilerPassInterface
             $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
         }
 
-        $asset_tracker->replaceArgument(4, $asset_res_path);
+        $asset_tracker->replaceArgument(3, $asset_res_path);
+        $asset_tracker->replaceArgument(4, $path);
         $asset_tracker->replaceArgument(5, $bundle_paths);
 
         // add all aliases to the tracker
         if (isset($config['resolve']['alias']) && is_array($config['resolve']['alias'])) {
-            foreach ($config['resolve']['alias'] as $alias => $path) {
-                if (!file_exists($path)) {
+            foreach ($config['resolve']['alias'] as $alias_path) {
+                if (!file_exists($alias_path)) {
                     continue;
                 }
-                $asset_tracker->addMethodCall('addPath', [$path]);
+                $asset_tracker->addMethodCall('addPath', [$alias_path]);
             }
         }
 
@@ -73,7 +74,12 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
         if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {
-            throw new \RuntimeException(sprintf('Webpack is not installed in path "%s".', $config['node']['node_modules_path']));
+            throw new \RuntimeException(
+                sprintf(
+                    'Webpack is not installed in path "%s".',
+                    $config['node']['node_modules_path']
+                )
+            );
         }
 
         $process_definition = $container
