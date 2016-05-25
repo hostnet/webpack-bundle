@@ -17,6 +17,7 @@
   - [Less](#less)
   - [Sass](#sass)
   - [URL](#url)
+  - [TypeScript](#url)
 - [Plugins](#plugins)
   - [DefinePlugin](#defineplugin)
   - [ProvidePlugin](#provideplugin)
@@ -359,6 +360,7 @@ The following configuration requires the following modules to be present in your
  - sass-loader
  - url-loader
  - babel-loader
+ - ts-loader
 
 Because we're creating shared chunks of javascript files, you'll need to include '`/compiled/shared.js`' manually in
 your base template. The same might also be the case for your CSS files, depending on what you include and where you do
@@ -387,6 +389,7 @@ webpack:
             filename: '[name].css'
         url: ~
         babel: ~
+        typescript: ~
 ```
 
 base.html.twig
@@ -409,12 +412,14 @@ Somewhere in your twig templates
 
 ## Loaders
 
-Loaders allow you to `require` files other than javascript. This package comes with 4 default loaders.
+Loaders allow you to `require` files other than javascript. This package comes with 6 default loaders.
 
- - `CSSLoader` : include CSS files
- - `UrlLoader` : include images (converted to base64)
- - `LessLoader`: include less files.
- - `SassLoader`: include sass files.
+ - `CSSLoader`       : include CSS files
+ - `UrlLoader`       : include images (converted to base64)
+ - `LessLoader`      : include less files.
+ - `SassLoader`      : include sass files.
+ - `BabelLoader`     : include ES6 files.
+ - `TypeScriptLoader`: include TypeScript files.
 
 Each loader has its own configuration under the `loaders` section.
 
@@ -497,6 +502,19 @@ you would need to do is gradually rename your jsx files to js files and everythi
 webpack:
     loaders:
         babel: ~
+```
+
+### TypeScript
+
+The TypeScript Loader transpiles TypeScript 2 code to JavaScript code, allowing it to run in all browsers. The loader
+compiles `.ts` files.
+
+> You need the `ts-loader` node module for this to work.
+
+```yaml
+webpack:
+    loaders:
+        typescript: ~
 ```
 
 ## Plugins

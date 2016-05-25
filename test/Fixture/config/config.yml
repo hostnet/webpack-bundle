@@ -28,6 +28,7 @@ webpack:
            all_chunks: true
        url: ~
        babel: ~
+       typescript: ~
     resolve:
         alias:
             app: %kernel.root_dir%/Resources/assets
