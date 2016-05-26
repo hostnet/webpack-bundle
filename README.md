@@ -509,12 +509,21 @@ webpack:
 The TypeScript Loader transpiles TypeScript 2 code to JavaScript code, allowing it to run in all browsers. The loader
 compiles `.ts` files.
 
-> You need the `ts-loader` node module for this to work.
+> You need the `ts-loader` node module for this to work with the default configuration.
 
 ```yaml
 webpack:
     loaders:
         typescript: ~
+```
+
+You can also configure your own loader:
+
+```yaml
+webpack:
+    loaders:
+        typescript:
+            loader: some-other-typescript-loader
 ```
 
 ## Plugins

@@ -17,9 +17,7 @@ final class TypeScriptLoader implements LoaderInterface, ConfigExtensionInterfac
      */
     public function __construct(array $config = [])
     {
-        $this->config = isset($config['loaders']['typescript'])
-            ? $config['loaders']['typescript']
-            : ['enabled' => false];
+        $this->config = $config;
     }
 
     /** {@inheritdoc} */
@@ -28,16 +26,25 @@ final class TypeScriptLoader implements LoaderInterface, ConfigExtensionInterfac
         $node_builder
             ->arrayNode('typescript')
                 ->canBeDisabled()
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('loader')->defaultValue('ts')->end()
+                ->end()
             ->end();
     }
 
     /** {@inheritdoc} */
     public function getCodeBlocks()
     {
-        if (! $this->config['enabled']) {
+        $config = $this->config['loaders']['typescript'];
+
+        if (! $config['enabled']) {
             return [new CodeBlock()];
         }
 
-        return [(new CodeBlock())->set(CodeBlock::LOADER, '{ test: /\.ts/, loader: \'ts\' }')];
+        return [(new CodeBlock())->set(
+            CodeBlock::LOADER,
+            sprintf("{ test: /\\.ts/, loader: '%s' }", $config['loader'])
+        )];
     }
 }
