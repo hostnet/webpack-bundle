@@ -23,17 +23,9 @@ class TypeScriptLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('enabled', $config['typescript']);
     }
 
-    public function testGetCodeBlockDefault()
-    {
-        $config = new TypeScriptLoader();
-        $block  = $config->getCodeBlocks()[0];
-
-        $this->assertFalse($block->has(CodeBlock::LOADER));
-    }
-
     public function testGetCodeBlockDisabled()
     {
-        $config = new TypeScriptLoader(['loaders' => ['typescript' => ['enabled' => false]]]);
+        $config = new TypeScriptLoader(['loaders' => ['typescript' => ['enabled' => false, 'loader' => 'ts']]]);
         $block  = $config->getCodeBlocks()[0];
 
         $this->assertFalse($block->has(CodeBlock::LOADER));
@@ -41,7 +33,7 @@ class TypeScriptLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCodeBlock()
     {
-        $config = new TypeScriptLoader(['loaders' => ['typescript' => ['enabled' => true]]]);
+        $config = new TypeScriptLoader(['loaders' => ['typescript' => ['enabled' => true, 'loader' => 'ts']]]);
         $block  = $config->getCodeBlocks()[0];
 
         $this->assertTrue($block->has(CodeBlock::LOADER));
