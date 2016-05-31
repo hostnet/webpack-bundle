@@ -26,6 +26,23 @@ class TwigParser
     }
 
     /**
+     * Consistently calculate file name hashes.
+     *
+     * @param $template_file
+     * @param $block_index
+     * @return string
+     */
+    public static function hashInlineFileName($template_file, $block_index)
+    {
+        // Work around path inconsistencies on Windows/XAMPP.
+        if (DIRECTORY_SEPARATOR == '\\') {
+            $template_file = str_replace('\\', '/', $template_file);
+        }
+        $hash = md5($template_file . $block_index);
+        return $hash;
+    }
+
+    /**
      * Returns an array of split points from the given template file.
      *
      * @param  string $template_file
@@ -53,7 +70,7 @@ class TwigParser
                     $stream->next();
 
                     $token     = $stream->next();
-                    $file_name = md5($template_file . $inline_blocks);
+                    $file_name = TwigParser::hashInlineFileName($template_file, $inline_blocks);
 
                     // Are we dealing with a custom extension? If not, fallback to javascript.
                     $extension = 'js'; // Default
