@@ -23,3 +23,7 @@ services:
         class: Hostnet\Component\Webpack\Configuration\Loader\TypeScriptLoader
         tags:
             - { name: "hostnet_webpack.config_extension" }
+    hostnet_webpack.loader.coffee:
+        class: Hostnet\Component\Webpack\Configuration\Loader\CoffeeScriptLoader
+        tags:
+            - { name: "hostnet_webpack.config_extension" }

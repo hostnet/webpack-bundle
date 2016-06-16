@@ -17,7 +17,8 @@
   - [Less](#less)
   - [Sass](#sass)
   - [URL](#url)
-  - [TypeScript](#url)
+  - [TypeScript](#typescript)
+  - [CoffeeScript](#coffeescript)
 - [Plugins](#plugins)
   - [DefinePlugin](#defineplugin)
   - [ProvidePlugin](#provideplugin)
@@ -412,7 +413,7 @@ Somewhere in your twig templates
 
 ## Loaders
 
-Loaders allow you to `require` files other than javascript. This package comes with 6 default loaders.
+Loaders allow you to `require` files other than javascript. This package comes with 7 default loaders.
 
  - `CSSLoader`       : include CSS files
  - `UrlLoader`       : include images (converted to base64)
@@ -420,6 +421,7 @@ Loaders allow you to `require` files other than javascript. This package comes w
  - `SassLoader`      : include sass files.
  - `BabelLoader`     : include ES6 files.
  - `TypeScriptLoader`: include TypeScript files.
+ - `CoffeeScriptLoader`: include CoffeeScript files.
 
 Each loader has its own configuration under the `loaders` section.
 
@@ -525,6 +527,21 @@ webpack:
         typescript:
             loader: some-other-typescript-loader
 ```
+
+### CoffeeScript
+
+The CoffeeScript loader transpiles [CoffeeScript](http://coffeescript.org/) to portable (.js),
+allowing coffeescript to run in every browser. The loaders loads `.coffee`-files
+
+> You need the [coffee-loader](https://github.com/webpack/coffee-loader)
+
+```yaml
+webpack:
+    loaders:
+        coffee: ~
+```
+
+A `loader` field can specify any other CoffeeScript loader, see [TypeScript](#typescript).
 
 ## Plugins
 
