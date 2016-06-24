@@ -45,7 +45,7 @@ class Configuration implements ConfigurationInterface
         $this->addPluginConfiguration($children);
 
         $children
-            ->booleanNode('compile_timeout')
+            ->integerNode('compile_timeout')
             ->defaultValue(self::DEFAULT_COMPILE_TIMEOUT_SECONDS)
             ->end();
 
