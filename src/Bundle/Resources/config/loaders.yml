@@ -2,24 +2,24 @@ services:
     hostnet_webpack.loader.css:
         class: Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
     hostnet_webpack.loader.url:
         class: Hostnet\Component\Webpack\Configuration\Loader\UrlLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
     hostnet_webpack.loader.less:
         class: Hostnet\Component\Webpack\Configuration\Loader\LessLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
     hostnet_webpack.loader.sass:
         class: Hostnet\Component\Webpack\Configuration\Loader\SassLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
     hostnet_webpack.loader.babel:
         class: Hostnet\Component\Webpack\Configuration\Loader\BabelLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
     hostnet_webpack.loader.typescript:
         class: Hostnet\Component\Webpack\Configuration\Loader\TypeScriptLoader
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
