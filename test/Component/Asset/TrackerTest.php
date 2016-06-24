@@ -274,7 +274,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
     public function testAddInvalidPath()
     {
         $profiler = new Profiler();
-        $finder   = $this->getMock(TemplateFinderInterface::class);
+        $finder   = $this->getMockBuilder(TemplateFinderInterface::class)->getMock();
         $tracker  = new Tracker($profiler, $finder, $this->root_dir, $this->asset_dir, $this->output_dir, []);
         $tracker->addPath("/i/dont/exist");
     }

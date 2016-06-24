@@ -8,16 +8,16 @@ services:
     hostnet_webpack.bridge.cache_warmer:
         class: Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
         arguments:
-            - '@hostnet_webpack.bridge.asset_cacheguard'
+            - "@hostnet_webpack.bridge.asset_cacheguard"
         tags:
-            - { name: kernel.cache_warmer, priority: 10 }
+            - { name: "kernel.cache_warmer", priority: 10 }
 
     hostnet_webpack.bridge.generate_config_command:
         class: Hostnet\Bundle\WebpackBundle\Command\CompileCommand
         arguments:
-            - '@hostnet_webpack.bridge.asset_cacheguard'
+            - "@hostnet_webpack.bridge.asset_cacheguard"
         tags:
-            - { name: console.command }
+            - { name: "console.command" }
 
     hostnet_webpack.bridge.config_generator:
         class: Hostnet\Component\Webpack\Configuration\ConfigGenerator
@@ -25,65 +25,65 @@ services:
     hostnet_webpack.bridge.asset_cacheguard:
         class: Hostnet\Component\Webpack\Asset\CacheGuard
         arguments:
-            - '@hostnet_webpack.bridge.asset_compiler'
-            - '@hostnet_webpack.bridge.asset_dumper'
-            - '@hostnet_webpack.bridge.asset_tracker'
-            - '@logger'
+            - "@hostnet_webpack.bridge.asset_compiler"
+            - "@hostnet_webpack.bridge.asset_dumper"
+            - "@hostnet_webpack.bridge.asset_tracker"
+            - "@logger"
 
     hostnet_webpack.bridge.asset_tracker:
         class: Hostnet\Component\Webpack\Asset\Tracker
         arguments:
-            - '@hostnet_webpack.bridge.profiler'
-            - '@templating.finder'
-            - '%kernel.root_dir%'
-            - '' # asset_path
-            - '' # output dir
+            - "@hostnet_webpack.bridge.profiler"
+            - "@templating.finder"
+            - "%kernel.root_dir%"
+            - "" # asset_path
+            - "" # output dir
             - [] # bundles
 
     hostnet_webpack.bridge.asset_dumper:
         class: Hostnet\Component\Webpack\Asset\Dumper
         arguments:
-            - '@filesystem'
-            - '@logger'
+            - "@filesystem"
+            - "@logger"
             - [] # bundles
-            - '' # 'public' dir
-            - '' # output dir
+            - "" # "public" dir
+            - "" # output dir
 
     hostnet_webpack.bridge.compiler_process:
         class: Symfony\Component\Process\Process
         arguments:
-            - '' # Node binary
-            - '' # Cache directory
+            - "" # Node binary
+            - "" # Cache directory
 
     hostnet_webpack.bridge.asset_twig_parser:
         class: Hostnet\Component\Webpack\Asset\TwigParser
         arguments:
-            - '@hostnet_webpack.bridge.asset_tracker'
-            - '@twig'
-            - '%kernel.cache_dir%'
+            - "@hostnet_webpack.bridge.asset_tracker"
+            - "@twig"
+            - "%kernel.cache_dir%"
 
     hostnet_webpack.bridge.asset_compiler:
         class: Hostnet\Component\Webpack\Asset\Compiler
         arguments:
-            - '@hostnet_webpack.bridge.profiler'
-            - '@hostnet_webpack.bridge.asset_tracker'
-            - '@hostnet_webpack.bridge.asset_twig_parser'
-            - '@hostnet_webpack.bridge.config_generator'
-            - '@hostnet_webpack.bridge.compiler_process'
-            - '%kernel.cache_dir%'
+            - "@hostnet_webpack.bridge.profiler"
+            - "@hostnet_webpack.bridge.asset_tracker"
+            - "@hostnet_webpack.bridge.asset_twig_parser"
+            - "@hostnet_webpack.bridge.config_generator"
+            - "@hostnet_webpack.bridge.compiler_process"
+            - "%kernel.cache_dir%"
             - [] # bundles
-            - '@?debug.stopwatch'
+            - "@?debug.stopwatch"
 
     hostnet_webpack.bridge.twig_extension:
         class: Hostnet\Bundle\WebpackBundle\Twig\TwigExtension
         arguments:
-            - '' # web_path
-            - '' # public_path
-            - '' # dump_path
-            - '' # common_js
-            - '' # common_css
+            - "" # web_path
+            - "" # public_path
+            - "" # dump_path
+            - "" # common_js
+            - "" # common_css
         tags:
-            - { name: twig.extension }
+            - { name: "twig.extension" }
 
     hostnet_webpack.bridge.profiler:
         class: Hostnet\Component\Webpack\Profiler\Profiler

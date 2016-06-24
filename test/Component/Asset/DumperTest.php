@@ -24,8 +24,8 @@ class DumperTest extends \PHPUnit_Framework_TestCase
     {
         $this->fixture_path = realpath(__DIR__ . '/../../Fixture');
         $this->dumper       = new Dumper(
-            $this->getMock(Filesystem::class),
-            $this->getMock(LoggerInterface::class),
+            $this->getMockBuilder(Filesystem::class)->getMock(),
+            $this->getMockBuilder(LoggerInterface::class)->getMock(),
             [
                 'FooBundle' => $this->fixture_path . '/Bundle/FooBundle',
                 'BarBundle' => $this->fixture_path . '/Bundle/BarBundle'

@@ -3,14 +3,14 @@ services:
     hostnet_webpack.plugin.define:
         class: Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
 
     hostnet_webpack.plugin.provide:
         class: Hostnet\Component\Webpack\Configuration\Plugin\ProvidePlugin
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }
 
     hostnet_webpack.plugin.uglifyjs:
         class: Hostnet\Component\Webpack\Configuration\Plugin\UglifyJsPlugin
         tags:
-            - { name: hostnet_webpack.config_extension }
+            - { name: "hostnet_webpack.config_extension" }

@@ -6,14 +6,14 @@ framework:
     templating:
         engine: [twig]
     router:
-        resource: %kernel.root_dir%/config/routing.yml
+        resource: "%kernel.root_dir%/config/routing.yml"
 
 webpack:
     node:
-        node_modules_path: %kernel.root_dir%/node_modules
+        node_modules_path: "%kernel.root_dir%/node_modules"
     output:
-        path: %kernel.root_dir%/cache/compiled/
-        dump_path: %kernel.root_dir%/cache/bundles/
+        path: "%kernel.root_dir%/cache/compiled/"
+        dump_path: "%kernel.root_dir%/cache/bundles/"
         public_path: /compiled/
         common_id: shared
     loaders:
@@ -31,8 +31,9 @@ webpack:
        typescript: ~
     resolve:
         alias:
-            app: %kernel.root_dir%/Resources/assets
-            fake: %kernel.root_dir%/fake
+            app: "%kernel.root_dir%/Resources/assets"
+            fake: "%kernel.root_dir%/fake"
+
     plugins:
         constants:
             ENVIRONMENT: functional_tests

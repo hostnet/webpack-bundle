@@ -3,13 +3,13 @@ services:
     hostnet_webpack.bridge.request_listener:
         class: Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
         arguments:
-            - '@hostnet_webpack.bridge.asset_cacheguard'
+            - "@hostnet_webpack.bridge.asset_cacheguard"
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest}
+            - { name: "kernel.event_listener", event: "kernel.request", method: "onRequest"}
 
     hostnet_webpack.bridge.data_collector:
         class: Hostnet\Component\Webpack\Profiler\WebpackDataCollector
         arguments:
-            - '@hostnet_webpack.bridge.profiler'
+            - "@hostnet_webpack.bridge.profiler"
         tags:
-            - { name: data_collector, template: WebpackBundle::profiler.html.twig, id: webpack }
+            - { name: "data_collector", template: "WebpackBundle::profiler.html.twig", id: "webpack" }

@@ -17,6 +17,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $final  = $tree->buildTree()->finalize([]);
 
         $this->assertArrayHasKey('node', $final);
+        $this->assertArrayHasKey('compile_timeout', $final);
 
         $this->assertArrayHasKey('binary', $final['node']);
         $this->assertArrayHasKey('win32', $final['node']['binary']);

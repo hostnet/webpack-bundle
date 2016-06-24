@@ -13,7 +13,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    const CONFIG_ROOT = 'webpack';
+    const CONFIG_ROOT                     = 'webpack';
+    const DEFAULT_COMPILE_TIMEOUT_SECONDS = 60;
 
     private $bundles;
     private $plugins;
@@ -42,6 +43,11 @@ class Configuration implements ConfigurationInterface
         $this->addBundleConfiguration($children);
         $this->addLoaderConfiguration($children);
         $this->addPluginConfiguration($children);
+
+        $children
+            ->booleanNode('compile_timeout')
+            ->defaultValue(self::DEFAULT_COMPILE_TIMEOUT_SECONDS)
+            ->end();
 
         $children->end();
 
