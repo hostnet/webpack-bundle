@@ -85,7 +85,8 @@ class WebpackCompilerPass implements CompilerPassInterface
         $process_definition = $container
             ->getDefinition('hostnet_webpack.bridge.compiler_process')
             ->replaceArgument(0, $config['node']['binary'] . ' ' . $webpack)
-            ->replaceArgument(1, $container->getParameter('kernel.cache_dir'));
+            ->replaceArgument(1, $container->getParameter('kernel.cache_dir'))
+            ->addMethodCall('setTimeout', [$config['compile_timeout']]);
 
         $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
         $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));

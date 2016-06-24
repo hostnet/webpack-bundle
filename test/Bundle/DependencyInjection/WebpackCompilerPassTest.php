@@ -30,10 +30,9 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
-        $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
+        $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
         $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
-        $container->set('logger', $this->getMock(LoggerInterface::class));
-
+        $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $container->setDefinition(
             'webpack_extension',
@@ -64,6 +63,13 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $method_calls = $container->getDefinition('hostnet_webpack.bridge.asset_tracker')->getMethodCalls();
         $this->assertEquals([['addPath', [__DIR__]]], $method_calls);
+
+        $process_definition = $container->getDefinition('hostnet_webpack.bridge.compiler_process');
+        self::assertTrue($process_definition->hasMethodCall('setTimeout'));
+        self::assertEquals(
+            Configuration::DEFAULT_COMPILE_TIMEOUT_SECONDS,
+            $process_definition->getMethodCalls()[0][1][0]
+        );
     }
 
     /**
@@ -82,9 +88,9 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
-        $container->set('templating.finder', $this->getMock(TemplateFinderInterface::class));
+        $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
         $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
-        $container->set('logger', $this->getMock(LoggerInterface::class));
+        $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $bundle->build($container);
 

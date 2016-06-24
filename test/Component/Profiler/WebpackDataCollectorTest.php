@@ -16,7 +16,10 @@ class WebpackDataCollectorTest extends \PHPUnit_Framework_TestCase
         $profiler  = new Profiler();
         $collector = new WebpackDataCollector($profiler);
         $profiler->set('foobar', 'hoi');
-        $collector->collect($this->getMock(Request::class), $this->getMock(Response::class));
+        $collector->collect(
+            $this->getMockBuilder(Request::class)->getMock(),
+            $this->getMockBuilder(Response::class)->getMock()
+        );
 
         $this->assertEquals('hoi', $collector->get('foobar'));
         $this->assertEquals('webpack', $collector->getName());
