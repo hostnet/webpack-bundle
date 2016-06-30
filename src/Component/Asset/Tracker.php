@@ -205,9 +205,9 @@ class Tracker
     {
         // Find and replace the @BundleName with the absolute path to the bundle.
         $matches = [];
-        preg_match('/@(\w+)/', $path, $matches);
-        if (isset($matches[0], $matches[1], $this->bundle_paths[$matches[1]])) {
-            return realpath(str_replace($matches[0], $this->bundle_paths[$matches[1]], $path));
+        preg_match('/(^|\/)@(\w+)/', $path, $matches);
+        if (isset($matches[0], $matches[2], $this->bundle_paths[$matches[2]])) {
+            return realpath(str_replace($matches[0], $this->bundle_paths[$matches[2]], $path));
         }
 
         // The path doesn't contain a bundle name. In this case it must exist in %kernel.root_dir%/Resources/views
