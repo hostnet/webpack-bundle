@@ -4,6 +4,7 @@ namespace Hostnet\Bundle\WebpackBundle\Twig\Token;
 use Hostnet\Bundle\WebpackBundle\Twig\Node\WebpackInlineNode;
 use Hostnet\Bundle\WebpackBundle\Twig\Node\WebpackNode;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
+use Hostnet\Component\Webpack\Asset\TwigParser;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
@@ -130,7 +131,7 @@ class WebpackTokenParser implements \Twig_TokenParserInterface
             $this->inline_blocks[$file] = 0;
         }
 
-        $file_name = md5($file . $this->inline_blocks[$file]) . '.js';
+        $file_name = TwigParser::hashInlineFileName($file, $this->inline_blocks[$file]) . '.js';
         $assets    = $this->extension->webpackAsset('cache.' . $file_name);
 
         $this->inline_blocks[$file]++;
