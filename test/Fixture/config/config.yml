@@ -29,6 +29,7 @@ webpack:
        url: ~
        babel: ~
        typescript: ~
+       coffee: ~
     resolve:
         alias:
             app: "%kernel.root_dir%/Resources/assets"
