@@ -66,8 +66,6 @@ webpack:
             test: /\.js($|\?)/i
             mangle_except: ~
             minimize: ~
-
-
 monolog:
     handlers:
         console:

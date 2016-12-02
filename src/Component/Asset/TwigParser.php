@@ -51,7 +51,8 @@ class TwigParser
     public function findSplitPoints($template_file)
     {
         $inline_blocks = 0;
-        $stream        = $this->twig->tokenize(file_get_contents($template_file));
+        $source        = new \Twig_Source(file_get_contents($template_file), $template_file);
+        $stream        = $this->twig->tokenize($source);
         $points        = [];
 
         while (! $stream->isEOF() && $token = $stream->next()) {
