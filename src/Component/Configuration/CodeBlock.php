@@ -34,6 +34,7 @@ namespace Hostnet\Component\Webpack\Configuration;
  *          output : {
  *              << output >>
  *          }
+ *          << root >>
  *      };
  *
  * @author Harold Iedema <hiedema@hostnet.nl>
@@ -48,11 +49,12 @@ class CodeBlock
           PRE_LOADER     = 'pre_loader',
           LOADER         = 'loader',
           POST_LOADER    = 'post_loader',
-          OUTPUT         = 'output';
+          OUTPUT         = 'output',
+          ROOT           = 'root';
 
     // Available types to allow easy validation
     private $types = [
-        'entry', 'header', 'resolve', 'resolve_loader', 'plugin', 'pre_loader', 'loader', 'post_loader', 'output'
+        'entry', 'header', 'resolve', 'resolve_loader', 'plugin', 'pre_loader', 'loader', 'post_loader', 'output', 'root'
     ];
 
     // Chunks collection

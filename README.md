@@ -479,6 +479,8 @@ webpack:
        sass:
            filename: '[name].css'
            all_chunks: true
+           include_paths:
+               - [include dirs for node-sass]
 ```
 
 ### URL
