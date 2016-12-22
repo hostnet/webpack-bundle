@@ -30,6 +30,9 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
                 ->children()
                     ->booleanNode('all_chunks')->defaultTrue()->end()
                     ->scalarNode('filename')->defaultNull()->end()
+                    ->arrayNode('include_paths')
+                        ->defaultValue(array())
+                        ->prototype('scalar')->end()
                 ->end()
             ->end();
     }
@@ -43,9 +46,22 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
             return [new CodeBlock()];
         }
 
+        $block = new CodeBlock;
+        $single = false;
+
+        if (!empty($config['include_paths'])) {
+            $block->set(CodeBlock::ROOT, 'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}');
+            $single = true;
+        }
+
         if (empty($config['filename'])) {
             // If the filename is not set, apply inline style tags.
-            return [(new CodeBlock())->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: \'style!css!sass\' }')];
+            $block->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: \'style!css!sass\' }');
+            $single = true;
+        }
+
+        if ($single) {
+            return [$block];
         }
 
         // If a filename is set, apply the ExtractTextPlugin
