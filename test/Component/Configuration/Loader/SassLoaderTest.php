@@ -40,4 +40,13 @@ class SassLoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($block->has(CodeBlock::LOADER));
     }
+
+    public function testGetCodeBlockWithIncludePaths()
+    {
+        $config = new SassLoader(['loaders' => ['sass' => ['enabled' => true, 'include_paths' => ['path1', 'path2'], 'filename' => 'testfile', 'all_chunks' => true]]]);
+        $block  = $config->getCodeBlocks()[0];
+
+        $this->assertTrue($block->has(CodeBlock::ROOT));
+        $this->assertTrue($block->has(CodeBlock::HEADER));
+    }
 }

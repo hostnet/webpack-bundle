@@ -42,25 +42,19 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
     {
         $config = $this->config['loaders']['sass'];
 
-        if (! $config['enabled']) {
-            return [new CodeBlock()];
-        }
-
         $block = new CodeBlock;
-        $single = false;
+
+        if (! $config['enabled']) {
+            return [$block];
+        }
 
         if (!empty($config['include_paths'])) {
             $block->set(CodeBlock::ROOT, 'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}');
-            $single = true;
         }
 
         if (empty($config['filename'])) {
             // If the filename is not set, apply inline style tags.
             $block->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: \'style!css!sass\' }');
-            $single = true;
-        }
-
-        if ($single) {
             return [$block];
         }
 
@@ -71,6 +65,10 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
             ->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: '.$fn.'.extract("css!sass") }')
             ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. ($config['all_chunks'] ? 'allChunks: true' : '') . '})')
         ];
+
+        if (!empty($config['include_paths'])) {
+            $code_blocks[0]->set(CodeBlock::ROOT, 'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}');
+        }
 
         // If a common_filename is set, apply the CommonsChunkPlugin.
         if (! empty($this->config['output']['common_id'])) {
