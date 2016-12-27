@@ -4,6 +4,7 @@ namespace Hostnet\Component\Webpack\Configuration;
 use Hostnet\Component\Webpack\Configuration\Config\OutputConfig;
 use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
 use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\Webpack\Configuration\Loader\SassLoader;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\ConfigGenerator
@@ -46,7 +47,7 @@ class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
 
         // Add extension
         $config->addExtension(new OutputConfig(['output' => ['path' => 'path/to/output']]));
-        $config->addExtension(new CSSLoader(['loaders' => ['css' => ['enabled' => true, 'filename' => 'foo', 'all_chunks' => true]]]));
+        $config->addExtension(new SassLoader(['loaders' => ['sass' => ['enabled' => true, 'include_paths' => ['path1', 'path2'], 'filename' => 'testfile', 'all_chunks' => true]]]));
 
         $fixture_file = __DIR__ . '/../../Fixture/Component/Configuration/ConfigGenerator.js';
         // file_put_contents($fixture_file, $config->getConfiguration());
