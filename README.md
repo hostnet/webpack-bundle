@@ -22,6 +22,7 @@
 - [Plugins](#plugins)
   - [DefinePlugin](#defineplugin)
   - [ProvidePlugin](#provideplugin)
+  - [UglifyJS](#uglifyjs)
 
 ## Introduction
 
@@ -616,8 +617,47 @@ Now you can add you javascript in an inline script and webpack will automaticall
 </script>
 {% endwebpack %}
 ```
-__Important:__ 
+
+__Important:__
 
 Don't forget to install jquery via npm
 `npm install jquery`.
-As all `node_modules` are resolved in `webpack.config.js` it will find it automatically. 
+As all `node_modules` are resolved in `webpack.config.js` it will find it automatically.
+
+### UglifyJS
+
+Run UglifyJS on JS output, creating smaller and more optimized JS files.
+See the [uglifyjs documentation](https://github.com/mishoo/UglifyJS2) for more
+information.
+
+```yaml
+plugins:
+    uglifyjs:
+        mangle_except: ['$super', '$', 'exports', 'require']  # Variable names to not mangle
+        source_map: true             # Generate a source map for tracking errors in compressed files.
+        test: '/\.js($|\?)/i'        # RegExp to filter processed files
+        minimize: true               # Whether to minimize or not
+        
+        # Options to set which optimizations UglifyJS will perform.
+        compress:
+            sequences: true              # Join consecutive statements with the "comma operator"
+            properties: true             # Optimize property access: a["foo"] → a.foo
+            dead_code: true              # Discard unreachable code
+            drop_debugger: true          # Discard "debugger" statements
+            unsafe: false                # Perform unsafe optimizations
+            conditionals: true           # Optimize ifs and conditional expressions
+            comparisons: true            # Optimize comparisons
+            evaluate: true               # Evaluate constant expressions
+            booleans: true               # Optimize boolean expressions
+            loops: true                  # Optimize loops
+            unused: true                 # Drop unused variables/functions
+            hoist_funs: true             # Hoist function declarations
+            hoist_vars: false            # Hoist variable declarations
+            if_return: true              # Optimize if-s followed by return/continue
+            join_vars: true              # Join var declarations
+            cascade: true                # Try to cascade `right` into `left` in sequences
+            side_effects: true           # Drop side-effect-free statements
+            warnings: false              # Warn about potentially dangerous optimizations/code
+```
+
+Now when your JS files are built, they will be compressed and optimized using UglifyJS.
