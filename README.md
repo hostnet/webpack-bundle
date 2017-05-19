@@ -12,6 +12,7 @@
   - [Shared dependencies](#shared-dependencies)
   - [Asset output directories](#asset-output-directories)
   - [Ideal configuration](#ideal-configuration)
+  - [Compile Timeout](#compile-timeout)
 - [Loaders](#loaders)
   - [CSS](#css)
   - [Less](#less)
@@ -410,6 +411,16 @@ Somewhere in your twig templates
 {% webpack css "@YourBundle/SomeModule.js" %}
     <link rel="stylesheet" href="{{ asset }}">
 {% endwebpack %}
+```
+
+### Compile Timeout
+
+By default, webpack is only given 60 seconds to execute.  In cases where webpack needs more time, you can update the
+`compile_timeout` option.
+
+```yaml
+webpack:
+    compile_timeout: 60
 ```
 
 ## Loaders
