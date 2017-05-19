@@ -640,7 +640,7 @@ plugins:
         
         # Options to set which optimizations UglifyJS will perform.
         compress:
-            sequences: true              # Join consecutive statemets with the "comma operator"
+            sequences: true              # Join consecutive statements with the "comma operator"
             properties: true             # Optimize property access: a["foo"] → a.foo
             dead_code: true              # Discard unreachable code
             drop_debugger: true          # Discard "debugger" statements
