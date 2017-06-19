@@ -14,14 +14,7 @@ cache:
 
 matrix:
   include:
-    # Symfony 2.7.0
-#    - php: 5.5
-#      env: COMPOSER_FLAGS="--prefer-lowest"
-    # Symfony 2.8
-#    - php: 5.6
-#      env: SYMFONY_VERSION="2.8.*@dev"
-    # Symfony 3.0
-    - php: 5.6
+    - php: 7.0
       env: DEPS=dev
 
 before_install:

@@ -19,7 +19,6 @@ class TwigTest extends KernelTestCase
         self::assertRegExp('~src="/compiled/shared\.js\?[0-9]+"~', $html);
         self::assertRegExp('~href="/compiled/shared\.css\?[0-9]+"~', $html);
 
-
         $twig->render('/template.html.twig');
     }
 }

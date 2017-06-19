@@ -108,9 +108,10 @@ class TwigParser
     }
 
     /**
-     * @param string      $asset
-     * @param string      $template_file
-     * @param Token $token
+     * @param  string $asset
+     * @param  string $template_file
+     * @param  Token  $token
+     * @return string
      */
     private function resolveAssetPath($asset, $template_file, $token)
     {
