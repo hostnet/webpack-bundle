@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
@@ -29,7 +32,10 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
             ->arrayNode('output')
                 ->validate()
                     ->ifTrue(function ($c) {
-                        return !preg_match(sprintf('~(?<web_dir>.*)%s$~', rtrim($c['public_path'], '\\/')), rtrim($c['path'], '\\/'));
+                        return !preg_match(sprintf(
+                            '~(?<web_dir>.*)%s$~',
+                            rtrim($c['public_path'], '\\/')
+                        ), rtrim($c['path'], '\\/'));
                     })
                     ->thenInvalid('webpack.output.public_path must be equal to the end of the webpack.output.path.')
                 ->end()
@@ -43,7 +49,9 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
                     ->scalarNode('chunk_filename')->defaultValue('[name].[hash].chunk.js')->end()
                     ->scalarNode('source_map_filename')->defaultValue('[file].sourcemap.js')->end()
                     ->scalarNode('devtool_module_filename_template')->defaultValue('webpack:///[resource-path]')->end()
-                    ->scalarNode('devtool_fallback_module_filename_template')->defaultValue('webpack:///[resourcePath]?[hash]')->end()
+                    ->scalarNode('devtool_fallback_module_filename_template')
+                        ->defaultValue('webpack:///[resourcePath]?[hash]')
+                        ->end()
                     ->booleanNode('devtool_line_to_line')->defaultFalse()->end()
                     ->scalarNode('hot_update_chunk_filename')->defaultValue('[id].[hash].hot-update.js')->end()
                     ->scalarNode('hot_update_main_filename')->defaultValue('[hash].hot-update.json')->end()

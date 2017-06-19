@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
@@ -87,7 +90,11 @@ final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
         $uglify
             ->booleanNode('source_map')
                 ->defaultTrue()
-                ->info('The plugin uses SourceMaps to map error message locations to modules. This slows down the compilation')
+                ->info(sprintf(
+                    '%s %s',
+                    'The plugin uses SourceMaps to map error message locations to modules.',
+                    'This slows down the compilation'
+                ))
             ->end();
 
         $uglify

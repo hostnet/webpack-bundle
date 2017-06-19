@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
@@ -7,16 +10,16 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers \Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
+ * @covers \Hostnet\Component\Webpack\Configuration\Loader\CssLoader
  */
-class CSSLoaderTest extends TestCase
+class CssLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
         $tree = new TreeBuilder();
         $node = $tree->root('webpack')->children();
 
-        CSSLoader::applyConfiguration($node);
+        CssLoader::applyConfiguration($node);
         $node->end();
 
         $config = $tree->buildTree()->finalize([]);
@@ -29,14 +32,14 @@ class CSSLoaderTest extends TestCase
 
     public function testGetCodeBlockDisabled()
     {
-        $config = new CSSLoader(['loaders' => ['css' => ['enabled' => false]]]);
+        $config = new CssLoader(['loaders' => ['css' => ['enabled' => false]]]);
 
         self::assertFalse($config->getCodeBlocks()[0]->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlockEnabledDefaults()
     {
-        $configs = (new CSSLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlocks();
+        $configs = (new CssLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlocks();
 
         self::assertTrue($configs[0]->has(CodeBlock::LOADER));
         self::assertFalse($configs[0]->has(CodeBlock::HEADER));
@@ -45,7 +48,7 @@ class CSSLoaderTest extends TestCase
 
     public function testGetCodeBlockEnabledCommonsChunk()
     {
-        $configs = (new CSSLoader([
+        $configs = (new CssLoader([
             'output'  => ['common_id' => 'foobar'],
             'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]]
         ]))->getCodeBlocks();

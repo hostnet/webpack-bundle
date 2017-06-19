@@ -10,6 +10,7 @@
         "twig/twig":              "^2.4.3"
     },
     "require-dev": {
+        "hostnet/phpcs-tool":     "^4.1.4",
         "phpunit/phpunit":        "^6.2.2",
         "symfony/phpunit-bridge": "^3.3.2"
     },

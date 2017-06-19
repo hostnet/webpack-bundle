@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
@@ -26,7 +29,6 @@ class RequestListenerTest extends TestCase
     {
         $this->event = $this->getMockBuilder(GetResponseEvent::class)->disableOriginalConstructor()->getMock();
         $this->guard = $this->getMockBuilder(CacheGuard::class)->disableOriginalConstructor()->getMock();
-
     }
 
     public function testRequestNoMasterRequest()

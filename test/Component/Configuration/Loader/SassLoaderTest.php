@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
@@ -43,7 +46,16 @@ class SassLoaderTest extends TestCase
 
     public function testGetCodeBlockWithIncludePaths()
     {
-        $config = new SassLoader(['loaders' => ['sass' => ['enabled' => true, 'include_paths' => ['path1', 'path2'], 'filename' => 'testfile', 'all_chunks' => true]]]);
+        $config = new SassLoader([
+            'loaders' => [
+                'sass' => [
+                    'enabled'       => true,
+                    'include_paths' => ['path1', 'path2'],
+                    'filename'      => 'testfile',
+                    'all_chunks'    => true
+                ]
+            ]
+        ]);
         $block  = $config->getCodeBlocks()[0];
 
         self::assertTrue($block->has(CodeBlock::ROOT));

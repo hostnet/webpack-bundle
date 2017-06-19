@@ -1,8 +1,11 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
-use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
+use Hostnet\Component\Webpack\Configuration\Loader\CssLoader;
 use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +16,7 @@ class ConfigurationTest extends TestCase
 {
     public function testGetConfigTreeBuilder()
     {
-        $config = new Configuration([], [DefinePlugin::class, CSSLoader::class]);
+        $config = new Configuration([], [DefinePlugin::class, CssLoader::class]);
         $tree   = $config->getConfigTreeBuilder();
         $final  = $tree->buildTree()->finalize([]);
 

@@ -1,5 +1,11 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
+namespace Hostnet\Functional;
+
+use Hostnet\Fixture\WebpackBundle\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 

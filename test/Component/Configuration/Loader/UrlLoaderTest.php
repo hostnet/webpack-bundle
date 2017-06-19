@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
@@ -36,7 +39,9 @@ class UrlLoaderTest extends TestCase
 
     public function testGetFontExtensionCodeBlock()
     {
-        $config = new UrlLoader(['loaders' => ['url' => ['enabled' => true, 'font_extensions' => 'svg,woff', 'limit' => 100]]]);
+        $config = new UrlLoader([
+            'loaders' => ['url' => ['enabled' => true, 'font_extensions' => 'svg,woff', 'limit' => 100]]
+        ]);
         $block  = $config->getCodeBlocks()[0];
 
         self::assertCount(2, $config->getCodeBlocks());
@@ -45,7 +50,9 @@ class UrlLoaderTest extends TestCase
 
     public function testGetImageExtensionCodeBlock()
     {
-        $config = new UrlLoader(['loaders' => ['url' => ['enabled' => true, 'image_extensions' => 'png', 'limit' => 100]]]);
+        $config = new UrlLoader([
+            'loaders' => ['url' => ['enabled' => true, 'image_extensions' => 'png', 'limit' => 100]]
+        ]);
         $block  = $config->getCodeBlocks()[0];
 
         self::assertCount(1, $config->getCodeBlocks());

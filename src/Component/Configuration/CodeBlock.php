@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration;
 
@@ -55,7 +58,16 @@ class CodeBlock
 
     // Available types to allow easy validation
     private $types = [
-        'entry', 'header', 'resolve', 'resolve_loader', 'plugin', 'pre_loader', 'loader', 'post_loader', 'output', 'root'
+        'entry',
+        'header',
+        'resolve',
+        'resolve_loader',
+        'plugin',
+        'pre_loader',
+        'loader',
+        'post_loader',
+        'output',
+        'root'
     ];
 
     // Chunks collection

@@ -427,7 +427,7 @@ webpack:
 
 Loaders allow you to `require` files other than javascript. This package comes with 7 default loaders.
 
- - `CSSLoader`       : include CSS files
+ - `CssLoader`       : include CSS files
  - `UrlLoader`       : include images (converted to base64)
  - `LessLoader`      : include less files.
  - `SassLoader`      : include sass files.

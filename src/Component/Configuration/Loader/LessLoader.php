@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
@@ -54,7 +57,9 @@ final class LessLoader implements LoaderInterface, ConfigExtensionInterface
         $code_blocks = [(new CodeBlock())
             ->set(CodeBlock::HEADER, 'var ' . $fn . ' = require("extract-text-webpack-plugin");')
             ->set(CodeBlock::LOADER, '{ test: /\.less$/, loader: '.$fn.'.extract("css!less") }')
-            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. ($config['all_chunks'] ? 'allChunks: true' : '') . '})')
+            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. (
+                $config['all_chunks'] ? 'allChunks: true' : ''
+            ) . '})')
         ];
 
         // If a common_filename is set, apply the CommonsChunkPlugin.

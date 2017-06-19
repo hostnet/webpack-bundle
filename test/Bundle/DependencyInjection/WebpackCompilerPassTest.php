@@ -1,4 +1,7 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
@@ -32,8 +35,15 @@ class WebpackCompilerPassTest extends TestCase
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
-        $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
-        $container->set('twig.loader', $this->getMockBuilder(\Twig_Loader_Filesystem::class)->disableOriginalConstructor()->getMock());
+        $container->set('twig', $this
+            ->getMockBuilder(\Twig_Environment::class)
+            ->disableOriginalConstructor()
+            ->getMock());
+        $container->set('twig.loader', $this
+            ->getMockBuilder(\Twig_Loader_Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock());
+
         $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $container->setDefinition(
@@ -91,7 +101,10 @@ class WebpackCompilerPassTest extends TestCase
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
-        $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
+        $container->set('twig', $this
+            ->getMockBuilder(\Twig_Environment::class)
+            ->disableOriginalConstructor()
+            ->getMock());
         $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $bundle->build($container);

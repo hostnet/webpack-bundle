@@ -1,5 +1,10 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
 declare(strict_types = 1);
+namespace Hostnet\Functional;
+
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Hostnet\Component\Webpack\Asset\Tracker;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

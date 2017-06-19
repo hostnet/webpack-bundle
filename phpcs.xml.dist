@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="hostnet/webpack-bundle">
+  <exclude-pattern>test/Fixture/cache/*</exclude-pattern>
+
+  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+    <exclude-pattern>test/Fixture/TestKernel.php</exclude-pattern>
+  </rule>
+  <rule ref="Hostnet"/>
+</ruleset>
