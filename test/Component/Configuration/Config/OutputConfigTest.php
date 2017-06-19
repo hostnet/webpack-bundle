@@ -1,14 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Config\OutputConfig
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Configuration\Config\OutputConfig
  */
-class OutputConfigTest extends \PHPUnit_Framework_TestCase
+class OutputConfigTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -20,21 +21,21 @@ class OutputConfigTest extends \PHPUnit_Framework_TestCase
 
         $config = $tree->buildTree()->finalize([]);
 
-        $this->assertArrayHasKey('output', $config);
-        $this->assertArrayHasKey('path', $config['output']);
-        $this->assertArrayHasKey('filename', $config['output']);
-        $this->assertArrayHasKey('common_id', $config['output']);
-        $this->assertArrayHasKey('chunk_filename', $config['output']);
-        $this->assertArrayHasKey('source_map_filename', $config['output']);
-        $this->assertArrayHasKey('devtool_module_filename_template', $config['output']);
-        $this->assertArrayHasKey('devtool_fallback_module_filename_template', $config['output']);
-        $this->assertArrayHasKey('devtool_line_to_line', $config['output']);
-        $this->assertArrayHasKey('hot_update_chunk_filename', $config['output']);
-        $this->assertArrayHasKey('hot_update_main_filename', $config['output']);
-        $this->assertArrayHasKey('public_path', $config['output']);
-        $this->assertArrayHasKey('jsonp_function', $config['output']);
-        $this->assertArrayHasKey('hot_update_function', $config['output']);
-        $this->assertArrayHasKey('path_info', $config['output']);
+        self::assertArrayHasKey('output', $config);
+        self::assertArrayHasKey('path', $config['output']);
+        self::assertArrayHasKey('filename', $config['output']);
+        self::assertArrayHasKey('common_id', $config['output']);
+        self::assertArrayHasKey('chunk_filename', $config['output']);
+        self::assertArrayHasKey('source_map_filename', $config['output']);
+        self::assertArrayHasKey('devtool_module_filename_template', $config['output']);
+        self::assertArrayHasKey('devtool_fallback_module_filename_template', $config['output']);
+        self::assertArrayHasKey('devtool_line_to_line', $config['output']);
+        self::assertArrayHasKey('hot_update_chunk_filename', $config['output']);
+        self::assertArrayHasKey('hot_update_main_filename', $config['output']);
+        self::assertArrayHasKey('public_path', $config['output']);
+        self::assertArrayHasKey('jsonp_function', $config['output']);
+        self::assertArrayHasKey('hot_update_function', $config['output']);
+        self::assertArrayHasKey('path_info', $config['output']);
     }
 
     public function testGetCodeBlock()
@@ -46,8 +47,8 @@ class OutputConfigTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::OUTPUT));
-        $this->assertArrayHasKey('filename', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
-        $this->assertArrayHasKey('commonId', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
+        self::assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::OUTPUT));
+        self::assertArrayHasKey('filename', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
+        self::assertArrayHasKey('commonId', $config->getCodeBlocks()[0]->get(CodeBlock::OUTPUT));
     }
 }

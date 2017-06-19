@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Command;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;

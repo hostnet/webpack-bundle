@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;

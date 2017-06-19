@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 use Hostnet\Component\Webpack\Asset\Dumper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -23,7 +24,7 @@ class DumperTest extends KernelTestCase
 
         $dumper->dump();
 
-        $this->assertFileExists($this->dir . '/foo/public.js');
+        self::assertFileExists($this->dir . '/foo/public.js');
     }
 
     protected function tearDown()

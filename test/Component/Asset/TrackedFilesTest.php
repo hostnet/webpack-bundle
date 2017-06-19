@@ -1,15 +1,17 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this unit-test we simulate the 'tracked' files vs. the 'compiled' files with two directories
  * 'a' for the 'asset's to track' and 'b' the compiled version of those.
  *
- * @covers Hostnet\Component\Webpack\Asset\TrackedFiles
+ * @covers \Hostnet\Component\Webpack\Asset\TrackedFiles
  */
-class TrackedFilesTest extends \PHPUnit_Framework_TestCase
+class TrackedFilesTest extends TestCase
 {
 
     /**

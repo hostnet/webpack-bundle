@@ -1,19 +1,23 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackExtension
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackExtensionTest extends \PHPUnit_Framework_TestCase
+class WebpackExtensionTest extends TestCase
 {
     public function testAlias()
     {
-        $this->assertEquals(Configuration::CONFIG_ROOT, (new WebpackExtension())->getAlias());
+        self::assertEquals(Configuration::CONFIG_ROOT, (new WebpackExtension())->getAlias());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testLoadNoConfig()
     {
         $container = new ContainerBuilder();

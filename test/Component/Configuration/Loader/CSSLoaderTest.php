@@ -1,14 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Configuration\Loader\CSSLoader
  */
-class CSSLoaderTest extends \PHPUnit_Framework_TestCase
+class CSSLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -20,26 +21,26 @@ class CSSLoaderTest extends \PHPUnit_Framework_TestCase
 
         $config = $tree->buildTree()->finalize([]);
 
-        $this->assertArrayHasKey('css', $config);
-        $this->assertArrayHasKey('enabled', $config['css']);
-        $this->assertArrayHasKey('all_chunks', $config['css']);
-        $this->assertArrayHasKey('filename', $config['css']);
+        self::assertArrayHasKey('css', $config);
+        self::assertArrayHasKey('enabled', $config['css']);
+        self::assertArrayHasKey('all_chunks', $config['css']);
+        self::assertArrayHasKey('filename', $config['css']);
     }
 
     public function testGetCodeBlockDisabled()
     {
         $config = new CSSLoader(['loaders' => ['css' => ['enabled' => false]]]);
 
-        $this->assertFalse($config->getCodeBlocks()[0]->has(CodeBlock::LOADER));
+        self::assertFalse($config->getCodeBlocks()[0]->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlockEnabledDefaults()
     {
         $configs = (new CSSLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlocks();
 
-        $this->assertTrue($configs[0]->has(CodeBlock::LOADER));
-        $this->assertFalse($configs[0]->has(CodeBlock::HEADER));
-        $this->assertFalse($configs[0]->has(CodeBlock::PLUGIN));
+        self::assertTrue($configs[0]->has(CodeBlock::LOADER));
+        self::assertFalse($configs[0]->has(CodeBlock::HEADER));
+        self::assertFalse($configs[0]->has(CodeBlock::PLUGIN));
     }
 
     public function testGetCodeBlockEnabledCommonsChunk()
@@ -49,9 +50,9 @@ class CSSLoaderTest extends \PHPUnit_Framework_TestCase
             'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]]
         ]))->getCodeBlocks();
 
-        $this->assertTrue($configs[0]->has(CodeBlock::LOADER));
-        $this->assertTrue($configs[0]->has(CodeBlock::HEADER));
-        $this->assertTrue($configs[0]->has(CodeBlock::PLUGIN));
-        $this->assertTrue($configs[1]->has(CodeBlock::PLUGIN));
+        self::assertTrue($configs[0]->has(CodeBlock::LOADER));
+        self::assertTrue($configs[0]->has(CodeBlock::HEADER));
+        self::assertTrue($configs[0]->has(CodeBlock::PLUGIN));
+        self::assertTrue($configs[1]->has(CodeBlock::PLUGIN));
     }
 }

@@ -1,14 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Config\ResolveLoaderConfig
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Configuration\Config\ResolveLoaderConfig
  */
-class ResolveLoaderConfigTest extends \PHPUnit_Framework_TestCase
+class ResolveLoaderConfigTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -19,7 +20,7 @@ class ResolveLoaderConfigTest extends \PHPUnit_Framework_TestCase
         $node->end();
 
         $config = $tree->buildTree()->finalize([]);
-        $this->assertArrayHasKey('resolve_loader', $config);
+        self::assertArrayHasKey('resolve_loader', $config);
     }
 
     public function testGetCodeBlock()
@@ -33,7 +34,7 @@ class ResolveLoaderConfigTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE_LOADER));
-        $this->assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE_LOADER));
+        self::assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE_LOADER));
+        self::assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE_LOADER));
     }
 }

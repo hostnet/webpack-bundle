@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -158,6 +159,10 @@ class Compiler
      */
     public static function getAliasId($path)
     {
-        return str_replace(['/', '\\'], '.', Container::underscore(ltrim(substr($path, 0, strrpos($path, '.')), '@')));
+        return str_replace(
+            ['/', '\\'],
+            '.',
+            Container::underscore(ltrim(substr($path, 0, (int) strrpos($path, '.')), '@'))
+        );
     }
 }

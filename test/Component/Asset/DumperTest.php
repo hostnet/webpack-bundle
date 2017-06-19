@@ -1,6 +1,8 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -8,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
  * @covers \Hostnet\Component\Webpack\Asset\Dumper
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class DumperTest extends \PHPUnit_Framework_TestCase
+class DumperTest extends TestCase
 {
     /**
      * @var Dumper
@@ -40,6 +42,9 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testDumpDefaults()
     {
         $this->dumper->dump();

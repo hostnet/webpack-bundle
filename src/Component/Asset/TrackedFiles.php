@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Symfony\Component\Finder\Finder;

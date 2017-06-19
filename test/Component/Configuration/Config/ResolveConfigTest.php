@@ -1,14 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Config\ResolveConfig
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Configuration\Config\ResolveConfig
  */
-class ResolveConfigTest extends \PHPUnit_Framework_TestCase
+class ResolveConfigTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -20,12 +21,12 @@ class ResolveConfigTest extends \PHPUnit_Framework_TestCase
 
         $config = $tree->buildTree()->finalize([]);
 
-        $this->assertArrayHasKey('resolve', $config);
-        $this->assertArrayHasKey('root', $config['resolve']);
-        $this->assertArrayHasKey('alias', $config['resolve']);
-        $this->assertArrayHasKey('modules_directories', $config['resolve']);
-        $this->assertArrayHasKey('fallback', $config['resolve']);
-        $this->assertArrayHasKey('extensions', $config['resolve']);
+        self::assertArrayHasKey('resolve', $config);
+        self::assertArrayHasKey('root', $config['resolve']);
+        self::assertArrayHasKey('alias', $config['resolve']);
+        self::assertArrayHasKey('modules_directories', $config['resolve']);
+        self::assertArrayHasKey('fallback', $config['resolve']);
+        self::assertArrayHasKey('extensions', $config['resolve']);
     }
 
     public function testGetCodeBlock()
@@ -42,11 +43,11 @@ class ResolveConfigTest extends \PHPUnit_Framework_TestCase
         ]);
         $config->addAlias('/foo/bar', '@FooBar');
 
-        $this->assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('alias', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('modulesDirectories', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
-        $this->assertArrayHasKey('@FooBar', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
-        $this->assertArrayHasKey('@Common', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
+        self::assertTrue($config->getCodeBlocks()[0]->has(CodeBlock::RESOLVE));
+        self::assertArrayHasKey('root', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        self::assertArrayHasKey('alias', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        self::assertArrayHasKey('modulesDirectories', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE));
+        self::assertArrayHasKey('@FooBar', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
+        self::assertArrayHasKey('@Common', $config->getCodeBlocks()[0]->get(CodeBlock::RESOLVE)['alias']);
     }
 }

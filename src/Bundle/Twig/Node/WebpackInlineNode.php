@@ -1,10 +1,14 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Twig\Node;
+
+use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
  * @author Yannick de Lange <yannick.l.88@gmail.com>
  */
-class WebpackInlineNode extends \Twig_Node
+class WebpackInlineNode extends Node
 {
     /**
      * @param array  $attributes An array of attributes (should not be nodes)
@@ -17,7 +21,7 @@ class WebpackInlineNode extends \Twig_Node
     }
 
     /** {@inheritdoc} */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         if (false !== ($file = $this->getAttribute('js_file'))) {
             $compiler

@@ -1,14 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
- * @author Harold Iedema <harold@iedema.me>
  */
-class RequestListenerTest extends \PHPUnit_Framework_TestCase
+class RequestListenerTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|GetResponseEvent

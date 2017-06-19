@@ -1,16 +1,18 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration;
 
 use Hostnet\Component\Webpack\Configuration\Config\OutputConfig;
 use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
 use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
 use Hostnet\Component\Webpack\Configuration\Loader\SassLoader;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\ConfigGenerator
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
+class ConfigGeneratorTest extends TestCase
 {
     public function testBuild()
     {
@@ -53,6 +55,6 @@ class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
         // file_put_contents($fixture_file, $config->getConfiguration());
         $fixture = file_get_contents($fixture_file);
 
-        $this->assertEquals(str_replace("\r\n", "\n", $fixture), str_replace("\r\n", "\n", $config->getConfiguration()));
+        self::assertEquals(str_replace("\r\n", "\n", $fixture), str_replace("\r\n", "\n", $config->getConfiguration()));
     }
 }

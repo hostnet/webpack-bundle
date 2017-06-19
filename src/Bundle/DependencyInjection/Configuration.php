@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Component\Webpack\Configuration\Config\ConfigInterface;

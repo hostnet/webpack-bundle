@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 use Hostnet\Component\Webpack\Configuration\ConfigGenerator;
 use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\Loader\MockLoader;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -17,7 +18,7 @@ class ConfigGeneratorTest extends KernelTestCase
 
         $contiguration = $config_generator->getConfiguration();
 
-        $this->assertTrue($mock_loader->code_blocks_called);
-        $this->assertContains(MockLoader::BLOCK_CONTENT, $contiguration);
+        self::assertTrue($mock_loader->code_blocks_called);
+        self::assertContains(MockLoader::BLOCK_CONTENT, $contiguration);
     }
 }

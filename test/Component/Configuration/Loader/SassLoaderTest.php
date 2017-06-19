@@ -1,15 +1,15 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Loader\SassLoader
- * @author Harold Iedema <hiedema@hostnet.nl>
- * @author Guillaume Cavana <guillaume.cavana@gmail.com>
+ * @covers \Hostnet\Component\Webpack\Configuration\Loader\SassLoader
  */
-class SassLoaderTest extends \PHPUnit_Framework_TestCase
+class SassLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -21,8 +21,8 @@ class SassLoaderTest extends \PHPUnit_Framework_TestCase
 
         $config = $tree->buildTree()->finalize([]);
 
-        $this->assertArrayHasKey('sass', $config);
-        $this->assertArrayHasKey('enabled', $config['sass']);
+        self::assertArrayHasKey('sass', $config);
+        self::assertArrayHasKey('enabled', $config['sass']);
     }
 
     public function testGetCodeBlockDisabled()
@@ -30,7 +30,7 @@ class SassLoaderTest extends \PHPUnit_Framework_TestCase
         $config = new SassLoader(['loaders' => ['sass' => ['enabled' => false]]]);
         $block  = $config->getCodeBlocks()[0];
 
-        $this->assertFalse($block->has(CodeBlock::LOADER));
+        self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlock()
@@ -38,7 +38,7 @@ class SassLoaderTest extends \PHPUnit_Framework_TestCase
         $config = new SassLoader(['loaders' => ['sass' => ['enabled' => true]]]);
         $block  = $config->getCodeBlocks()[0];
 
-        $this->assertTrue($block->has(CodeBlock::LOADER));
+        self::assertTrue($block->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlockWithIncludePaths()
@@ -46,7 +46,7 @@ class SassLoaderTest extends \PHPUnit_Framework_TestCase
         $config = new SassLoader(['loaders' => ['sass' => ['enabled' => true, 'include_paths' => ['path1', 'path2'], 'filename' => 'testfile', 'all_chunks' => true]]]);
         $block  = $config->getCodeBlocks()[0];
 
-        $this->assertTrue($block->has(CodeBlock::ROOT));
-        $this->assertTrue($block->has(CodeBlock::HEADER));
+        self::assertTrue($block->has(CodeBlock::ROOT));
+        self::assertTrue($block->has(CodeBlock::HEADER));
     }
 }

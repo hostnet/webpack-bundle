@@ -1,11 +1,14 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\TwigParser
  * @author Harold Iedema <harold@iedema.me>
  */
-class TwigParserTest extends \PHPUnit_Framework_TestCase
+class TwigParserTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|Tracker
@@ -48,17 +51,17 @@ class TwigParserTest extends \PHPUnit_Framework_TestCase
         $file   = __DIR__ . '/Fixtures/template.html.twig';
         $points = ($parser->findSplitPoints($file));
 
-        $this->assertCount(8, $points);
-        $this->assertArrayHasKey('@BarBundle/app.js', $points);
-        $this->assertArrayHasKey('@BarBundle/app2.js', $points);
-        $this->assertArrayHasKey('@BarBundle/app3.js', $points);
-        $this->assertArrayHasKey('@BarBundle/app4.js', $points);
-        $this->assertArrayHasKey('cache/' . md5($file . 0) . '.js', $points);
-        $this->assertArrayHasKey('cache/' . md5($file . 1) . '.js', $points);
-        $this->assertArrayHasKey('cache/' . md5($file . 2) . '.less', $points);
-        $this->assertArrayHasKey('cache/' . md5($file . 3) . '.css', $points);
+        self::assertCount(8, $points);
+        self::assertArrayHasKey('@BarBundle/app.js', $points);
+        self::assertArrayHasKey('@BarBundle/app2.js', $points);
+        self::assertArrayHasKey('@BarBundle/app3.js', $points);
+        self::assertArrayHasKey('@BarBundle/app4.js', $points);
+        self::assertArrayHasKey('cache/' . md5($file . 0) . '.js', $points);
+        self::assertArrayHasKey('cache/' . md5($file . 1) . '.js', $points);
+        self::assertArrayHasKey('cache/' . md5($file . 2) . '.less', $points);
+        self::assertArrayHasKey('cache/' . md5($file . 3) . '.css', $points);
 
-        $this->assertContains('foobar', $points);
+        self::assertContains('foobar', $points);
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;

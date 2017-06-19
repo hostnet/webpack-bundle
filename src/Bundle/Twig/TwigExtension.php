@@ -1,15 +1,24 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
 use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Component\Webpack\Asset\Compiler;
+use Twig\Extension\AbstractExtension;
+use Twig\Loader\LoaderInterface;
+use Twig\TwigFunction;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class TwigExtension extends \Twig_Extension
+class TwigExtension extends AbstractExtension
 {
+    /**
+     * @var LoaderInterface
+     */
+    private $loader;
+
     /**
      * @var string
      */
@@ -36,14 +45,16 @@ class TwigExtension extends \Twig_Extension
     private $common_css;
 
     /**
-     * @param string $web_dir
-     * @param string $public_path
-     * @param string $dump_path
-     * @param string $common_js
-     * @param string $common_css
+     * @param LoaderInterface $loader
+     * @param string          $web_dir
+     * @param string          $public_path
+     * @param string          $dump_path
+     * @param string          $common_js
+     * @param string          $common_css
      */
-    public function __construct($web_dir, $public_path, $dump_path, $common_js, $common_css)
+    public function __construct(LoaderInterface $loader, $web_dir, $public_path, $dump_path, $common_js, $common_css)
     {
+        $this->loader      = $loader;
         $this->web_dir     = $web_dir;
         $this->public_path = $public_path;
         $this->dump_path   = $dump_path;
@@ -60,17 +71,17 @@ class TwigExtension extends \Twig_Extension
     /** {@inheritdoc} */
     public function getTokenParsers()
     {
-        return [new WebpackTokenParser($this)];
+        return [new WebpackTokenParser($this, $this->loader)];
     }
 
     /** {@inheritdoc} */
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('webpack_asset', [$this, 'webpackAsset']),
-            new \Twig_SimpleFunction('webpack_public', [$this, 'webpackPublic']),
-            new \Twig_SimpleFunction('webpack_common_js', [$this, 'webpackCommonJs']),
-            new \Twig_SimpleFunction('webpack_common_css', [$this, 'webpackCommonCss']),
+            new TwigFunction('webpack_asset', [$this, 'webpackAsset']),
+            new TwigFunction('webpack_public', [$this, 'webpackPublic']),
+            new TwigFunction('webpack_common_js', [$this, 'webpackCommonJs']),
+            new TwigFunction('webpack_common_css', [$this, 'webpackCommonCss']),
         ];
     }
 

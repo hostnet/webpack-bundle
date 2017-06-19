@@ -1,10 +1,12 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Bundle\WebpackBundle\WebpackBundle;
 use Hostnet\Component\Webpack\Configuration\CodeBlockProviderInterface;
 use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
 use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -14,9 +16,8 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
+class WebpackCompilerPassTest extends TestCase
 {
     public function testPass()
     {
@@ -32,6 +33,7 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
         $container->set('twig', $this->getMockBuilder(\Twig_Environment::class)->disableOriginalConstructor()->getMock());
+        $container->set('twig.loader', $this->getMockBuilder(\Twig_Loader_Filesystem::class)->disableOriginalConstructor()->getMock());
         $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $container->setDefinition(
@@ -53,16 +55,16 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         ], $container);
         $container->compile();
 
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
 
         $method_calls = $container->getDefinition('hostnet_webpack.bridge.config_generator')->getMethodCalls();
-        $this->assertArraySubset([['addExtension', [new Reference('webpack_extension')]]], $method_calls);
+        self::assertArraySubset([['addExtension', [new Reference('webpack_extension')]]], $method_calls);
 
         $method_calls = $container->getDefinition('hostnet_webpack.bridge.asset_tracker')->getMethodCalls();
-        $this->assertEquals([['addPath', [__DIR__]]], $method_calls);
+        self::assertEquals([['addPath', [__DIR__]]], $method_calls);
 
         $process_definition = $container->getDefinition('hostnet_webpack.bridge.compiler_process');
         self::assertTrue($process_definition->hasMethodCall('setTimeout'));
@@ -104,9 +106,9 @@ class WebpackCompilerPassTest extends \PHPUnit_Framework_TestCase
         ], $container);
         $container->compile();
 
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
-        $this->assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
+        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
     }
 }

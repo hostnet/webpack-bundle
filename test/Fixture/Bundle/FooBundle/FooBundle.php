@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Fixture\WebpackBundle\Bundle\FooBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
