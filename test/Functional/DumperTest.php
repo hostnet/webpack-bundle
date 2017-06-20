@@ -1,4 +1,10 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
+namespace Hostnet\Functional;
+
 use Hostnet\Component\Webpack\Asset\Dumper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -23,7 +29,7 @@ class DumperTest extends KernelTestCase
 
         $dumper->dump();
 
-        $this->assertFileExists($this->dir . '/foo/public.js');
+        self::assertFileExists($this->dir . '/foo/public.js');
     }
 
     protected function tearDown()

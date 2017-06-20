@@ -1,5 +1,11 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class CodeBlockTest
@@ -7,13 +13,13 @@ namespace Hostnet\Component\Webpack\Configuration;
  * @covers \Hostnet\Component\Webpack\Configuration\CodeBlock
  * @author Harold Iedema <harold@iedema.me>
  */
-class CodeBlockTest extends \PHPUnit_Framework_TestCase
+class CodeBlockTest extends TestCase
 {
     public function testCodeBlock()
     {
         $block = (new CodeBlock())->set(CodeBlock::HEADER, 'foo');
-        $this->assertTrue($block->has(CodeBlock::HEADER));
-        $this->assertEquals('foo', $block->get(CodeBlock::HEADER));
+        self::assertTrue($block->has(CodeBlock::HEADER));
+        self::assertEquals('foo', $block->get(CodeBlock::HEADER));
     }
 
     /**

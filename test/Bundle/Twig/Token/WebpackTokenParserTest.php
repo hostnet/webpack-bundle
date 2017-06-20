@@ -1,19 +1,33 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Twig\Token;
 
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackTokenParserTest extends \PHPUnit_Framework_TestCase
+class WebpackTokenParserTest extends TestCase
 {
     public function testParser()
     {
-        $extension = new TwigExtension(__DIR__, '/compiled', '/bundles', '/compiled/shared.js', '/compiled/shared.css');
-        $parser    = new WebpackTokenParser($extension);
+        $loader    = $this->prophesize(\Twig_LoaderInterface::class)->reveal();
+        $extension = new TwigExtension(
+            $loader,
+            __DIR__,
+            '/compiled',
+            '/bundles',
+            '/compiled/shared.js',
+            '/compiled/shared.css'
+        );
 
-        $this->assertEquals(WebpackTokenParser::TAG_NAME, $parser->getTag());
+        $parser = new WebpackTokenParser($extension, $loader);
+
+        self::assertEquals(WebpackTokenParser::TAG_NAME, $parser->getTag());
     }
 }

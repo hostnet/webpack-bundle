@@ -1,17 +1,21 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Asset\Compiler;
 use Hostnet\Component\Webpack\Asset\Dumper;
 use Hostnet\Component\Webpack\Asset\Tracker;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
- * @covers Hostnet\Component\Webpack\Asset\CacheGuard
+ * @covers \Hostnet\Component\Webpack\Asset\CacheGuard
  */
-class CacheGuardTest extends \PHPUnit_Framework_TestCase
+class CacheGuardTest extends TestCase
 {
-
     /**
      * Simple test for the case the cache is outdated.
      */

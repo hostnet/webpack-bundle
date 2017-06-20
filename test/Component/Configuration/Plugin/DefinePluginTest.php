@@ -1,15 +1,22 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin
  */
-class DefinePluginTest extends \PHPUnit_Framework_TestCase
+class DefinePluginTest extends TestCase
 {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConfigTreeBuilder()
     {
         $tree = new TreeBuilder();
@@ -33,7 +40,7 @@ class DefinePluginTest extends \PHPUnit_Framework_TestCase
 
         $config->add('bar', 'baz');
 
-        $this->assertEquals(
+        self::assertEquals(
             'new webpack.DefinePlugin({"foo":"bar","bar":"baz"})',
             $config->getCodeBlocks()[0]->get(CodeBlock::PLUGIN)
         );

@@ -1,13 +1,20 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Twig\Node;
+
+use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class WebpackNode extends \Twig_Node
+class WebpackNode extends Node
 {
     /** {@inheritdoc} */
-    public function compile(\Twig_Compiler $compiler)
+    public function compile(Compiler $compiler)
     {
         foreach ($this->getAttribute('files') as $file) {
             $compiler->write('$context["asset"] = "'. $file .'";');

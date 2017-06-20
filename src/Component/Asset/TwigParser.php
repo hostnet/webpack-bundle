@@ -1,8 +1,16 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
+use Twig\Environment;
+use Twig\Source;
+use Twig\Token;
+use Twig\TokenStream;
 
 /**
  * Parses twig templates to find split points.
@@ -18,7 +26,7 @@ class TwigParser
     /**
      * @param Tracker $tracker
      */
-    public function __construct(Tracker $tracker, \Twig_Environment $twig, $cache_dir)
+    public function __construct(Tracker $tracker, Environment $twig, $cache_dir)
     {
         $this->tracker   = $tracker;
         $this->twig      = $twig;
@@ -51,20 +59,20 @@ class TwigParser
     public function findSplitPoints($template_file)
     {
         $inline_blocks = 0;
-        $source        = new \Twig_Source(file_get_contents($template_file), $template_file);
+        $source        = new Source(file_get_contents($template_file), $template_file);
         $stream        = $this->twig->tokenize($source);
         $points        = [];
 
         while (! $stream->isEOF() && $token = $stream->next()) {
             // {{ webpack_asset(...) }}
-            if ($token->test(\Twig_Token::NAME_TYPE, 'webpack_asset')) {
+            if ($token->test(Token::NAME_TYPE, 'webpack_asset')) {
                 // We found the webpack function!
                 $asset          = $this->getAssetFromStream($template_file, $stream);
                 $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
             }
 
             // {% webpack_javascripts %} and {% webpack_stylesheets %}
-            if ($token->test(\Twig_Token::BLOCK_START_TYPE) && $stream->getCurrent()->test(WebpackTokenParser::TAG_NAME)) {
+            if ($token->test(Token::BLOCK_START_TYPE) && $stream->getCurrent()->test(WebpackTokenParser::TAG_NAME)) {
                 $stream->next();
 
                 if ($stream->getCurrent()->getValue() === 'inline') {
@@ -75,7 +83,7 @@ class TwigParser
 
                     // Are we dealing with a custom extension? If not, fallback to javascript.
                     $extension = 'js'; // Default
-                    if ($token->test(\Twig_Token::NAME_TYPE)) {
+                    if ($token->test(Token::NAME_TYPE)) {
                         $extension = $token->getValue();
                         $stream->next();
                     }
@@ -91,8 +99,8 @@ class TwigParser
                     $inline_blocks++;
                 } else {
                     $stream->next();
-                    while (! $stream->isEOF() && ! $stream->getCurrent()->test(\Twig_Token::BLOCK_END_TYPE)) {
-                        $asset          = $stream->expect(\Twig_Token::STRING_TYPE)->getValue();
+                    while (! $stream->isEOF() && ! $stream->getCurrent()->test(Token::BLOCK_END_TYPE)) {
+                        $asset          = $stream->expect(Token::STRING_TYPE)->getValue();
                         $points[$asset] = $this->resolveAssetPath($asset, $template_file, $token);
                     }
                 }
@@ -103,9 +111,10 @@ class TwigParser
     }
 
     /**
-     * @param string      $asset
-     * @param string      $template_file
-     * @param \Twig_Token $token
+     * @param  string $asset
+     * @param  string $template_file
+     * @param  Token  $token
+     * @return string
      */
     private function resolveAssetPath($asset, $template_file, $token)
     {
@@ -122,30 +131,30 @@ class TwigParser
     }
 
     /**
-     * @throws \Twig_Error_Syntax
      * @param  $filename
-     * @param  \Twig_TokenStream $stream
+     * @param  TokenStream $stream
+     * @return mixed
      */
-    private function getAssetFromStream($filename, \Twig_TokenStream $stream)
+    private function getAssetFromStream($filename, TokenStream $stream)
     {
-        $this->expect($filename, $stream->next(), \Twig_Token::PUNCTUATION_TYPE, '(');
+        $this->expect($filename, $stream->next(), Token::PUNCTUATION_TYPE, '(');
         $token = $stream->next();
-        $this->expect($filename, $token, \Twig_Token::STRING_TYPE);
-        $this->expect($filename, $stream->next(), \Twig_Token::PUNCTUATION_TYPE, ')');
+        $this->expect($filename, $token, Token::STRING_TYPE);
+        $this->expect($filename, $stream->next(), Token::PUNCTUATION_TYPE, ')');
 
         return $token->getValue();
     }
 
-    private function expect($filename, \Twig_Token $token, $type, $value = null)
+    private function expect($filename, Token $token, $type, $value = null)
     {
         if ($token->getType() !== $type) {
             throw new \RuntimeException(sprintf(
                 'Parse error in %s at line %d. Expected %s%s, got %s.',
                 $filename,
                 $token->getLine(),
-                \Twig_Token::typeToEnglish($type),
+                Token::typeToEnglish($type),
                 $value !== null ? ' "' . $value . '"' : '',
-                \Twig_Token::typeToEnglish($token->getType())
+                Token::typeToEnglish($token->getType())
             ));
         }
     }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Component\Webpack\Configuration\Config\ConfigInterface;

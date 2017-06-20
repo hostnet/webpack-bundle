@@ -1,15 +1,20 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * In this unit-test we simulate the 'tracked' files vs. the 'compiled' files with two directories
  * 'a' for the 'asset's to track' and 'b' the compiled version of those.
  *
- * @covers Hostnet\Component\Webpack\Asset\TrackedFiles
+ * @covers \Hostnet\Component\Webpack\Asset\TrackedFiles
  */
-class TrackedFilesTest extends \PHPUnit_Framework_TestCase
+class TrackedFilesTest extends TestCase
 {
 
     /**
@@ -40,7 +45,6 @@ class TrackedFilesTest extends \PHPUnit_Framework_TestCase
         $this->directory_b = tempnam(sys_get_temp_dir(), 'tracked_files_unittest_b');
         unlink($this->directory_b);
         mkdir($this->directory_b);
-
     }
 
     /**
@@ -114,7 +118,6 @@ class TrackedFilesTest extends \PHPUnit_Framework_TestCase
 
         self::assertFalse($t1->modifiedAfter($t2));
         self::assertTrue($t2->modifiedAfter($t1));
-
     }
 
     /**

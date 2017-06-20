@@ -1,16 +1,22 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Plugin\ProvidePlugin
- * @author Harold Iedema <hiedema@hostnet.nl>
- * @author Guillaume Cavana <guillaume.cavana@gmail.com>
+ * @covers \Hostnet\Component\Webpack\Configuration\Plugin\ProvidePlugin
  */
-class ProvidePluginTest extends \PHPUnit_Framework_TestCase
+class ProvidePluginTest extends TestCase
 {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConfigTreeBuilder()
     {
         $tree = new TreeBuilder();
@@ -34,7 +40,7 @@ class ProvidePluginTest extends \PHPUnit_Framework_TestCase
 
         $config->add('jQuery', 'jquery');
 
-        $this->assertEquals(
+        self::assertEquals(
             'new webpack.ProvidePlugin({"$":"jquery","jQuery":"jquery"})',
             $config->getCodeBlocks()[0]->get(CodeBlock::PLUGIN)
         );

@@ -1,15 +1,19 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Configuration\ConfigGenerator;
 use Hostnet\Component\Webpack\Profiler\Profiler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Process\Process;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\Compiler
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class CompilerTest extends \PHPUnit_Framework_TestCase
+class CompilerTest extends TestCase
 {
     private $profiler;
     private $tracker;

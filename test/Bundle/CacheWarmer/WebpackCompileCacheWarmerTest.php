@@ -1,14 +1,18 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\CacheWarmer;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
+ * @covers \Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
  */
-class WebpackCompileCacheWarmerTest extends \PHPUnit_Framework_TestCase
+class WebpackCompileCacheWarmerTest extends TestCase
 {
-
     /**
      * Simple test to see the guard is executed from the cache warmer.
      */

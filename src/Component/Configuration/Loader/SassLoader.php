@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -49,7 +53,10 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
         }
 
         if (!empty($config['include_paths'])) {
-            $block->set(CodeBlock::ROOT, 'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}');
+            $block->set(
+                CodeBlock::ROOT,
+                'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}'
+            );
         }
 
         if (empty($config['filename'])) {
@@ -63,11 +70,16 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
         $code_blocks = [(new CodeBlock())
             ->set(CodeBlock::HEADER, 'var ' . $fn . ' = require("extract-text-webpack-plugin");')
             ->set(CodeBlock::LOADER, '{ test: /\.scss$/, loader: '.$fn.'.extract("css!sass") }')
-            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. ($config['all_chunks'] ? 'allChunks: true' : '') . '})')
+            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. (
+                $config['all_chunks'] ? 'allChunks: true' : ''
+            ) . '})')
         ];
 
         if (!empty($config['include_paths'])) {
-            $code_blocks[0]->set(CodeBlock::ROOT, 'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}');
+            $code_blocks[0]->set(
+                CodeBlock::ROOT,
+                'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}'
+            );
         }
 
         // If a common_filename is set, apply the CommonsChunkPlugin.

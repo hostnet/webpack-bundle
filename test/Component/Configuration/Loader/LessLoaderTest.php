@@ -1,14 +1,19 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
- * @covers Hostnet\Component\Webpack\Configuration\Loader\LessLoader
+ * @covers \Hostnet\Component\Webpack\Configuration\Loader\LessLoader
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class LessLoaderTest extends \PHPUnit_Framework_TestCase
+class LessLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
@@ -20,8 +25,8 @@ class LessLoaderTest extends \PHPUnit_Framework_TestCase
 
         $config = $tree->buildTree()->finalize([]);
 
-        $this->assertArrayHasKey('less', $config);
-        $this->assertArrayHasKey('enabled', $config['less']);
+        self::assertArrayHasKey('less', $config);
+        self::assertArrayHasKey('enabled', $config['less']);
     }
 
     public function testGetCodeBlockDisabled()
@@ -29,7 +34,7 @@ class LessLoaderTest extends \PHPUnit_Framework_TestCase
         $config = new LessLoader(['loaders' => ['less' => ['enabled' => false]]]);
         $block  = $config->getCodeBlocks()[0];
 
-        $this->assertFalse($block->has(CodeBlock::LOADER));
+        self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
     public function testGetCodeBlock()
@@ -37,6 +42,6 @@ class LessLoaderTest extends \PHPUnit_Framework_TestCase
         $config = new LessLoader(['loaders' => ['less' => ['enabled' => true]]]);
         $block  = $config->getCodeBlocks()[0];
 
-        $this->assertTrue($block->has(CodeBlock::LOADER));
+        self::assertTrue($block->has(CodeBlock::LOADER));
     }
 }

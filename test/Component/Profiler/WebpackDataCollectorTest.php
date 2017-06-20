@@ -1,15 +1,19 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Profiler;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @covers Hostnet\Component\Webpack\Profiler\Profiler
- * @covers Hostnet\Component\Webpack\Profiler\WebpackDataCollector
- * @author Harold Iedema <hiedema@hostnet.nl>
+ * @covers \Hostnet\Component\Webpack\Profiler\Profiler
+ * @covers \Hostnet\Component\Webpack\Profiler\WebpackDataCollector
  */
-class WebpackDataCollectorTest extends \PHPUnit_Framework_TestCase
+class WebpackDataCollectorTest extends TestCase
 {
     public function testProfiler()
     {
@@ -21,7 +25,7 @@ class WebpackDataCollectorTest extends \PHPUnit_Framework_TestCase
             $this->getMockBuilder(Response::class)->getMock()
         );
 
-        $this->assertEquals('hoi', $collector->get('foobar'));
-        $this->assertEquals('webpack', $collector->getName());
+        self::assertEquals('hoi', $collector->get('foobar'));
+        self::assertEquals('webpack', $collector->getName());
     }
 }

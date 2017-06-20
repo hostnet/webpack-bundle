@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Psr\Log\LoggerInterface;
@@ -25,8 +29,13 @@ class Dumper
      * @param string          $public_res_path
      * @param string          $output_dir
      */
-    public function __construct(Filesystem $fs, LoggerInterface $logger, array $bundle_paths, $public_res_path, $output_dir)
-    {
+    public function __construct(
+        Filesystem      $fs,
+        LoggerInterface $logger,
+        array           $bundle_paths,
+        string          $public_res_path,
+        string          $output_dir
+    ) {
         $this->fs              = $fs;
         $this->logger          = $logger;
         $this->bundle_paths    = $bundle_paths;

@@ -1,20 +1,26 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Twig;
+
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\Twig\TwigExtension
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class TwigExtensionTest extends \PHPUnit_Framework_TestCase
+class TwigExtensionTest extends TestCase
 {
     public function testExtension()
     {
-        $extension = new TwigExtension(__DIR__, '/', '/bundles', '/shared.js', '/shared.css');
+        $loader    = $this->prophesize(\Twig_LoaderInterface::class)->reveal();
+        $extension = new TwigExtension($loader, __DIR__, '/', '/bundles', '/shared.js', '/shared.css');
 
-        $this->assertEquals('webpack', $extension->getName());
-        $this->assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
-        $this->assertEquals('/shared.js?0', $extension->webpackCommonJs());
-        $this->assertEquals('/shared.css?0', $extension->webpackCommonCss());
+        self::assertEquals('webpack', $extension->getName());
+        self::assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
+        self::assertEquals('/shared.js?0', $extension->webpackCommonJs());
+        self::assertEquals('/shared.css?0', $extension->webpackCommonCss());
     }
 
     /**
@@ -22,8 +28,9 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAssets($expected, $asset, $web_dir, $dump_path, $public_path)
     {
-        $extension = new TwigExtension($web_dir, $public_path, $dump_path, '', '');
-        $this->assertEquals($expected, $extension->webpackPublic($asset));
+        $loader    = $this->prophesize(\Twig_LoaderInterface::class)->reveal();
+        $extension = new TwigExtension($loader, $web_dir, $public_path, $dump_path, '', '');
+        self::assertEquals($expected, $extension->webpackPublic($asset));
     }
 
     public function assetProvider()

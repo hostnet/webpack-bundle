@@ -1,6 +1,12 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
+namespace Hostnet\Functional;
+
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
-use Hostnet\Component\Webpack\Asset\Tracker;
+use Hostnet\Fixture\WebpackBundle\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -9,6 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class AssetTest extends KernelTestCase
 {
     private $compiled;
+
+    public static function getKernelClass()
+    {
+        return TestKernel::class;
+    }
 
     protected function setUp()
     {
@@ -27,7 +38,7 @@ class AssetTest extends KernelTestCase
         /** @var $twig_ext TwigExtension */
         $twig_ext = static::$kernel->getContainer()->get('hostnet_webpack.bridge.twig_extension');
 
-        $this->assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
+        self::assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
     }
 
     public function testCompiledAsset()
@@ -36,7 +47,7 @@ class AssetTest extends KernelTestCase
         $container = static::$kernel->getContainer();
         $twig_ext  = $container->get('hostnet_webpack.bridge.twig_extension');
 
-        $this->assertEquals([
+        self::assertEquals([
             'js'  => false,
             'css' => false,
         ], $twig_ext->webpackAsset('henk'));
@@ -45,8 +56,8 @@ class AssetTest extends KernelTestCase
         touch($this->compiled . 'app.henk.css');
 
         $resources = $twig_ext->webpackAsset('@App/henk.js');
-        $this->assertContains('app.henk.js?', (string) $resources['js']);
-        $this->assertContains('app.henk.css?', (string) $resources['css']);
+        self::assertContains('app.henk.js?', (string) $resources['js']);
+        self::assertContains('app.henk.css?', (string) $resources['css']);
     }
 
     protected function tearDown()

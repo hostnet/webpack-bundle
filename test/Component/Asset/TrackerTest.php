@@ -1,7 +1,12 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Profiler\Profiler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Templating\TemplateReferenceInterface;
@@ -10,7 +15,7 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
  * @covers \Hostnet\Component\Webpack\Asset\Tracker
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class TrackerTest extends \PHPUnit_Framework_TestCase
+class TrackerTest extends TestCase
 {
     /**
      * The root directory of the application a.k.a. %kernel.root_dir%

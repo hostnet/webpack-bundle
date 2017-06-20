@@ -1,16 +1,21 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Component\Webpack\Configuration;
 
 use Hostnet\Component\Webpack\Configuration\Config\OutputConfig;
-use Hostnet\Component\Webpack\Configuration\Loader\CSSLoader;
-use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
+use Hostnet\Component\Webpack\Configuration\Loader\CssLoader;
 use Hostnet\Component\Webpack\Configuration\Loader\SassLoader;
+use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\ConfigGenerator
  * @author Harold Iedema <hiedema@hostnet.nl>
  */
-class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
+class ConfigGeneratorTest extends TestCase
 {
     public function testBuild()
     {
@@ -42,17 +47,28 @@ class ConfigGeneratorTest extends \PHPUnit_Framework_TestCase
         );
 
         // And some plugins
-        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['a' => 'b']]]))->add('b', 'c')->getCodeBlocks()[0]);
-        $config->addBlock((new DefinePlugin(['plugins' => ['constants' => ['c' => 'd']]]))->add('d', 'e')->getCodeBlocks()[0]);
+        $config->addBlock(
+            (new DefinePlugin(['plugins' => ['constants' => ['a' => 'b']]]))->add('b', 'c')->getCodeBlocks()[0]
+        );
+        $config->addBlock(
+            (new DefinePlugin(['plugins' => ['constants' => ['c' => 'd']]]))->add('d', 'e')->getCodeBlocks()[0]
+        );
 
         // Add extension
         $config->addExtension(new OutputConfig(['output' => ['path' => 'path/to/output']]));
-        $config->addExtension(new SassLoader(['loaders' => ['sass' => ['enabled' => true, 'include_paths' => ['path1', 'path2'], 'filename' => 'testfile', 'all_chunks' => true]]]));
+        $config->addExtension(new SassLoader([
+            'loaders' => [
+                'sass' => [
+                    'enabled' => true,
+                    'include_paths' => ['path1', 'path2'],
+                    'filename' => 'testfile',
+                    'all_chunks' => true]]
+        ]));
 
         $fixture_file = __DIR__ . '/../../Fixture/Component/Configuration/ConfigGenerator.js';
         // file_put_contents($fixture_file, $config->getConfiguration());
         $fixture = file_get_contents($fixture_file);
 
-        $this->assertEquals(str_replace("\r\n", "\n", $fixture), str_replace("\r\n", "\n", $config->getConfiguration()));
+        self::assertEquals(str_replace("\r\n", "\n", $fixture), str_replace("\r\n", "\n", $config->getConfiguration()));
     }
 }

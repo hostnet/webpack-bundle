@@ -1,4 +1,10 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
+namespace Hostnet\Functional;
+
 use Hostnet\Component\Webpack\Asset\Tracker;
 use Hostnet\Component\Webpack\Profiler\WebpackDataCollector;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -13,7 +19,7 @@ class CompileTest extends KernelTestCase
         static::bootKernel(['environment' => 'dev', 'debug' => false]);
         $collector = static::$kernel->getContainer()->get('hostnet_webpack.bridge.data_collector');
 
-        $this->assertInstanceOf(WebpackDataCollector::class, $collector);
+        self::assertInstanceOf(WebpackDataCollector::class, $collector);
     }
 
     /**
@@ -35,12 +41,12 @@ class CompileTest extends KernelTestCase
 
         $templates = array_map(array($this, 'relative'), $tracker->getTemplates());
 
-        $this->assertContains('/test/Fixture/Bundle/FooBundle/Resources/views/foo.html.twig', $templates);
-        $this->assertContains('/test/Fixture/Resources/views/template.html.twig', $templates);
+        self::assertContains('/test/Fixture/Bundle/FooBundle/Resources/views/foo.html.twig', $templates);
+        self::assertContains('/test/Fixture/Resources/views/template.html.twig', $templates);
 
         $aliases = $tracker->getAliases();
 
-        $this->assertEquals('/test/Fixture/Bundle/BarBundle/Resources/assets', $this->relative($aliases['@BarBundle']));
+        self::assertEquals('/test/Fixture/Bundle/BarBundle/Resources/assets', $this->relative($aliases['@BarBundle']));
     }
 
     private function relative($path)

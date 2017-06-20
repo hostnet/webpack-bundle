@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -66,11 +70,11 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $container
             ->getDefinition('hostnet_webpack.bridge.twig_extension')
-            ->replaceArgument(0, $web_dir)
-            ->replaceArgument(1, $public_path)
-            ->replaceArgument(2, str_replace($web_dir, '', $dump_path))
-            ->replaceArgument(3, sprintf('%s/%s.js', $public_path, $config['output']['common_id']))
-            ->replaceArgument(4, sprintf('%s/%s.css', $public_path, $config['output']['common_id']));
+            ->replaceArgument(1, $web_dir)
+            ->replaceArgument(2, $public_path)
+            ->replaceArgument(3, str_replace($web_dir, '', $dump_path))
+            ->replaceArgument(4, sprintf('%s/%s.js', $public_path, $config['output']['common_id']))
+            ->replaceArgument(5, sprintf('%s/%s.css', $public_path, $config['output']['common_id']));
 
         // Ensure webpack is installed in the given (or detected) node_modules directory.
         if (false === ($webpack = realpath($config['node']['node_modules_path'] . '/webpack/bin/webpack.js'))) {

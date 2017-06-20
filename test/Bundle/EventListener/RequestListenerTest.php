@@ -1,14 +1,18 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
- * @author Harold Iedema <harold@iedema.me>
  */
-class RequestListenerTest extends \PHPUnit_Framework_TestCase
+class RequestListenerTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject|GetResponseEvent
@@ -25,7 +29,6 @@ class RequestListenerTest extends \PHPUnit_Framework_TestCase
     {
         $this->event = $this->getMockBuilder(GetResponseEvent::class)->disableOriginalConstructor()->getMock();
         $this->guard = $this->getMockBuilder(CacheGuard::class)->disableOriginalConstructor()->getMock();
-
     }
 
     public function testRequestNoMasterRequest()

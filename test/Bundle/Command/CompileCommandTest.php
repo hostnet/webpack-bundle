@@ -1,16 +1,20 @@
 <?php
+/**
+ * @copyright 2017 Hostnet B.V.
+ */
+declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\Command;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
- * @covers Hostnet\Bundle\WebpackBundle\Command\CompileCommand
+ * @covers \Hostnet\Bundle\WebpackBundle\Command\CompileCommand
  */
-class CompileCommandTest extends \PHPUnit_Framework_TestCase
+class CompileCommandTest extends TestCase
 {
-
     /**
      * Simple test to see the validate function is executed from the CacheGard class.
      */

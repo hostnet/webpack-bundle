@@ -2,6 +2,7 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
+- [Upgrading to 2.0](#upgrading-to-2.0)
 - [Quick how-to](#quick-how-to)
 - [Twig tag](#twig-tag)
 - [Configuration](#configuration)
@@ -61,6 +62,28 @@ Once installed, enable the bundle `Hostnet\Bundle\WebpackBundle\WebpackBundle` i
 
 > ___Warning___: In order to have the webpack twig tag detect the compiled files, webpack has to be compiled already. Therefore
 >  it's mandatory to run the compile command `webpack:compile` __before__ the cache warmpup.
+
+
+## Upgrading to 2.0
+
+Due to some breaking changes in Twig, webpack-bundle 2.0 was released to be made compatible with the new twig version.
+
+To ensure a smooth upgrade, please ensure that you have the following in your project:
+
+- PHP 7.0 or higher
+- Symfony 3.3.0 or higher
+- Twig 2.4.0 or higher
+
+There are no configuration changes made in this version. If your project uses the package versions as mentioned above, 
+you should not run into any issues when upgrading webpack-bundle to 2.0.
+ 
+The following additional changes were made in this version:
+
+- Use PHP 7 strict type declaration
+- Use namespaced Twig classes, which are introduced in Twig 2.4 for future compatibility (e.g. `\Twig\Environemnt` instead of `\Twig_Environment`)
+- Enforce code style using `phpcs` and enforcing the extra ruleset specified by Hostnet.
+- The class `CSSLoader` was renamed to `CssLoader` because our code style rules enforce this.
+- Generated file names for inline javascript/css source are now coming from `TokenStream->getSourceContext()->getName()` instead of `TokenStream->getFilename()`. The latter function was removed from Twig.
 
 ## Quick how-to
 
@@ -427,7 +450,7 @@ webpack:
 
 Loaders allow you to `require` files other than javascript. This package comes with 7 default loaders.
 
- - `CSSLoader`       : include CSS files
+ - `CssLoader`       : include CSS files
  - `UrlLoader`       : include images (converted to base64)
  - `LessLoader`      : include less files.
  - `SassLoader`      : include sass files.
