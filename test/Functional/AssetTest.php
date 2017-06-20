@@ -6,7 +6,7 @@ declare(strict_types = 1);
 namespace Hostnet\Functional;
 
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
-use Hostnet\Component\Webpack\Asset\Tracker;
+use Hostnet\Fixture\WebpackBundle\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -15,6 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class AssetTest extends KernelTestCase
 {
     private $compiled;
+
+    public static function getKernelClass()
+    {
+        return TestKernel::class;
+    }
 
     protected function setUp()
     {
