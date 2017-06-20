@@ -6,11 +6,11 @@
     "require": {
         "php":                    "^7.0",
         "symfony/monolog-bundle": "^3.1.0",
-        "symfony/symfony":        "3.3.*,>=3.3.2",
-        "twig/twig":              "^2.4.3"
+        "symfony/symfony":        "^3.3.0",
+        "twig/twig":              "^2.4.0"
     },
     "require-dev": {
-        "hostnet/phpcs-tool":     "^4.1.4",
+        "hostnet/phpcs-tool":     "^5.2.0",
         "phpunit/phpunit":        "^6.2.2",
         "symfony/phpunit-bridge": "^3.3.2"
     },
