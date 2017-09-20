@@ -48,8 +48,11 @@ module : {
     postLoaders : [
         { test: /\.inl$/, loader: "style" }
     ]
+},
+sassLoader: {
+    includePaths: [
+        'path1',
+        'path2'
+    ]
 }
-
-,
-    sassLoader: { includePaths: ['path1','path2']}
 };

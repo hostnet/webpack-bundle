@@ -83,12 +83,14 @@ class ConfigGenerator
         $code[] = $tab1 . 'postLoaders : [';
         $code[] = $tab2 . $this->getChunks(CodeBlock::POST_LOADER, ',' . PHP_EOL . $tab2, ',' . PHP_EOL . $tab2);
         $code[] = $tab1 . ']';
-        $code[] = '}';
-        $code[] = '';
+
         if (!empty($this->getChunks(CodeBlock::ROOT))) {
-            $code[] = ',';
-            $code[] = $tab1 . $this->getChunks(CodeBlock::ROOT, ',' . PHP_EOL . $tab1, ',' . PHP_EOL . $tab1);
+            $code[] = '},';
+            $code[] = $this->getChunks(CodeBlock::ROOT);
+        } else {
+            $code[] = '}';
         }
+
         $code[] = '};';
         $code[] = '';
 
