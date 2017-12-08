@@ -72,3 +72,9 @@ monolog:
             type: console
             verbosity_levels:
                 VERBOSITY_NORMAL: notice
+
+services:
+    Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\Loader\MockLoader:
+      public: true
+      tags:
+            - { name: "hostnet_webpack.config_extension" }

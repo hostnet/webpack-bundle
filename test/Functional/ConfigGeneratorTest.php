@@ -16,10 +16,10 @@ class ConfigGeneratorTest extends KernelTestCase
         static::bootKernel();
 
         /** @var $mock_loader MockLoader */
-        $mock_loader = static::$kernel->getContainer()->get('bar.mock_loader');
+        $mock_loader = static::$kernel->getContainer()->get(MockLoader::class);
 
         /** @var $config_generator ConfigGenerator */
-        $config_generator = static::$kernel->getContainer()->get('hostnet_webpack.bridge.config_generator');
+        $config_generator = static::$kernel->getContainer()->get(ConfigGenerator::class);
 
         $contiguration = $config_generator->getConfiguration();
 

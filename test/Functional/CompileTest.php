@@ -2,34 +2,31 @@
 /**
  * @copyright 2017 Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Functional;
 
 use Hostnet\Component\Webpack\Asset\Tracker;
 use Hostnet\Component\Webpack\Profiler\WebpackDataCollector;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- */
 class CompileTest extends KernelTestCase
 {
     public function testDevCollector()
     {
         static::bootKernel(['environment' => 'dev', 'debug' => false]);
-        $collector = static::$kernel->getContainer()->get('hostnet_webpack.bridge.data_collector');
+        $collector = static::$kernel->getContainer()->get(WebpackDataCollector::class);
 
         self::assertInstanceOf(WebpackDataCollector::class, $collector);
     }
 
-    /**
-     * @expectedException \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
-     * @expectedExceptionMessage You have requested a non-existent service "hostnet_webpack.bridge.data_collector".
-     */
     public function testMissingCollector()
     {
+        $this->expectException(ServiceNotFoundException::class);
+
         static::bootKernel(['environment' => 'test', 'debug' => false]);
-        static::$kernel->getContainer()->get('hostnet_webpack.bridge.data_collector');
+        static::$kernel->getContainer()->get(WebpackDataCollector::class);
     }
 
     public function testTrackedTemplates()
@@ -37,9 +34,9 @@ class CompileTest extends KernelTestCase
         static::bootKernel();
 
         /** @var $tracker Tracker */
-        $tracker = static::$kernel->getContainer()->get('hostnet_webpack.bridge.asset_tracker');
+        $tracker = static::$kernel->getContainer()->get(Tracker::class);
 
-        $templates = array_map(array($this, 'relative'), $tracker->getTemplates());
+        $templates = array_map([$this, 'relative'], $tracker->getTemplates());
 
         self::assertContains('/test/Fixture/Bundle/FooBundle/Resources/views/foo.html.twig', $templates);
         self::assertContains('/test/Fixture/Resources/views/template.html.twig', $templates);

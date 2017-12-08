@@ -9,9 +9,6 @@ use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Hostnet\Fixture\WebpackBundle\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- */
 class AssetTest extends KernelTestCase
 {
     private $compiled;
@@ -36,7 +33,7 @@ class AssetTest extends KernelTestCase
         static::bootKernel();
 
         /** @var $twig_ext TwigExtension */
-        $twig_ext = static::$kernel->getContainer()->get('hostnet_webpack.bridge.twig_extension');
+        $twig_ext = static::$kernel->getContainer()->get(TwigExtension::class);
 
         self::assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
     }
@@ -45,7 +42,7 @@ class AssetTest extends KernelTestCase
     {
         /** @var $twig_ext TwigExtension */
         $container = static::$kernel->getContainer();
-        $twig_ext  = $container->get('hostnet_webpack.bridge.twig_extension');
+        $twig_ext  = $container->get(TwigExtension::class);
 
         self::assertEquals([
             'js'  => false,

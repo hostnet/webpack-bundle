@@ -5,19 +5,22 @@
 declare(strict_types = 1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
+use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
+use Hostnet\Component\Webpack\Asset\Compiler;
+use Hostnet\Component\Webpack\Asset\Dumper;
+use Hostnet\Component\Webpack\Asset\Tracker;
+use Hostnet\Component\Webpack\Configuration\ConfigGenerator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Process\Process;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class WebpackCompilerPass implements CompilerPassInterface
 {
     /** {@inheritdoc} */
     public function process(ContainerBuilder $container)
     {
-        $asset_tracker   = $container->getDefinition('hostnet_webpack.bridge.asset_tracker');
+        $asset_tracker   = $container->getDefinition(Tracker::class);
         $bundles         = $container->getParameter('kernel.bundles');
         $config          = $container->getParameter('hostnet_webpack_config');
         $tracked_bundles = $config['bundles'];
@@ -59,17 +62,17 @@ class WebpackCompilerPass implements CompilerPassInterface
         ];
 
         $container
-            ->getDefinition('hostnet_webpack.bridge.asset_dumper')
+            ->getDefinition(Dumper::class)
             ->replaceArgument(2, $bundle_paths)
             ->replaceArgument(3, $public_res_path)
             ->replaceArgument(4, $dump_path);
 
         $container
-            ->getDefinition('hostnet_webpack.bridge.asset_compiler')
+            ->getDefinition(Compiler::class)
             ->replaceArgument(6, $config['bundles']);
 
         $container
-            ->getDefinition('hostnet_webpack.bridge.twig_extension')
+            ->getDefinition(TwigExtension::class)
             ->replaceArgument(1, $web_dir)
             ->replaceArgument(2, $public_path)
             ->replaceArgument(3, str_replace($web_dir, '', $dump_path))
@@ -87,12 +90,12 @@ class WebpackCompilerPass implements CompilerPassInterface
         }
 
         $process_definition = $container
-            ->getDefinition('hostnet_webpack.bridge.compiler_process')
+            ->getDefinition(Process::class)
             ->replaceArgument(0, $config['node']['binary'] . ' ' . $webpack)
             ->replaceArgument(1, $container->getParameter('kernel.cache_dir'))
             ->addMethodCall('setTimeout', [$config['compile_timeout']]);
 
-        $builder_definition   = $container->getDefinition('hostnet_webpack.bridge.config_generator');
+        $builder_definition   = $container->getDefinition(ConfigGenerator::class);
         $config_extension_ids = array_keys($container->findTaggedServiceIds('hostnet_webpack.config_extension'));
         foreach ($config_extension_ids as $id) {
             $builder_definition->addMethodCall('addExtension', [new Reference($id)]);

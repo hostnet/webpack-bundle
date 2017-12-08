@@ -8,9 +8,6 @@ namespace Hostnet\Functional;
 use Hostnet\Component\Webpack\Asset\Dumper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- */
 class DumperTest extends KernelTestCase
 {
     protected function setUp()
@@ -25,7 +22,7 @@ class DumperTest extends KernelTestCase
         static::bootKernel();
 
         /** @var $dumper Dumper */
-        $dumper = static::$kernel->getContainer()->get('hostnet_webpack.bridge.asset_dumper');
+        $dumper = static::$kernel->getContainer()->get(Dumper::class);
 
         $dumper->dump();
 
