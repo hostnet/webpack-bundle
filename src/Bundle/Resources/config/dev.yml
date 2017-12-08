@@ -1,15 +1,17 @@
 services:
-
-    hostnet_webpack.bridge.request_listener:
-        class: Hostnet\Bundle\WebpackBundle\EventListener\RequestListener
+    Hostnet\Bundle\WebpackBundle\EventListener\RequestListener:
         arguments:
             - "@hostnet_webpack.bridge.asset_cacheguard"
         tags:
             - { name: "kernel.event_listener", event: "kernel.request", method: "onRequest"}
 
-    hostnet_webpack.bridge.data_collector:
-        class: Hostnet\Component\Webpack\Profiler\WebpackDataCollector
+    Hostnet\Component\Webpack\Profiler\WebpackDataCollector:
+        public: true
         arguments:
             - "@hostnet_webpack.bridge.profiler"
         tags:
             - { name: "data_collector", template: "WebpackBundle::profiler.html.twig", id: "webpack" }
+
+    # BC aliases
+    hostnet_webpack.bridge.request_listener: '@Hostnet\Bundle\WebpackBundle\EventListener\RequestListener'
+    hostnet_webpack.bridge.data_collector: '@Hostnet\Component\Webpack\Profiler\WebpackDataCollector'

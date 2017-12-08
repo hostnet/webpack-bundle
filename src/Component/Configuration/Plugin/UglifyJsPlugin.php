@@ -61,7 +61,6 @@ final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
 
         $compress = $uglify
             ->arrayNode('compress')
-                ->cannotBeEmpty()
                 ->addDefaultsIfNotSet()
                 ->children();
 

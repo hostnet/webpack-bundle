@@ -5,8 +5,8 @@
     "license":     "MIT",
     "require": {
         "php":                    "^7.0",
-        "symfony/monolog-bundle": "^3.1.0",
-        "symfony/symfony":        "^3.3.0",
+        "symfony/monolog-bundle": "^4.0.0||^3.1.0",
+        "symfony/symfony":        "^4.0.0||^3.3.0",
         "twig/twig":              "^2.4.0"
     },
     "require-dev": {

@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
-/**
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
- */
 final class WebpackDataCollector implements DataCollectorInterface
 {
     /**
@@ -36,6 +33,13 @@ final class WebpackDataCollector implements DataCollectorInterface
 
     /** {@inheritdoc} */
     public function collect(Request $request, Response $response, \Exception $exception = null)
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
     {
     }
 
