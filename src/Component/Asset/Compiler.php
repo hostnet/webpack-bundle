@@ -103,6 +103,7 @@ class Compiler
         );
         $this->profiler->set('compiler.performance.prepare', $this->stopwatch->stop('webpack.prepare')->getDuration());
         $this->stopwatch->start('webpack.compiler');
+        $this->process->inheritEnvironmentVariables(true);
         $this->process->run();
 
         $output = $this->process->getOutput() . $this->process->getErrorOutput();
