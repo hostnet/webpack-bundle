@@ -1,10 +1,10 @@
 {
     "name":        "hostnet/webpack-bundle",
     "type":        "symfony-bundle",
-    "description": "Integrates Webpack with Symfony2",
+    "description": "Integrates Webpack with Symfony",
     "license":     "MIT",
     "require": {
-        "php":                    "^7.0",
+        "php":                    "^7.1.0",
         "symfony/monolog-bundle": "^4.0.0||^3.1.0",
         "symfony/symfony":        "^4.0.0||^3.3.0",
         "twig/twig":              "^2.4.0"
