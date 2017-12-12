@@ -70,7 +70,7 @@ Due to some breaking changes in Twig, webpack-bundle 2.0 was released to be made
 
 To ensure a smooth upgrade, please ensure that you have the following in your project:
 
-- PHP 7.0 or higher
+- PHP 7.1 or higher
 - Symfony 3.3.0 or higher
 - Twig 2.4.0 or higher
 
@@ -84,6 +84,8 @@ The following additional changes were made in this version:
 - Enforce code style using `phpcs` and enforcing the extra ruleset specified by Hostnet.
 - The class `CSSLoader` was renamed to `CssLoader` because our code style rules enforce this.
 - Generated file names for inline javascript/css source are now coming from `TokenStream->getSourceContext()->getName()` instead of `TokenStream->getFilename()`. The latter function was removed from Twig.
+- Created FCQN services and added aliases to ensure BC.
+- Made the bundle compatible with Symfony (3.)4 
 
 ## Quick how-to
 
