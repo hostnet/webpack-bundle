@@ -52,10 +52,17 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
             return [$block];
         }
 
+        $tab1   = str_repeat(' ', 4); // "one tab" spacing for 'pretty' output
+        $tab2   = str_repeat(' ', 8); // "two tabs" spacing for 'pretty' output
+
         if (!empty($config['include_paths'])) {
             $block->set(
                 CodeBlock::ROOT,
-                'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}'
+                'sassLoader: {' . PHP_EOL .
+                    $tab1 . 'includePaths: [' . PHP_EOL .
+                        $tab2 . '\'' . implode('\',' . PHP_EOL . $tab2 . '\'', $config['include_paths']) . '\'' . PHP_EOL .
+                    $tab1 .']' . PHP_EOL .
+                '}'
             );
         }
 
@@ -78,7 +85,11 @@ final class SassLoader implements LoaderInterface, ConfigExtensionInterface
         if (!empty($config['include_paths'])) {
             $code_blocks[0]->set(
                 CodeBlock::ROOT,
-                'sassLoader: { includePaths: [\'' . implode('\',\'', $config['include_paths']) . '\']}'
+                'sassLoader: {' . PHP_EOL .
+                    $tab1 . 'includePaths: [' . PHP_EOL .
+                        $tab2 . '\'' . implode('\',' . PHP_EOL . $tab2 . '\'', $config['include_paths']) . '\'' . PHP_EOL .
+                    $tab1 .']' . PHP_EOL .
+                '}'
             );
         }
 
