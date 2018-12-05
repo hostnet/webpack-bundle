@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -36,13 +37,13 @@ class ResolveConfigTest extends TestCase
     {
         $config = new ResolveConfig([
             'node' => [
-                'node_modules_path' => '/path/to/node_modules'
+                'node_modules_path' => '/path/to/node_modules',
             ],
             'resolve' => [
                 'root' => ['foobar.js'],
                 'alias' => ['@Common' => 'common'],
-                'modules_directories' => []
-            ]
+                'modules_directories' => [],
+            ],
         ]);
         $config->addAlias('/foo/bar', '@FooBar');
 

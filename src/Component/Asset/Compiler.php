@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -14,8 +15,6 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * Compiles asssets using the webpack binary.
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class Compiler
 {
@@ -28,6 +27,11 @@ class Compiler
      * @var Tracker
      */
     private $tracker;
+
+    /**
+     * @var TwigParser
+     */
+    private $twig_parser;
 
     /**
      * @var ConfigGenerator
@@ -54,24 +58,14 @@ class Compiler
      */
     private $stopwatch;
 
-    /**
-     * @param Profiler        $profiler
-     * @param Tracker         $tracker
-     * @param ConfigGenerator $generator
-     * @param TwigParser      $twig_parser
-     * @param Process         $process
-     * @param Stopwatch       $stopwatch
-     * @param string          $cache_dir
-     * @param array           $bundles
-     */
     public function __construct(
         Profiler        $profiler,
         Tracker         $tracker,
         TwigParser      $twig_parser,
         ConfigGenerator $generator,
         Process         $process,
-        /* string */    $cache_dir,
-        /* array */     $bundles,
+        /* string */ $cache_dir,
+        /* array */ $bundles,
         Stopwatch       $stopwatch = null
     ) {
         $this->profiler    = $profiler;
@@ -81,7 +75,7 @@ class Compiler
         $this->process     = $process;
         $this->cache_dir   = $cache_dir;
         $this->bundles     = $bundles;
-        $this->stopwatch   = $stopwatch !== null ? $stopwatch : new Stopwatch();
+        $this->stopwatch   = $stopwatch ?? new Stopwatch();
     }
 
     /**

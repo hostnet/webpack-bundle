@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Profiler\Profiler;
@@ -13,7 +14,6 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\Tracker
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class TrackerTest extends TestCase
 {
@@ -54,7 +54,6 @@ class TrackerTest extends TestCase
      */
     public function testIsOutdated()
     {
-
         $path = tempnam(sys_get_temp_dir(), 'unittest_tracker_source');
         unlink($path);
         mkdir($path);
@@ -168,7 +167,6 @@ class TrackerTest extends TestCase
         $finder = $this->prophesize(TemplateFinderInterface::class);
         $finder->findAllTemplates()->willReturn([$ref->reveal()]);
 
-
         $tracker = new Tracker(
             $profiler,
             $finder->reveal(),
@@ -190,7 +188,6 @@ class TrackerTest extends TestCase
         $ref->get('engine')->willReturn('twig');
         $finder = $this->prophesize(TemplateFinderInterface::class);
         $finder->findAllTemplates()->willReturn([$ref->reveal()]);
-
 
         $tracker = new Tracker(
             $profiler,

@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -16,15 +17,14 @@ final class CssLoader implements LoaderInterface, ConfigExtensionInterface
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $node_builder
@@ -38,7 +38,9 @@ final class CssLoader implements LoaderInterface, ConfigExtensionInterface
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         $config = $this->config['loaders']['css'];
@@ -59,10 +61,10 @@ final class CssLoader implements LoaderInterface, ConfigExtensionInterface
         $fn          = 'fn_extract_text_plugin_css';
         $code_blocks = [(new CodeBlock())
             ->set(CodeBlock::HEADER, 'var ' . $fn . ' = require("extract-text-webpack-plugin");')
-            ->set(CodeBlock::LOADER, '{ test: /\.css$/, loader: '.$fn.'.extract("css-loader") }')
-            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {'. (
+            ->set(CodeBlock::LOADER, '{ test: /\.css$/, loader: ' . $fn . '.extract("css-loader") }')
+            ->set(CodeBlock::PLUGIN, 'new ' . $fn . '("' . $config['filename'] . '", {' . (
                 $config['all_chunks'] ? 'allChunks: true' : ''
-            ) . '})')
+            ) . '})'),
         ];
 
         // If a common_filename is set, apply the CommonsChunkPlugin.

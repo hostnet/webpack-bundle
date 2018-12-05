@@ -1,15 +1,15 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\TwigParser
- * @author Harold Iedema <harold@iedema.me>
  */
 class TwigParserTest extends TestCase
 {
@@ -32,7 +32,7 @@ class TwigParserTest extends TestCase
     protected function setUp()
     {
         $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
-        $this->twig      = new \Twig_Environment(new \Twig_Loader_Array(array()));
+        $this->twig      = new \Twig_Environment(new \Twig_Loader_Array([]));
         $this->cache_dir = sys_get_temp_dir();
     }
 

@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -40,7 +41,7 @@ class UrlLoaderTest extends TestCase
     public function testGetFontExtensionCodeBlock()
     {
         $config = new UrlLoader([
-            'loaders' => ['url' => ['enabled' => true, 'font_extensions' => 'svg,woff', 'limit' => 100]]
+            'loaders' => ['url' => ['enabled' => true, 'font_extensions' => 'svg,woff', 'limit' => 100]],
         ]);
         $block  = $config->getCodeBlocks()[0];
 
@@ -51,7 +52,7 @@ class UrlLoaderTest extends TestCase
     public function testGetImageExtensionCodeBlock()
     {
         $config = new UrlLoader([
-            'loaders' => ['url' => ['enabled' => true, 'image_extensions' => 'png', 'limit' => 100]]
+            'loaders' => ['url' => ['enabled' => true, 'image_extensions' => 'png', 'limit' => 100]],
         ]);
         $block  = $config->getCodeBlocks()[0];
 

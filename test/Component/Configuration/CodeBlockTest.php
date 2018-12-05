@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration;
 
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,6 @@ use PHPUnit\Framework\TestCase;
  * Class CodeBlockTest
  *
  * @covers \Hostnet\Component\Webpack\Configuration\CodeBlock
- * @author Harold Iedema <harold@iedema.me>
  */
 class CodeBlockTest extends TestCase
 {

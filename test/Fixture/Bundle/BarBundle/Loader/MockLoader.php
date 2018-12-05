@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;

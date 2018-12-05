@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -52,9 +53,9 @@ class SassLoaderTest extends TestCase
                     'enabled'       => true,
                     'include_paths' => ['path1', 'path2'],
                     'filename'      => 'testfile',
-                    'all_chunks'    => true
-                ]
-            ]
+                    'all_chunks'    => true,
+                ],
+            ],
         ]);
         $block  = $config->getCodeBlocks()[0];
 

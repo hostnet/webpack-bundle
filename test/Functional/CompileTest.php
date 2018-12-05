@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
 declare(strict_types=1);
 
@@ -33,7 +33,7 @@ class CompileTest extends KernelTestCase
     {
         static::bootKernel();
 
-        /** @var $tracker Tracker */
+        /** @var Tracker $tracker */
         $tracker = static::$kernel->getContainer()->get(Tracker::class);
 
         $templates = array_map([$this, 'relative'], $tracker->getTemplates());

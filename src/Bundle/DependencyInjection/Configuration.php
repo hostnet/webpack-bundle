@@ -1,39 +1,36 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Component\Webpack\Configuration\Config\ConfigInterface;
+use Hostnet\Component\Webpack\Configuration\ConfigExtensionInterface;
 use Hostnet\Component\Webpack\Configuration\Loader\LoaderInterface;
 use Hostnet\Component\Webpack\Configuration\Plugin\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class Configuration implements ConfigurationInterface
 {
-    const CONFIG_ROOT                     = 'webpack';
-    const DEFAULT_COMPILE_TIMEOUT_SECONDS = 60;
+    public const CONFIG_ROOT                     = 'webpack';
+    public const DEFAULT_COMPILE_TIMEOUT_SECONDS = 60;
 
     private $bundles;
     private $plugins;
 
-    /**
-     * @param array $bundles
-     * @param array $plugins
-     */
     public function __construct(array $bundles = [], array $plugins = [])
     {
         $this->bundles = $bundles;
         $this->plugins = $plugins;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getConfigTreeBuilder()
     {
         $tree_builder = new TreeBuilder();
@@ -80,7 +77,7 @@ class Configuration implements ConfigurationInterface
                                 'linux_x32' => $value,
                                 'linux_x64' => $value,
                                 'darwin'    => $value,
-                                'fallback'  => $value
+                                'fallback'  => $value,
                             ];
                         })
                     ->end()
@@ -164,11 +161,11 @@ class Configuration implements ConfigurationInterface
     {
         foreach ($this->plugins as $name => $class_name) {
             // Only accept plugins of type PluginInterface.
-            if (! in_array($interface, class_implements($class_name))) {
+            if (false === \in_array($interface, class_implements($class_name), false)) {
                 continue;
             }
 
-            /* @var $class_name \Hostnet\Component\Webpack\Configuration\ConfigExtensionInterface */
+            /** @var ConfigExtensionInterface $class_name */
             $class_name::applyConfiguration($node_builder);
         }
     }

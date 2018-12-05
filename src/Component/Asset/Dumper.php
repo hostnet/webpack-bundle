@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Psr\Log\LoggerInterface;
@@ -11,8 +12,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Exports resources from the 'public' directory to <dump_path>/<bundle_name> whenever a resource has been changed.
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class Dumper
 {
@@ -22,13 +21,6 @@ class Dumper
     private $public_res_path;
     private $output_dir;
 
-    /**
-     * @param Filesystem      $fs
-     * @param LoggerInterface $logger
-     * @param array           $bundle_paths
-     * @param string          $public_res_path
-     * @param string          $output_dir
-     */
     public function __construct(
         Filesystem      $fs,
         LoggerInterface $logger,
@@ -67,11 +59,11 @@ class Dumper
         $this->logger->info(sprintf('Dumping public assets for "%s" to "%s".', $name, $target_dir));
 
         // Always copy on windows.
-        if (strpos(strtoupper(php_uname('s')), 'WIN') === 0) {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             $this->fs->mirror($path, $target_dir, null, [
                 'override'        => true,
                 'copy_on_windows' => true,
-                'delete'          => true
+                'delete'          => true,
             ]);
 
             return;
@@ -91,8 +83,8 @@ class Dumper
      */
     private function getTargetDir($name)
     {
-        if (substr($name, strlen($name) - 6) === 'Bundle') {
-            $name = substr($name, 0, strlen($name) - 6);
+        if (substr($name, \strlen($name) - 6) === 'Bundle') {
+            $name = substr($name, 0, -6);
         }
 
         return $this->output_dir . DIRECTORY_SEPARATOR . strtolower($name);

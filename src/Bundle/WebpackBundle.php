@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass;
@@ -12,12 +13,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Class WebpackBundle
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class WebpackBundle extends Bundle
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -25,7 +26,9 @@ class WebpackBundle extends Bundle
         $container->addCompilerPass(new WebpackCompilerPass());
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getContainerExtension()
     {
         return new WebpackExtension();

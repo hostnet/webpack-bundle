@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use PHPUnit\Framework\TestCase;
@@ -16,7 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TrackedFilesTest extends TestCase
 {
-
     /**
      * Full path to test directory 'a'
      *
@@ -88,7 +88,6 @@ class TrackedFilesTest extends TestCase
         $file = tempnam($this->directory_a, 'tracked_files_unittest_a_file2');
         touch($file, $time);
 
-
         $t1 = new TrackedFiles([$this->directory_a]);
         $t2 = new TrackedFiles([$this->directory_b]);
 
@@ -101,7 +100,6 @@ class TrackedFilesTest extends TestCase
      */
     public function testDel()
     {
-
         $time = time();
 
         $file1 = tempnam($this->directory_a, 'tracked_files_unittest_a_file1');
@@ -132,8 +130,7 @@ class TrackedFilesTest extends TestCase
         $file = tempnam($this->directory_b, 'tracked_files_unittest_b_file1');
         touch($file, $time - 50);
         $file = tempnam($this->directory_a, 'tracked_files_unittest_a_file2');
-        touch($file, $time-200);
-
+        touch($file, $time - 200);
 
         $t1 = new TrackedFiles([$this->directory_a]);
         $t2 = new TrackedFiles([$this->directory_b]);
@@ -155,7 +152,6 @@ class TrackedFilesTest extends TestCase
         touch($file, $time - 50);
         $file = tempnam($this->directory_a, 'tracked_files_unittest_a_file2');
         touch($file, $time);
-
 
         $t1 = new TrackedFiles([$this->directory_a]);
         $t2 = new TrackedFiles([$this->directory_b]);

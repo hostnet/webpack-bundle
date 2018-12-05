@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -12,8 +13,6 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 /**
  * @see https://github.com/webpack/docs/wiki/list-of-plugins#uglifyjsplugin
  * @see http://lisperator.net/uglifyjs/compress
- *
- * @author Iltar van der Berg <ivanderberg@hostnet.nl>
  */
 final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
 {
@@ -43,15 +42,14 @@ final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
-        $this->config = isset($config['plugins']['uglifyjs'])  ? $config['plugins']['uglifyjs'] : [];
+        $this->config = $config['plugins']['uglifyjs'] ?? [];
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $uglify = $node_builder
@@ -64,7 +62,7 @@ final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
                 ->addDefaultsIfNotSet()
                 ->children();
 
-        foreach (self::$config_map as list ($option, $default, $info)) {
+        foreach (self::$config_map as [$option, $default, $info]) {
             $compress
                 ->booleanNode($option)
                     ->defaultValue($default)
@@ -109,7 +107,9 @@ final class UglifyJsPlugin implements PluginInterface, ConfigExtensionInterface
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         if (empty($this->config) || !$this->config['enabled']) {

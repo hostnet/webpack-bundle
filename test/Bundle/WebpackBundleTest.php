@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass;
@@ -11,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\WebpackBundle
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class WebpackBundleTest extends TestCase
 {

@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Functional;
 
 use Hostnet\Component\Webpack\Asset\Dumper;
@@ -10,6 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DumperTest extends KernelTestCase
 {
+    /**
+     * @var string
+     */
+    private $dir;
+
     protected function setUp()
     {
         static::bootKernel();
@@ -21,7 +27,7 @@ class DumperTest extends KernelTestCase
     {
         static::bootKernel();
 
-        /** @var $dumper Dumper */
+        /** @var Dumper $dumper */
         $dumper = static::$kernel->getContainer()->get(Dumper::class);
 
         $dumper->dump();
@@ -31,7 +37,7 @@ class DumperTest extends KernelTestCase
 
     protected function tearDown()
     {
-        `rm -rf $this->dir`;
+        shell_exec("rm -rf $this->dir");
 
         parent::tearDown();
     }

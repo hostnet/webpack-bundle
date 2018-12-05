@@ -1,13 +1,11 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
-use Hostnet\Component\Webpack\Asset\Compiler;
-use Hostnet\Component\Webpack\Asset\Dumper;
-use Hostnet\Component\Webpack\Asset\Tracker;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 

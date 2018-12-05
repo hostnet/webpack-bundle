@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\Twig\Token;
 
 use Hostnet\Bundle\WebpackBundle\Twig\Node\WebpackInlineNode;
@@ -16,15 +17,12 @@ use Twig\Token;
 use Twig\TokenParser\TokenParserInterface;
 use Twig\TokenStream;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class WebpackTokenParser implements TokenParserInterface
 {
     /**
      * Tag name is declared as constant for easy accessibility by the TwigParser for split-point detection.
      */
-    const TAG_NAME = 'webpack';
+    public const TAG_NAME = 'webpack';
 
     /**
      * @var Parser
@@ -46,29 +44,31 @@ class WebpackTokenParser implements TokenParserInterface
      */
     private $inline_blocks = [];
 
-    /**
-     * @param ExtensionInterface $extension
-     * @param LoaderInterface    $loader
-     */
     public function __construct(ExtensionInterface $extension, LoaderInterface $loader)
     {
         $this->extension = $extension;
         $this->loader    = $loader;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function setParser(Parser $parser)
     {
         $this->parser = $parser;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getTag()
     {
         return self::TAG_NAME;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function parse(Token $token)
     {
         $stream = $this->parser->getStream();
@@ -76,7 +76,7 @@ class WebpackTokenParser implements TokenParserInterface
 
         // Export type: "js" or "css"
         $export_type = $stream->expect(Token::NAME_TYPE)->getValue();
-        if (! in_array($export_type, ['js', 'css', 'inline'])) {
+        if (false === \in_array($export_type, ['js', 'css', 'inline'])) {
             // This exception will include the template filename by itself.
             throw new \Twig_Error_Syntax(sprintf(
                 'Expected export type "inline", "js" or "css", got "%s" at line %d.',
@@ -85,7 +85,7 @@ class WebpackTokenParser implements TokenParserInterface
             ));
         }
 
-        if ($export_type === "inline") {
+        if ($export_type === 'inline') {
             return $this->parseInline($stream, $lineno);
         }
 
@@ -141,7 +141,7 @@ class WebpackTokenParser implements TokenParserInterface
         $stream->expect(Token::BLOCK_END_TYPE);
 
         $file = $this->loader->getCacheKey($stream->getSourceContext()->getName());
-        if (! isset($this->inline_blocks[$file])) {
+        if (false === isset($this->inline_blocks[$file])) {
             $this->inline_blocks[$file] = 0;
         }
 

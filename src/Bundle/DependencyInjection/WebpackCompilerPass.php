@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
@@ -17,7 +18,9 @@ use Symfony\Component\Process\Process;
 
 class WebpackCompilerPass implements CompilerPassInterface
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function process(ContainerBuilder $container)
     {
         $asset_tracker   = $container->getDefinition(Tracker::class);
@@ -29,16 +32,16 @@ class WebpackCompilerPass implements CompilerPassInterface
         $public_path     = rtrim($config['output']['public_path'], '\\/');
         $dump_path       = rtrim($config['output']['dump_path'], '\\/');
         $path            = rtrim($config['output']['path'], '\\/');
-        $web_dir         = rtrim(substr($path, 0, strlen($path) - strlen($public_path)), '/\\');
+        $web_dir         = rtrim(substr($path, 0, \strlen($path) - \strlen($public_path)), '/\\');
         $bundle_paths    = [];
 
         // add all configured bundles to the tracker
         foreach ($bundles as $name => $class) {
-            if (! in_array($name, $tracked_bundles)) {
+            if (false === \in_array($name, $tracked_bundles, false)) {
                 continue;
             }
 
-            $bundle_paths[$name] = realpath(dirname((new \ReflectionClass($class))->getFileName()));
+            $bundle_paths[$name] = realpath(\dirname((new \ReflectionClass($class))->getFileName()));
         }
 
         $asset_tracker->replaceArgument(3, $asset_res_path);
@@ -46,7 +49,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         $asset_tracker->replaceArgument(5, $bundle_paths);
 
         // add all aliases to the tracker
-        if (isset($config['resolve']['alias']) && is_array($config['resolve']['alias'])) {
+        if (isset($config['resolve']['alias']) && \is_array($config['resolve']['alias'])) {
             foreach ($config['resolve']['alias'] as $alias_path) {
                 if (!file_exists($alias_path)) {
                     continue;
@@ -58,7 +61,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         // Configure the compiler process.
         $env_vars = [
             'PATH'      => getenv('PATH'),
-            'NODE_PATH' => $config['node']['node_modules_path']
+            'NODE_PATH' => $config['node']['node_modules_path'],
         ];
 
         $container
@@ -105,7 +108,7 @@ class WebpackCompilerPass implements CompilerPassInterface
         // need this because there is a big chance that populating the $_ENV variable is disabled on most machines.
         // FIXME http://stackoverflow.com/questions/32125810/windows-symfony2-process-crashes-when-passing-env-variables
         // @codeCoverageIgnoreStart
-        if (strpos(strtoupper(php_uname('s')), 'WIN') === 0) {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             $env_vars['COMSPEC']            = getenv('COMSPEC');
             $env_vars['WINDIR']             = getenv('WINDIR');
             $env_vars['COMMONPROGRAMW6432'] = getenv('COMMONPROGRAMW6432');
