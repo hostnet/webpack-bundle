@@ -17,8 +17,8 @@ class TypeScriptLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('typescript')->children();
+        $tree = new TreeBuilder('webpack');
+        $node = $tree->getRootNode()->children();
 
         TypeScriptLoader::applyConfiguration($node);
         $node->end();

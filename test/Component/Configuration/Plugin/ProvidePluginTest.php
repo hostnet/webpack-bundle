@@ -20,8 +20,8 @@ class ProvidePluginTest extends TestCase
      */
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('webpack')->children();
+        $tree = new TreeBuilder('webpack');
+        $node = $tree->getRootNode()->children();
 
         ProvidePlugin::applyConfiguration($node);
         $node->end();

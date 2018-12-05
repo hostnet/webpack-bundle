@@ -6,6 +6,7 @@ declare(strict_types=1);
 
 namespace Hostnet\Functional;
 
+use Hostnet\Component\Path\Path;
 use Hostnet\Component\Webpack\Asset\Dumper;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -20,7 +21,7 @@ class DumperTest extends KernelTestCase
     {
         static::bootKernel();
 
-        $this->dir = static::$kernel->getContainer()->getParameter('kernel.cache_dir') . '/../bundles';
+        $this->dir = Path::BASE_DIR . '/test/Fixture/cache/bundles';
     }
 
     public function testDump()
@@ -29,7 +30,6 @@ class DumperTest extends KernelTestCase
 
         /** @var Dumper $dumper */
         $dumper = static::$kernel->getContainer()->get(Dumper::class);
-
         $dumper->dump();
 
         self::assertFileExists($this->dir . '/foo/public.js');

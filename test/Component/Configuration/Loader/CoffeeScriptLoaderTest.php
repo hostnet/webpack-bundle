@@ -17,8 +17,8 @@ class CoffeeScriptLoaderTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('coffee')->children();
+        $tree = new TreeBuilder('webpack');
+        $node = $tree->getRootNode()->children();
 
         CoffeeScriptLoader::applyConfiguration($node);
         $node->end();

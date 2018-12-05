@@ -17,8 +17,8 @@ class OutputConfigTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('webpack')->children();
+        $tree = new TreeBuilder('webpack');
+        $node = $tree->getRootNode()->children();
 
         OutputConfig::applyConfiguration($node);
         $node->end();

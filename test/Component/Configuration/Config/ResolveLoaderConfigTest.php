@@ -17,8 +17,8 @@ class ResolveLoaderConfigTest extends TestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('webpack')->children();
+        $tree = new TreeBuilder('webpack');
+        $node = $tree->getRootNode()->children();
 
         ResolveLoaderConfig::applyConfiguration($node);
         $node->end();
