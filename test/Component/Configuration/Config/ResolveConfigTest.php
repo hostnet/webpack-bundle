@@ -7,18 +7,19 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use Hostnet\Tests\AbstractTestCase;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\Config\ResolveConfig
  */
-class ResolveConfigTest extends TestCase
+class ResolveConfigTest extends AbstractTestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('webpack')->children();
+        $tree = $this->createTreeBuilder('webpack');
+        $node = $this->retrieveRootNode($tree, 'webpack')->children();
 
         ResolveConfig::applyConfiguration($node);
         $node->end();

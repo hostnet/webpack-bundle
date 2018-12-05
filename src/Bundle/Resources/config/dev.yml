@@ -10,7 +10,7 @@ services:
         arguments:
             - "@hostnet_webpack.bridge.profiler"
         tags:
-            - { name: "data_collector", template: "WebpackBundle::profiler.html.twig", id: "webpack" }
+            - { name: "data_collector", template: "profiler.html.twig", id: "webpack" }
 
     # BC aliases
     hostnet_webpack.bridge.request_listener: '@Hostnet\Bundle\WebpackBundle\EventListener\RequestListener'

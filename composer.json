@@ -25,7 +25,8 @@
         "psr-4": {
             "Hostnet\\Fixture\\WebpackBundle\\": "test/Fixture",
             "Hostnet\\Bundle\\WebpackBundle\\":  "test/Bundle",
-            "Hostnet\\Component\\Webpack\\":     "test/Component"
+            "Hostnet\\Component\\Webpack\\":     "test/Component",
+            "Hostnet\\Tests\\":                  "test"
         }
     },
     "archive": {

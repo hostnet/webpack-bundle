@@ -7,18 +7,17 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Hostnet\Tests\AbstractTestCase;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\Loader\SassLoader
  */
-class SassLoaderTest extends TestCase
+class SassLoaderTest extends AbstractTestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('webpack')->children();
+        $tree = $this->createTreeBuilder('webpack');
+        $node = $this->retrieveRootNode($tree, 'webpack')->children();
 
         SassLoader::applyConfiguration($node);
         $node->end();
@@ -47,16 +46,18 @@ class SassLoaderTest extends TestCase
 
     public function testGetCodeBlockWithIncludePaths()
     {
-        $config = new SassLoader([
-            'loaders' => [
-                'sass' => [
-                    'enabled'       => true,
-                    'include_paths' => ['path1', 'path2'],
-                    'filename'      => 'testfile',
-                    'all_chunks'    => true,
+        $config = new SassLoader(
+            [
+                'loaders' => [
+                    'sass' => [
+                        'enabled'       => true,
+                        'include_paths' => ['path1', 'path2'],
+                        'filename'      => 'testfile',
+                        'all_chunks'    => true,
+                    ],
                 ],
-            ],
-        ]);
+            ]
+        );
         $block  = $config->getCodeBlocks()[0];
 
         self::assertTrue($block->has(CodeBlock::ROOT));
