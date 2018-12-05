@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Bundle\WebpackBundle\Twig\Token\WebpackTokenParser;
-use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use Twig\Environment;
 use Twig\Source;
 use Twig\Token;
@@ -14,8 +14,6 @@ use Twig\TokenStream;
 
 /**
  * Parses twig templates to find split points.
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class TwigParser
 {
@@ -23,9 +21,6 @@ class TwigParser
     private $twig;
     private $cache_dir;
 
-    /**
-     * @param Tracker $tracker
-     */
     public function __construct(Tracker $tracker, Environment $twig, $cache_dir)
     {
         $this->tracker   = $tracker;
@@ -43,11 +38,11 @@ class TwigParser
     public static function hashInlineFileName($template_file, $block_index)
     {
         // Work around path inconsistencies on Windows/XAMPP.
-        if (DIRECTORY_SEPARATOR == '\\') {
+        if (DIRECTORY_SEPARATOR === '\\') {
             $template_file = str_replace('\\', '/', $template_file);
         }
-        $hash = md5($template_file . $block_index);
-        return $hash;
+
+        return md5($template_file . $block_index);
     }
 
     /**
@@ -79,7 +74,7 @@ class TwigParser
                     $stream->next();
 
                     $token     = $stream->next();
-                    $file_name = TwigParser::hashInlineFileName($template_file, $inline_blocks);
+                    $file_name = self::hashInlineFileName($template_file, $inline_blocks);
 
                     // Are we dealing with a custom extension? If not, fallback to javascript.
                     $extension = 'js'; // Default

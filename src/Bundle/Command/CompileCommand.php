@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\Command;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
@@ -12,8 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @TODO Add some decent logging interface to allow optional verbose output.
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class CompileCommand extends Command
 {

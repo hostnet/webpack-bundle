@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -14,16 +15,16 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Class WebpackExtension
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class WebpackExtension extends Extension
 {
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function load(array $config, ContainerBuilder $container)
     {
         // Load configuration
-        $loader = new YamlFileLoader($container, (new FileLocator(__DIR__ . '/../Resources/config')));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('webpack.yml');
 
         // Enable the request listener if we're running in dev.
@@ -50,7 +51,7 @@ class WebpackExtension extends Extension
 
         // Parse application config into the config generator
         foreach ($config_definitions as $id => $definition) {
-            /* @var $definition Definition */
+            /** @var Definition $definition */
             $definition->addArgument($config);
         }
 
@@ -69,15 +70,15 @@ class WebpackExtension extends Extension
      */
     private function getPlatformKey()
     {
-        $platform = php_uname('s');
+        $platform = PHP_OS;
 
-        if (strtoupper(substr($platform, 0, 3)) === 'WIN') {
+        if (0 === stripos($platform, 'WIN')) {
             return PHP_INT_SIZE === 8 ? 'win64' : 'win32';
         }
-        if (strtoupper(substr($platform, 0, 5)) === 'LINUX') {
+        if (0 === stripos($platform, 'LINUX')) {
             return PHP_INT_SIZE === 8 ? 'linux_x64' : 'linux_x32';
         }
-        if (strtoupper(substr($platform, 0, 6)) === 'DARWIN') {
+        if (0 === stripos($platform, 'DARWIN')) {
             return 'darwin';
         }
 
@@ -99,12 +100,14 @@ class WebpackExtension extends Extension
 
         $configuration = new Configuration(array_keys($bundles), $config_class_names);
 
-        $container->addResource(new FileResource((new \ReflectionClass(get_class($configuration)))->getFileName()));
+        $container->addResource(new FileResource((new \ReflectionClass(\get_class($configuration)))->getFileName()));
 
         return $configuration;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getNamespace()
     {
         return 'http://hostnet.nl/schema/dic/webpack';

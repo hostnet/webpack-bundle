@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Plugin;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -13,25 +14,19 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
  * https://github.com/webpack/docs/wiki/list-of-plugins#provideplugin
  *
  * Define free variables. Useful for having development builds with debug logging or adding global constants.
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
- * @author Guillaume Cavana <guillaume.cavana@gmail.com>
  */
 final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
 {
     /**
      * @var array
      */
-    private $provides = [];
+    private $provides;
 
     /**
      * @var array
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
         $this->config   = $config;
@@ -50,7 +45,9 @@ final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
         return $this;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $node_builder
@@ -60,7 +57,9 @@ final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         return [(new CodeBlock())

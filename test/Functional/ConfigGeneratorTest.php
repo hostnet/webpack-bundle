@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Functional;
 
 use Hostnet\Component\Webpack\Configuration\ConfigGenerator;
@@ -15,10 +16,10 @@ class ConfigGeneratorTest extends KernelTestCase
     {
         static::bootKernel();
 
-        /** @var $mock_loader MockLoader */
+        /** @var MockLoader $mock_loader */
         $mock_loader = static::$kernel->getContainer()->get(MockLoader::class);
 
-        /** @var $config_generator ConfigGenerator */
+        /** @var ConfigGenerator $config_generator */
         $config_generator = static::$kernel->getContainer()->get(ConfigGenerator::class);
 
         $contiguration = $config_generator->getConfiguration();

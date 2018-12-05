@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -16,17 +17,14 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
-        $this->config = isset($config['loaders']['babel'])
-            ? $config['loaders']['babel']
-            : ['enabled' => false];
+        $this->config = $config['loaders']['babel'] ?? ['enabled' => false];
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $node_builder
@@ -35,7 +33,9 @@ final class BabelLoader implements LoaderInterface, ConfigExtensionInterface
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         if (! $this->config['enabled']) {

@@ -1,13 +1,11 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Profiler;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class Profiler
 {
     /**
@@ -30,6 +28,6 @@ class Profiler
      */
     public function get($id)
     {
-        return isset($this->logs[$id]) ? $this->logs[$id] : null;
+        return $this->logs[$id] ?? null;
     }
 }

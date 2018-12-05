@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -50,7 +51,7 @@ class CssLoaderTest extends TestCase
     {
         $configs = (new CssLoader([
             'output'  => ['common_id' => 'foobar'],
-            'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]]
+            'loaders' => ['css' => ['enabled' => true, 'filename' => 'blaat', 'all_chunks' => true]],
         ]))->getCodeBlocks();
 
         self::assertTrue($configs[0]->has(CodeBlock::LOADER));

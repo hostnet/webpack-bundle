@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration;
 
 /**
@@ -40,21 +41,19 @@ namespace Hostnet\Component\Webpack\Configuration;
  *          }
  *          << root >>
  *      };
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class CodeBlock
 {
-    const HEADER         = 'header',
-          ENTRY          = 'entry',
-          RESOLVE        = 'resolve',
-          RESOLVE_LOADER = 'resolve_loader',
-          PLUGIN         = 'plugin',
-          PRE_LOADER     = 'pre_loader',
-          LOADER         = 'loader',
-          POST_LOADER    = 'post_loader',
-          OUTPUT         = 'output',
-          ROOT           = 'root';
+    public const HEADER         = 'header';
+    public const ENTRY          = 'entry';
+    public const RESOLVE        = 'resolve';
+    public const RESOLVE_LOADER = 'resolve_loader';
+    public const PLUGIN         = 'plugin';
+    public const PRE_LOADER     = 'pre_loader';
+    public const LOADER         = 'loader';
+    public const POST_LOADER    = 'post_loader';
+    public const OUTPUT         = 'output';
+    public const ROOT           = 'root';
 
     // Available types to allow easy validation
     private $types = [
@@ -67,7 +66,7 @@ class CodeBlock
         'loader',
         'post_loader',
         'output',
-        'root'
+        'root',
     ];
 
     // Chunks collection
@@ -75,16 +74,16 @@ class CodeBlock
 
     /**
      * @param  string $chunk
-     * @param  string $code
+     * @param  mixed $code
      * @return CodeBlock
      */
     public function set($chunk, $code)
     {
-        if (! in_array($chunk, $this->types)) {
+        if (false === \in_array($chunk, $this->types, false)) {
             throw new \InvalidArgumentException(sprintf(
                 'Invalid insertion point "%s". Available points are: %s.',
                 $chunk,
-                implode(", ", $this->types)
+                implode(', ', $this->types)
             ));
         }
 
@@ -101,11 +100,11 @@ class CodeBlock
      * Returns the code associated with the given chunk.
      *
      * @param  string $chunk
-     * @return string
+     * @return mixed
      */
     public function get($chunk)
     {
-        if (! isset($this->chunks[$chunk])) {
+        if (false === isset($this->chunks[$chunk])) {
             throw new \InvalidArgumentException(sprintf('This code block does not have a chunk for "%s".', $chunk));
         }
 

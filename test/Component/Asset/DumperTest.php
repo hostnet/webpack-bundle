@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\Dumper
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class DumperTest extends TestCase
 {
@@ -33,7 +33,7 @@ class DumperTest extends TestCase
             $this->getMockBuilder(LoggerInterface::class)->getMock(),
             [
                 'FooBundle' => $this->fixture_path . '/Bundle/FooBundle',
-                'BarBundle' => $this->fixture_path . '/Bundle/BarBundle'
+                'BarBundle' => $this->fixture_path . '/Bundle/BarBundle',
             ],
             'Resources/public',
             $this->fixture_path . '/dumper_output'

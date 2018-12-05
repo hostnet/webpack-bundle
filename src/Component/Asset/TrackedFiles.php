@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Symfony\Component\Finder\Finder;
@@ -13,7 +14,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class TrackedFiles
 {
-
     /**
      * The last modified time for the set of files, in a Unix timestamp.
      *
@@ -29,20 +29,10 @@ class TrackedFiles
     public function __construct(array $paths)
     {
         //Filter out the files, the Finder class can not handle files in the ->in() call.
-        $files = array_filter(
-            $paths,
-            function ($possible_file) {
-                return is_file($possible_file);
-            }
-        );
+        $files = array_filter($paths, 'is_file');
 
         //Filter out the directories to be used for searching using the Filter class.
-        $dirs = array_filter(
-            $paths,
-            function ($possible_dir) {
-                return is_dir($possible_dir);
-            }
-        );
+        $dirs = array_filter($paths, 'is_dir');
 
         $finder = new Finder();
 
@@ -61,7 +51,7 @@ class TrackedFiles
 
         //Loop through all the files and save the latest modification time.
         foreach ($finder->files() as $file) {
-            /*@var $file \SplFileInfo */
+            /**@var $file \SplFileInfo */
             if ($this->modification_time < $file->getMTime()) {
                 $this->modification_time = $file->getMTime();
             }
@@ -72,7 +62,7 @@ class TrackedFiles
      * Is one of the Tracked files in this set changed later than the other set.
      *
      * @param TrackedFiles $other the other set of files to compare to.
-     * @return boolean true if this set if this set is modified after (later) the other set.
+     * @return bool true if this set if this set is modified after (later) the other set.
      */
     public function modifiedAfter(TrackedFiles $other)
     {

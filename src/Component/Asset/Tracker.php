@@ -1,24 +1,21 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
 /**
  * Asset Tracker
- *
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class Tracker
 {
-
     /**
      * The key-value store used to present 'logging' in the symfony-profiler bar.
      *
@@ -55,7 +52,6 @@ class Tracker
     private $paths;
 
     /**
-     *
      * @var array
      */
     private $aliases = [];
@@ -234,7 +230,7 @@ class Tracker
         $matches = [];
         preg_match('/@(\w+)/', $path, $matches);
         if (isset($matches[0], $matches[1])) {
-            if (!isset($this->bundle_paths[$matches[1]])) {
+            if (false === isset($this->bundle_paths[$matches[1]])) {
                 return false;
             }
             $template = realpath(

@@ -1,13 +1,11 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class ConfigGenerator
 {
     /**
@@ -99,8 +97,8 @@ class ConfigGenerator
 
     /**
      * @param  string $type
-     * @param  string $delimiter
-     * @param  string $internal_delimiter
+     * @param  string|bool $delimiter
+     * @param  string|bool $internal_delimiter
      * @return string
      */
     private function getChunks($type, $delimiter = PHP_EOL, $internal_delimiter = PHP_EOL)

@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -16,15 +17,14 @@ final class CoffeeScriptLoader implements LoaderInterface, ConfigExtensionInterf
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $node_builder
@@ -37,7 +37,9 @@ final class CoffeeScriptLoader implements LoaderInterface, ConfigExtensionInterf
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         $config = $this->config['loaders']['coffee'];

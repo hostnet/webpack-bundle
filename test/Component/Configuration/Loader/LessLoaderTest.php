@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -11,7 +12,6 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\Loader\LessLoader
- * @author Harold Iedema <hiedema@hostnet.nl>
  */
 class LessLoaderTest extends TestCase
 {

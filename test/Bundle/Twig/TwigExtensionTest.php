@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ class TwigExtensionTest extends TestCase
         $extension = new TwigExtension($loader, __DIR__, '/', '/bundles', '/shared.js', '/shared.css');
 
         self::assertEquals('webpack', $extension->getName());
-        self::assertEquals(['js'  => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
+        self::assertEquals(['js' => false, 'css' => false], $extension->webpackAsset('@AppBundle/app.js'));
         self::assertEquals('/shared.js?0', $extension->webpackCommonJs());
         self::assertEquals('/shared.css?0', $extension->webpackCommonCss());
     }

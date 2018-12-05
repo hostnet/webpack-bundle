@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Component\Webpack\Configuration\Config;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
@@ -17,9 +18,6 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
      */
     private $config;
 
-    /**
-     * @param array $config
-     */
     public function __construct(array $config = [])
     {
         $this->config = $config;
@@ -45,7 +43,9 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
         return $this;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public static function applyConfiguration(NodeBuilder $node_builder)
     {
         $node_builder
@@ -68,14 +68,16 @@ final class ResolveConfig implements ConfigInterface, ConfigExtensionInterface
                         ->prototype('scalar')->end()
                     ->end()
                     ->arrayNode('extensions')
-                        ->defaultValue(["", ".webpack.js", ".web.js", ".js"])
+                        ->defaultValue(['', '.webpack.js', '.web.js', '.js'])
                         ->prototype('scalar')->end()
                     ->end()
                 ->end()
             ->end();
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getCodeBlocks()
     {
         // Convert keys to camelCase.

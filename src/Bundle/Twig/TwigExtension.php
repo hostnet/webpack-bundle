@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration;
@@ -12,9 +13,6 @@ use Twig\Extension\AbstractExtension;
 use Twig\Loader\LoaderInterface;
 use Twig\TwigFunction;
 
-/**
- * @author Harold Iedema <hiedema@hostnet.nl>
- */
 class TwigExtension extends AbstractExtension
 {
     /**
@@ -47,14 +45,6 @@ class TwigExtension extends AbstractExtension
      */
     private $common_css;
 
-    /**
-     * @param LoaderInterface $loader
-     * @param string          $web_dir
-     * @param string          $public_path
-     * @param string          $dump_path
-     * @param string          $common_js
-     * @param string          $common_css
-     */
     public function __construct(LoaderInterface $loader, $web_dir, $public_path, $dump_path, $common_js, $common_css)
     {
         $this->loader      = $loader;
@@ -65,19 +55,25 @@ class TwigExtension extends AbstractExtension
         $this->common_css  = $common_css;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return Configuration::CONFIG_ROOT;
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getTokenParsers()
     {
         return [new WebpackTokenParser($this, $this->loader)];
     }
 
-    /** {@inheritdoc} */
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return [
@@ -106,7 +102,7 @@ class TwigExtension extends AbstractExtension
                 : false,
             'css' => file_exists($full_asset_path . '.css')
                 ? $asset_id . '.css?' . filemtime($full_asset_path . '.css')
-                : false
+                : false,
         ];
     }
 
@@ -129,8 +125,8 @@ class TwigExtension extends AbstractExtension
 
         $url = preg_replace_callback('/^@(?<bundle>\w+)/', function ($match) {
             $str = $match['bundle'];
-            if (substr($str, strlen($str) - 6) === 'Bundle') {
-                $str = substr($str, 0, strlen($str) - 6);
+            if (substr($str, \strlen($str) - 6) === 'Bundle') {
+                $str = substr($str, 0, -6);
             }
             return strtolower($str);
         }, $url);

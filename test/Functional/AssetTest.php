@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Functional;
 
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
@@ -32,7 +33,7 @@ class AssetTest extends KernelTestCase
     {
         static::bootKernel();
 
-        /** @var $twig_ext TwigExtension */
+        /** @var TwigExtension $twig_ext */
         $twig_ext = static::$kernel->getContainer()->get(TwigExtension::class);
 
         self::assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
@@ -40,7 +41,7 @@ class AssetTest extends KernelTestCase
 
     public function testCompiledAsset()
     {
-        /** @var $twig_ext TwigExtension */
+        /** @var TwigExtension $twig_ext */
         $container = static::$kernel->getContainer();
         $twig_ext  = $container->get(TwigExtension::class);
 
@@ -59,7 +60,7 @@ class AssetTest extends KernelTestCase
 
     protected function tearDown()
     {
-        `rm -rf {$this->compiled}`;
+        shell_exec("rm -rf {$this->compiled}");
 
         parent::tearDown();
     }

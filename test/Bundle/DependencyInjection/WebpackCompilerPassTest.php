@@ -1,8 +1,9 @@
 <?php
 /**
- * @copyright 2017 Hostnet B.V.
+ * @copyright 2017-present Hostnet B.V.
  */
-declare(strict_types = 1);
+declare(strict_types=1);
+
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use Hostnet\Bundle\WebpackBundle\WebpackBundle;
@@ -49,10 +50,11 @@ class WebpackCompilerPassTest extends TestCase
 
         $bundle->build($container);
 
-        $extension->load(['webpack' => [
-            'node'    => ['node_modules_path' => $fixture_dir.'/node_modules'],
+        $extension->load([
+        'webpack' => [
+            'node'    => ['node_modules_path' => $fixture_dir . '/node_modules'],
             'bundles' => ['FooBundle'],
-            'resolve' => ['alias' => ['foo' => __DIR__, 'bar' => __DIR__.'/fake']],
+            'resolve' => ['alias' => ['foo' => __DIR__, 'bar' => __DIR__ . '/fake']],
         ]], $container);
         $container->compile();
 
@@ -103,10 +105,10 @@ class WebpackCompilerPassTest extends TestCase
         $extension->load([
             'webpack' => [
                 'node' => [
-                    'node_modules_path' => $fixture_dir
+                    'node_modules_path' => $fixture_dir,
                 ],
-                'bundles' => ['FooBundle']
-            ]
+                'bundles' => ['FooBundle'],
+            ],
         ], $container);
         $container->compile();
 
