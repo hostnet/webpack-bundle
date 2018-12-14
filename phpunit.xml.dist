@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
         xmlns:xsi                     = "http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation = "http://schema.phpunit.de/4.7/phpunit.xsd"
-        colors                        = "true"
+        xsi:noNamespaceSchemaLocation = "http://schema.phpunit.de/7.2/phpunit.xsd"
         bootstrap                     = "vendor/autoload.php"
-        >
+        colors                        = "true"
+>
     <php>
         <server name="KERNEL_DIR" value="test/Fixture"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors"/>
     </php>
     <testsuites>
-        <testsuite name="webpack-bundle">
+        <testsuite name="WebpackBundle - Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
