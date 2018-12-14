@@ -8,6 +8,9 @@ framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
 
+twig:
+    strict_variables: false
+
 webpack:
     node:
         node_modules_path: "%kernel.root_dir%/node_modules"

@@ -7,18 +7,19 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Configuration\Loader;
 
 use Hostnet\Component\Webpack\Configuration\CodeBlock;
+use Hostnet\Tests\AbstractTestCase;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * @covers \Hostnet\Component\Webpack\Configuration\Loader\CoffeeScriptLoader
  */
-class CoffeeScriptLoaderTest extends TestCase
+class CoffeeScriptLoaderTest extends AbstractTestCase
 {
     public function testConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $node = $tree->root('coffee')->children();
+        $tree = $this->createTreeBuilder('webpack');
+        $node = $this->retrieveRootNode($tree, 'webpack')->children();
 
         CoffeeScriptLoader::applyConfiguration($node);
         $node->end();

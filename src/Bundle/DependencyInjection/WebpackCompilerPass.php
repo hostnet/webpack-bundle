@@ -94,7 +94,7 @@ class WebpackCompilerPass implements CompilerPassInterface
 
         $process_definition = $container
             ->getDefinition(Process::class)
-            ->replaceArgument(0, $config['node']['binary'] . ' ' . $webpack)
+            ->replaceArgument(0, [$config['node']['binary'] . ' ' . $webpack])
             ->replaceArgument(1, $container->getParameter('kernel.cache_dir'))
             ->addMethodCall('setTimeout', [$config['compile_timeout']]);
 

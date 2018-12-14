@@ -11,8 +11,10 @@ use Hostnet\Component\Webpack\Configuration\ConfigExtensionInterface;
 use Hostnet\Component\Webpack\Configuration\Loader\LoaderInterface;
 use Hostnet\Component\Webpack\Configuration\Plugin\PluginInterface;
 use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class Configuration implements ConfigurationInterface
 {
@@ -33,8 +35,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $tree_builder = new TreeBuilder();
-        $root_node    = $tree_builder->root(self::CONFIG_ROOT);
+        $tree_builder = $this->createTreeBuilder();
+        $root_node    = $this->retrieveRootNode($tree_builder);
         $children     = $root_node->children();
 
         $root_node->fixXmlConfig('bundle');
@@ -168,5 +170,31 @@ class Configuration implements ConfigurationInterface
             /** @var ConfigExtensionInterface $class_name */
             $class_name::applyConfiguration($node_builder);
         }
+    }
+
+    private function createTreeBuilder(): TreeBuilder
+    {
+        if (Kernel::VERSION_ID >= 40200) {
+            return new TreeBuilder(self::CONFIG_ROOT);
+        }
+
+        if (Kernel::VERSION_ID >= 30300 && Kernel::VERSION_ID < 40200) {
+            return new TreeBuilder();
+        }
+
+        throw new \RuntimeException('This bundle can only be used by Symfony 3.3 and up.');
+    }
+
+    private function retrieveRootNode(TreeBuilder $tree_builder): NodeDefinition
+    {
+        if (Kernel::VERSION_ID >= 40200) {
+            return $tree_builder->getRootNode();
+        }
+
+        if (Kernel::VERSION_ID >= 30300 && Kernel::VERSION_ID < 40200) {
+            return $tree_builder->root(self::CONFIG_ROOT);
+        }
+
+        throw new \RuntimeException('This bundle can only be used by Symfony 3.3 and up.');
     }
 }
