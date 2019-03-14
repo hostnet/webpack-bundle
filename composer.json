@@ -8,7 +8,7 @@
         "ext-json":                    "*",
         "symfony/monolog-bundle":      "^4.0.0||^3.1.0",
         "symfony/symfony":             "^4.0.0||^3.3.0",
-        "twig/twig":                   "^2.4.0"
+        "twig/twig":                   "^2.7.2"
     },
     "require-dev": {
         "hostnet/phpcs-tool":     "^8.3.2",
