@@ -7,6 +7,8 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
 /**
  * @covers \Hostnet\Component\Webpack\Asset\TwigParser
@@ -32,7 +34,7 @@ class TwigParserTest extends TestCase
     protected function setUp()
     {
         $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
-        $this->twig      = new \Twig_Environment(new \Twig_Loader_Array([]));
+        $this->twig      = new Environment(new ArrayLoader([]));
         $this->cache_dir = sys_get_temp_dir();
     }
 
