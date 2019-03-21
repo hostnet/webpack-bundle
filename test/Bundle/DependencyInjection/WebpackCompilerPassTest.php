@@ -21,6 +21,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass
@@ -40,8 +42,8 @@ class WebpackCompilerPassTest extends TestCase
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->createMock(TemplateFinderInterface::class));
-        $container->set('twig', $this->createMock(\Twig_Environment::class));
-        $container->set('twig.loader', $this->createMock(\Twig_Loader_Filesystem::class));
+        $container->set('twig', $this->createMock(Environment::class));
+        $container->set('twig.loader', $this->createMock(FilesystemLoader::class));
         $container->set('logger', $this->createMock(LoggerInterface::class));
 
         $code_block_provider = new Definition(CodeBlockProviderInterface::class);
@@ -95,7 +97,7 @@ class WebpackCompilerPassTest extends TestCase
         $container->set('filesystem', new Filesystem());
         $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
         $container->set('twig', $this
-            ->getMockBuilder(\Twig_Environment::class)
+            ->getMockBuilder(Environment::class)
             ->disableOriginalConstructor()
             ->getMock());
         $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
