@@ -21,7 +21,7 @@ class TwigParserTest extends TestCase
     private $tracker;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $twig;
 
