@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use PHPUnit\Framework\TestCase;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\Twig\TwigExtension
@@ -15,7 +16,7 @@ class TwigExtensionTest extends TestCase
 {
     public function testExtension()
     {
-        $loader    = $this->prophesize(\Twig_LoaderInterface::class)->reveal();
+        $loader    = $this->prophesize(LoaderInterface::class)->reveal();
         $extension = new TwigExtension($loader, __DIR__, '/', '/bundles', '/shared.js', '/shared.css');
 
         self::assertEquals('webpack', $extension->getName());
@@ -29,7 +30,7 @@ class TwigExtensionTest extends TestCase
      */
     public function testAssets($expected, $asset, $web_dir, $dump_path, $public_path)
     {
-        $loader    = $this->prophesize(\Twig_LoaderInterface::class)->reveal();
+        $loader    = $this->prophesize(LoaderInterface::class)->reveal();
         $extension = new TwigExtension($loader, $web_dir, $public_path, $dump_path, '', '');
         self::assertEquals($expected, $extension->webpackPublic($asset));
     }
