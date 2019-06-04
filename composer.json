@@ -7,7 +7,7 @@
         "php":                    "^7.1.0",
         "ext-json":               "*",
         "symfony/monolog-bundle": "^4.0.0||^3.1.0",
-        "symfony/symfony":        "^4.1.13",
+        "symfony/symfony":        "^4.0.0||^3.3.0",
         "twig/twig":              "^2.7.2"
     },
     "require-dev": {
@@ -30,7 +30,7 @@
             "Hostnet\\Fixture\\WebpackBundle\\": "test/Fixture",
             "Hostnet\\Bundle\\WebpackBundle\\":  "test/Bundle",
             "Hostnet\\Component\\Webpack\\":     "test/Component",
-            "Hostnet\\Tests\\":                 "test"
+            "Hostnet\\Tests\\":                  "test"
         }
     },
     "archive": {
