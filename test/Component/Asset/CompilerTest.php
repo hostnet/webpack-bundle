@@ -23,7 +23,7 @@ class CompilerTest extends TestCase
     private $process;
     private $cache_path;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->profiler    = $this->getMockBuilder(Profiler::class)->disableOriginalConstructor()->getMock();
         $this->tracker     = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
@@ -33,7 +33,7 @@ class CompilerTest extends TestCase
         $this->cache_path  = realpath(__DIR__ . '/../../Fixture/cache');
     }
 
-    public function testCompile()
+    public function testCompile(): void
     {
         $this->tracker->expects($this->once())->method('getTemplates')->willReturn(['foobar']);
         $this->tracker->expects($this->once())->method('getAliases')->willReturn(['@AppBundle' => 'foobar']);

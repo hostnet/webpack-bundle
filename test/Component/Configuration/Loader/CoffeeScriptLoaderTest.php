@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class CoffeeScriptLoaderTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -30,7 +30,7 @@ class CoffeeScriptLoaderTest extends AbstractTestCase
         self::assertArrayHasKey('enabled', $config['coffee']);
     }
 
-    public function testGetCodeBlockDisabled()
+    public function testGetCodeBlockDisabled(): void
     {
         $config = new CoffeeScriptLoader(['loaders' => ['coffee' => ['enabled' => false, 'loader' => 'coffee']]]);
         $block  = $config->getCodeBlocks()[0];
@@ -38,7 +38,7 @@ class CoffeeScriptLoaderTest extends AbstractTestCase
         self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new CoffeeScriptLoader(['loaders' => ['coffee' => ['enabled' => true, 'loader' => 'coffee']]]);
         $block  = $config->getCodeBlocks()[0];

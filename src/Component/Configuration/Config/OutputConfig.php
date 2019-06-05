@@ -26,7 +26,7 @@ final class OutputConfig implements ConfigInterface, ConfigExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('output')

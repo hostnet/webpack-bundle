@@ -81,7 +81,7 @@ class Compiler
     /**
      * @return string
      */
-    public function compile()
+    public function compile(): string
     {
         $this->stopwatch->start('webpack.total');
         $this->stopwatch->start('webpack.prepare');
@@ -124,7 +124,7 @@ class Compiler
     /**
      * Adds root & alias configuration entries.
      */
-    private function addResolveConfig()
+    private function addResolveConfig(): void
     {
         $aliases = $this->tracker->getAliases();
         $this->generator->addBlock(
@@ -135,7 +135,7 @@ class Compiler
     /**
      * Add split points to the 'entry' section of the configuration.
      */
-    private function addSplitPoints()
+    private function addSplitPoints(): void
     {
         $split_points = [];
         foreach ($this->tracker->getTemplates() as $template_file) {
@@ -155,7 +155,7 @@ class Compiler
      * @param  string $path
      * @return string
      */
-    public static function getAliasId($path)
+    public static function getAliasId($path): string
     {
         return str_replace(
             ['/', '\\'],

@@ -19,7 +19,7 @@ class CompileCommandTest extends TestCase
     /**
      * Simple test to see the validate function is executed from the CacheGard class.
      */
-    public function testCompileCommand()
+    public function testCompileCommand(): void
     {
         $guard = $this->prophesize(CacheGuard::class);
         $guard->rebuild()->shouldBeCalled();

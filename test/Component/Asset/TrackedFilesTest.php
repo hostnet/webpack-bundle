@@ -36,7 +36,7 @@ class TrackedFilesTest extends TestCase
      *
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->directory_a = tempnam(sys_get_temp_dir(), 'tracked_files_unittest_a');
         unlink($this->directory_a);
@@ -52,7 +52,7 @@ class TrackedFilesTest extends TestCase
      *
      * {@inheritDoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $fs = new Filesystem();
         $fs->remove($this->directory_a);
@@ -62,7 +62,7 @@ class TrackedFilesTest extends TestCase
     /**
      * Test the behavior for empty / no directories
      */
-    public function testTrackedFilesEmpty()
+    public function testTrackedFilesEmpty(): void
     {
         $t1 = new TrackedFiles([$this->directory_a]);
         $t2 = new TrackedFiles([$this->directory_b]);
@@ -77,7 +77,7 @@ class TrackedFilesTest extends TestCase
     /**
      * What happens when a file is added after 'compilation'
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $time = time();
 
@@ -98,7 +98,7 @@ class TrackedFilesTest extends TestCase
     /**
      * What happens when a file is removed after 'compilation'
      */
-    public function testDel()
+    public function testDel(): void
     {
         $time = time();
 
@@ -121,7 +121,7 @@ class TrackedFilesTest extends TestCase
     /**
      * What happens when a file is modified before 'compilation'
      */
-    public function testModifyBefore()
+    public function testModifyBefore(): void
     {
         $time = time();
 
@@ -142,7 +142,7 @@ class TrackedFilesTest extends TestCase
     /**
      * What happens when a file is modified after 'compilation'
      */
-    public function testModifyAfter()
+    public function testModifyAfter(): void
     {
         $time = time();
 

@@ -25,7 +25,7 @@ final class TypeScriptLoader implements LoaderInterface, ConfigExtensionInterfac
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('typescript')

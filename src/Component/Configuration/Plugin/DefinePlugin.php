@@ -38,7 +38,7 @@ final class DefinePlugin implements PluginInterface, ConfigExtensionInterface
      * @param  mixed  $value
      * @return DefinePlugin
      */
-    public function add($key, $value)
+    public function add($key, $value): DefinePlugin
     {
         $this->constants[$key] = $value;
 
@@ -48,7 +48,7 @@ final class DefinePlugin implements PluginInterface, ConfigExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('constants')

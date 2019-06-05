@@ -31,7 +31,7 @@ final class ResolveLoaderConfig implements ConfigInterface, ConfigExtensionInter
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('resolve_loader')

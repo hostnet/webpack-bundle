@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class WebpackBundleTest extends TestCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
         $bundle    = new WebpackBundle();
         $container = new ContainerBuilder();

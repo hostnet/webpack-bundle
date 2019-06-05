@@ -22,14 +22,8 @@ final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
      */
     private $provides;
 
-    /**
-     * @var array
-     */
-    private $config;
-
     public function __construct(array $config = [])
     {
-        $this->config   = $config;
         $this->provides = $config['plugins']['provides'];
     }
 
@@ -38,7 +32,7 @@ final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
      * @param  mixed  $value
      * @return ProvidePlugin
      */
-    public function add($key, $value)
+    public function add($key, $value): ProvidePlugin
     {
         $this->provides[$key] = $value;
 
@@ -48,7 +42,7 @@ final class ProvidePlugin implements PluginInterface, ConfigExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('provides')

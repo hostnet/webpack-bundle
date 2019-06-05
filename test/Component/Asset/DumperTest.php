@@ -25,7 +25,7 @@ class DumperTest extends TestCase
      */
     private $fixture_path;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fixture_path = realpath(__DIR__ . '/../../Fixture');
         $this->dumper       = new Dumper(
@@ -48,7 +48,7 @@ class DumperTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testDumpDefaults()
+    public function testDumpDefaults(): void
     {
         $this->dumper->dump();
     }

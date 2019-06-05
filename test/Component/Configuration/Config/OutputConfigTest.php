@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class OutputConfigTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -43,7 +43,7 @@ class OutputConfigTest extends AbstractTestCase
         self::assertArrayHasKey('path_info', $config['output']);
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new OutputConfig([
             'output' => [

@@ -23,11 +23,16 @@ services:
             - '@Hostnet\Component\Webpack\Asset\Tracker'
             - '@logger'
 
+    Hostnet\Component\Webpack\Asset\TemplateFinder:
+        arguments:
+            - '@kernel'
+            - '%kernel.root_dir%/Resources'
+
     Hostnet\Component\Webpack\Asset\Tracker:
         public: true
         arguments:
             - '@Hostnet\Component\Webpack\Profiler\Profiler'
-            - '@templating.finder'
+            - '@Hostnet\Component\Webpack\Asset\TemplateFinder'
             - "%kernel.root_dir%"
             - "" # asset_path
             - "" # output dir

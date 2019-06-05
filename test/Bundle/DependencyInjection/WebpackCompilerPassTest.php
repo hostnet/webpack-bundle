@@ -16,10 +16,10 @@ use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
 use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Process\Process;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -29,22 +29,22 @@ use Twig\Loader\FilesystemLoader;
  */
 class WebpackCompilerPassTest extends TestCase
 {
-    public function testPass()
+    public function testPass(): void
     {
         $bundle      = new WebpackBundle();
         $container   = new ContainerBuilder();
         $extension   = $bundle->getContainerExtension();
-        $fixture_dir = sprintf('%s/Fixture', dirname(__DIR__, 2));
+        $fixture_dir = sprintf('%s/Fixture', \dirname(__DIR__, 2));
 
         $container->setParameter('kernel.bundles', ['FooBundle' => FooBundle::class, 'BarBundle' => BarBundle::class]);
         $container->setParameter('kernel.environment', 'dev');
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
+        $container->set('kernel', $this->prophesize(Kernel::class)->reveal());
         $container->set('filesystem', new Filesystem());
-        $container->set('templating.finder', $this->createMock(TemplateFinderInterface::class));
-        $container->set('twig', $this->createMock(Environment::class));
-        $container->set('twig.loader', $this->createMock(FilesystemLoader::class));
-        $container->set('logger', $this->createMock(LoggerInterface::class));
+        $container->set('twig', $this->prophesize(Environment::class)->reveal());
+        $container->set('twig.loader', $this->prophesize(FilesystemLoader::class)->reveal());
+        $container->set('logger', $this->prophesize(LoggerInterface::class)->reveal());
 
         $code_block_provider = new Definition(CodeBlockProviderInterface::class);
         $code_block_provider->addTag('hostnet_webpack.config_extension');
@@ -53,11 +53,12 @@ class WebpackCompilerPassTest extends TestCase
         $bundle->build($container);
 
         $extension->load([
-        'webpack' => [
-            'node'    => ['node_modules_path' => $fixture_dir . '/node_modules'],
-            'bundles' => ['FooBundle'],
-            'resolve' => ['alias' => ['foo' => __DIR__, 'bar' => __DIR__ . '/fake']],
-        ]], $container);
+            'webpack' => [
+                'node'    => ['node_modules_path' => $fixture_dir . '/node_modules'],
+                'bundles' => ['FooBundle'],
+                'resolve' => ['alias' => ['foo' => __DIR__, 'bar' => __DIR__ . '/fake']],
+            ],
+        ], $container);
         $container->compile();
 
         self::assertTrue($container->hasDefinition(Compiler::class));
@@ -79,11 +80,7 @@ class WebpackCompilerPassTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Webpack is not installed in path
-     */
-    public function testLoadNoWebpack()
+    public function testLoadNoWebpack(): void
     {
         $bundle      = new WebpackBundle();
         $container   = new ContainerBuilder();
@@ -94,29 +91,19 @@ class WebpackCompilerPassTest extends TestCase
         $container->setParameter('kernel.environment', 'dev');
         $container->setParameter('kernel.root_dir', $fixture_dir);
         $container->setParameter('kernel.cache_dir', realpath($fixture_dir . '/cache'));
-        $container->set('filesystem', new Filesystem());
-        $container->set('templating.finder', $this->getMockBuilder(TemplateFinderInterface::class)->getMock());
-        $container->set('twig', $this
-            ->getMockBuilder(Environment::class)
-            ->disableOriginalConstructor()
-            ->getMock());
-        $container->set('logger', $this->getMockBuilder(LoggerInterface::class)->getMock());
 
         $bundle->build($container);
 
         $extension->load([
-            'webpack' => [
-                'node' => [
-                    'node_modules_path' => $fixture_dir,
-                ],
-                'bundles' => ['FooBundle'],
-            ],
+         'webpack' => [
+             'node'    => ['node_modules_path' => $fixture_dir],
+             'bundles' => ['FooBundle'],
+         ],
         ], $container);
-        $container->compile();
 
-        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_compiler'));
-        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.asset_tracker'));
-        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.config_generator'));
-        self::assertTrue($container->hasDefinition('hostnet_webpack.bridge.profiler'));
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Webpack is not installed in path');
+
+        $container->compile();
     }
 }

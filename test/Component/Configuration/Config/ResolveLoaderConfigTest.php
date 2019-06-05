@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class ResolveLoaderConfigTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -28,7 +28,7 @@ class ResolveLoaderConfigTest extends AbstractTestCase
         self::assertArrayHasKey('resolve_loader', $config);
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new ResolveLoaderConfig([
             'node' => [

@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 class CompileTest extends KernelTestCase
 {
-    public function testDevCollector()
+    public function testDevCollector(): void
     {
         static::bootKernel(['environment' => 'dev', 'debug' => false]);
         $collector = static::$kernel->getContainer()->get(WebpackDataCollector::class);
@@ -21,7 +21,7 @@ class CompileTest extends KernelTestCase
         self::assertInstanceOf(WebpackDataCollector::class, $collector);
     }
 
-    public function testMissingCollector()
+    public function testMissingCollector(): void
     {
         $this->expectException(ServiceNotFoundException::class);
 
@@ -29,7 +29,7 @@ class CompileTest extends KernelTestCase
         static::$kernel->getContainer()->get(WebpackDataCollector::class);
     }
 
-    public function testTrackedTemplates()
+    public function testTrackedTemplates(): void
     {
         static::bootKernel();
 

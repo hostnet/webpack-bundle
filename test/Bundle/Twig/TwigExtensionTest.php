@@ -14,7 +14,7 @@ use Twig\Loader\LoaderInterface;
  */
 class TwigExtensionTest extends TestCase
 {
-    public function testExtension()
+    public function testExtension(): void
     {
         $loader    = $this->prophesize(LoaderInterface::class)->reveal();
         $extension = new TwigExtension($loader, __DIR__, '/', '/bundles', '/shared.js', '/shared.css');
@@ -28,7 +28,7 @@ class TwigExtensionTest extends TestCase
     /**
      * @dataProvider assetProvider
      */
-    public function testAssets($expected, $asset, $web_dir, $dump_path, $public_path)
+    public function testAssets($expected, $asset, $web_dir, $dump_path, $public_path): void
     {
         $loader    = $this->prophesize(LoaderInterface::class)->reveal();
         $extension = new TwigExtension($loader, $web_dir, $public_path, $dump_path, '', '');

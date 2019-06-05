@@ -15,7 +15,7 @@ use Twig\Loader\LoaderInterface;
  */
 class WebpackTokenParserTest extends TestCase
 {
-    public function testParser()
+    public function testParser(): void
     {
         $loader    = $this->prophesize(LoaderInterface::class)->reveal();
         $extension = new TwigExtension(

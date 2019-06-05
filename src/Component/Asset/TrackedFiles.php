@@ -64,7 +64,7 @@ class TrackedFiles
      * @param TrackedFiles $other the other set of files to compare to.
      * @return bool true if this set if this set is modified after (later) the other set.
      */
-    public function modifiedAfter(TrackedFiles $other)
+    public function modifiedAfter(TrackedFiles $other): bool
     {
         return $this->modification_time > $other->modification_time;
     }

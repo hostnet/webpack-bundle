@@ -15,12 +15,12 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
  */
 class TwigTest extends KernelTestCase
 {
-    public function testTemplates()
+    public function testTemplates(): void
     {
         static::bootKernel();
 
         /** @var TwigEngine $twig_ext */
-        $twig = static::$kernel->getContainer()->get('templating');
+        $twig = static::$kernel->getContainer()->get('twig');
         $html = $twig->render('/common_id.html.twig');
 
         self::assertRegExp('~src="/compiled/shared\.js\?[0-9]+"~', $html);

@@ -15,37 +15,35 @@ use PHPUnit\Framework\TestCase;
  */
 class CodeBlockTest extends TestCase
 {
-    public function testCodeBlock()
+    public function testCodeBlock(): void
     {
         $block = (new CodeBlock())->set(CodeBlock::HEADER, 'foo');
         self::assertTrue($block->has(CodeBlock::HEADER));
         self::assertEquals('foo', $block->get(CodeBlock::HEADER));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidChunk()
+    public function testInvalidChunk(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         (new CodeBlock())->set('foobar', true);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testGetInvalid()
+    public function testGetInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         (new CodeBlock())->get(CodeBlock::HEADER);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The chunk "header" is already in use.
-     */
-    public function testDuplicateChunk()
+    public function testDuplicateChunk(): void
     {
         $block = new CodeBlock();
         $block->set(CodeBlock::HEADER, 'foo');
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The chunk "header" is already in use.');
+
         $block->set(CodeBlock::HEADER, 'bar');
     }
 }

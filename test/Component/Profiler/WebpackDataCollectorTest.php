@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class WebpackDataCollectorTest extends TestCase
 {
-    public function testProfiler()
+    public function testProfiler(): void
     {
         $profiler  = new Profiler();
         $collector = new WebpackDataCollector($profiler);

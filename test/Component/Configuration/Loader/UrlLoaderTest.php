@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class UrlLoaderTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -31,7 +31,7 @@ class UrlLoaderTest extends AbstractTestCase
         self::assertArrayHasKey('enabled', $config['url']);
     }
 
-    public function testGetCodeBlockDisabled()
+    public function testGetCodeBlockDisabled(): void
     {
         $config = new UrlLoader(['loaders' => ['url' => ['enabled' => false]]]);
         $block  = $config->getCodeBlocks()[0];
@@ -39,7 +39,7 @@ class UrlLoaderTest extends AbstractTestCase
         self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetFontExtensionCodeBlock()
+    public function testGetFontExtensionCodeBlock(): void
     {
         $config = new UrlLoader([
             'loaders' => ['url' => ['enabled' => true, 'font_extensions' => 'svg,woff', 'limit' => 100]],
@@ -50,7 +50,7 @@ class UrlLoaderTest extends AbstractTestCase
         self::assertTrue($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetImageExtensionCodeBlock()
+    public function testGetImageExtensionCodeBlock(): void
     {
         $config = new UrlLoader([
             'loaders' => ['url' => ['enabled' => true, 'image_extensions' => 'png', 'limit' => 100]],

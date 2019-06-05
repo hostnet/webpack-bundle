@@ -31,14 +31,14 @@ class TwigParserTest extends TestCase
     private $cache_dir;
 
     /** {@inheritdoc} */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->tracker   = $this->getMockBuilder(Tracker::class)->disableOriginalConstructor()->getMock();
         $this->twig      = new Environment(new ArrayLoader([]));
         $this->cache_dir = sys_get_temp_dir();
     }
 
-    public function testParseValid()
+    public function testParseValid(): void
     {
         // Call count expectations:
         //  1: webpack_asset.js
@@ -69,27 +69,25 @@ class TwigParserTest extends TestCase
         self::assertContains('foobar', $points);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage template_parse_error.html.twig at line 3. Expected punctuation "(", got name.
-     */
-    public function testParseError()
+    public function testParseError(): void
     {
         $this->tracker->expects($this->never())->method('resolveResourcePath');
-
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('template_parse_error.html.twig at line 3. Expected punctuation "(", got name.');
+
         $parser->findSplitPoints(__DIR__ . '/Fixtures/template_parse_error.html.twig');
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage at line 3 could not be resolved.
-     */
-    public function testResolveError()
+    public function testResolveError(): void
     {
         $this->tracker->expects($this->once())->method('resolveResourcePath')->willReturn(false);
-
         $parser = new TwigParser($this->tracker, $this->twig, $this->cache_dir);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('at line 3 could not be resolved.');
+
         $parser->findSplitPoints(__DIR__ . '/Fixtures/template.html.twig');
     }
 }

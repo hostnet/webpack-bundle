@@ -17,7 +17,7 @@ class WebpackCompileCacheWarmerTest extends TestCase
     /**
      * Simple test to see the guard is executed from the cache warmer.
      */
-    public function testWebpackCompileCacheWarmer()
+    public function testWebpackCompileCacheWarmer(): void
     {
         $guard = $this->prophesize(CacheGuard::class);
         $guard->rebuild()->shouldBeCalled();

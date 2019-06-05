@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class CssLoaderTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -32,14 +32,14 @@ class CssLoaderTest extends AbstractTestCase
         self::assertArrayHasKey('filename', $config['css']);
     }
 
-    public function testGetCodeBlockDisabled()
+    public function testGetCodeBlockDisabled(): void
     {
         $config = new CssLoader(['loaders' => ['css' => ['enabled' => false]]]);
 
         self::assertFalse($config->getCodeBlocks()[0]->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlockEnabledDefaults()
+    public function testGetCodeBlockEnabledDefaults(): void
     {
         $configs = (new CssLoader(['loaders' => ['css' => ['enabled' => true]]]))->getCodeBlocks();
 
@@ -48,7 +48,7 @@ class CssLoaderTest extends AbstractTestCase
         self::assertFalse($configs[0]->has(CodeBlock::PLUGIN));
     }
 
-    public function testGetCodeBlockEnabledCommonsChunk()
+    public function testGetCodeBlockEnabledCommonsChunk(): void
     {
         $configs = (new CssLoader([
             'output'  => ['common_id' => 'foobar'],

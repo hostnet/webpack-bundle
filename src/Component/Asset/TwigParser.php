@@ -35,7 +35,7 @@ class TwigParser
      * @param $block_index
      * @return string
      */
-    public static function hashInlineFileName($template_file, $block_index)
+    public static function hashInlineFileName($template_file, $block_index): string
     {
         // Work around path inconsistencies on Windows/XAMPP.
         if (DIRECTORY_SEPARATOR === '\\') {
@@ -51,7 +51,7 @@ class TwigParser
      * @param  string $template_file
      * @return array
      */
-    public function findSplitPoints($template_file)
+    public function findSplitPoints($template_file): array
     {
         $inline_blocks = 0;
         $source        = new Source(file_get_contents($template_file), $template_file);
@@ -111,7 +111,7 @@ class TwigParser
      * @param  Token  $token
      * @return string
      */
-    private function resolveAssetPath($asset, $template_file, $token)
+    private function resolveAssetPath($asset, $template_file, $token): string
     {
         if (false === ($asset_path = $this->tracker->resolveResourcePath($asset))) {
             throw new \RuntimeException(sprintf(
@@ -140,7 +140,7 @@ class TwigParser
         return $token->getValue();
     }
 
-    private function expect($filename, Token $token, $type, $value = null)
+    private function expect($filename, Token $token, $type, $value = null): void
     {
         if ($token->getType() !== $type) {
             throw new \RuntimeException(sprintf(

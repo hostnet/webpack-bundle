@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class WebpackExtensionTest extends TestCase
 {
-    public function testAlias()
+    public function testAlias(): void
     {
         self::assertEquals(Configuration::CONFIG_ROOT, (new WebpackExtension())->getAlias());
     }
@@ -22,7 +22,7 @@ class WebpackExtensionTest extends TestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testLoadNoConfig()
+    public function testLoadNoConfig(): void
     {
         $container = new ContainerBuilder();
         $extension = new WebpackExtension();

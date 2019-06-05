@@ -77,7 +77,7 @@ class CodeBlock
      * @param  mixed $code
      * @return CodeBlock
      */
-    public function set($chunk, $code)
+    public function set($chunk, $code): CodeBlock
     {
         if (false === \in_array($chunk, $this->types, false)) {
             throw new \InvalidArgumentException(sprintf(
@@ -117,7 +117,7 @@ class CodeBlock
      * @param  string $chunk
      * @return bool
      */
-    public function has($chunk)
+    public function has($chunk): bool
     {
         return isset($this->chunks[$chunk]);
     }
