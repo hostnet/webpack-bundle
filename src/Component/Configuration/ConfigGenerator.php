@@ -17,7 +17,7 @@ class ConfigGenerator
      * @param  CodeBlockProviderInterface $entity
      * @return ConfigGenerator
      */
-    public function addExtension(CodeBlockProviderInterface $entity)
+    public function addExtension(CodeBlockProviderInterface $entity): ConfigGenerator
     {
         foreach ($entity->getCodeBlocks() as $block) {
             $this->addBlock($block);
@@ -30,7 +30,7 @@ class ConfigGenerator
      * @param  CodeBlock $block
      * @return ConfigGenerator
      */
-    public function addBlock(CodeBlock $block)
+    public function addBlock(CodeBlock $block): ConfigGenerator
     {
         $this->blocks[] = $block;
 
@@ -96,10 +96,11 @@ class ConfigGenerator
     }
 
     /**
-     * @param  string $type
-     * @param  string|bool $delimiter
-     * @param  string|bool $internal_delimiter
-     * @return string
+     * @param string $type
+     * @param string|bool $delimiter
+     * @param string|bool $internal_delimiter
+     *
+     * @return string|array
      */
     private function getChunks($type, $delimiter = PHP_EOL, $internal_delimiter = PHP_EOL)
     {

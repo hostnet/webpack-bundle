@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigGeneratorTest extends TestCase
 {
-    public function testBuild()
+    public function testBuild(): void
     {
         $config = new ConfigGenerator();
         $config

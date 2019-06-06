@@ -16,7 +16,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
  */
 class BabelLoaderTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -30,7 +30,7 @@ class BabelLoaderTest extends AbstractTestCase
         self::assertArrayHasKey('enabled', $config['babel']);
     }
 
-    public function testGetCodeBlockDefault()
+    public function testGetCodeBlockDefault(): void
     {
         $config = new BabelLoader();
         $block  = $config->getCodeBlocks()[0];
@@ -38,7 +38,7 @@ class BabelLoaderTest extends AbstractTestCase
         self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlockDisabled()
+    public function testGetCodeBlockDisabled(): void
     {
         $config = new BabelLoader(['loaders' => ['babel' => ['enabled' => false]]]);
         $block  = $config->getCodeBlocks()[0];
@@ -46,7 +46,7 @@ class BabelLoaderTest extends AbstractTestCase
         self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new BabelLoader(['loaders' => ['babel' => ['enabled' => true]]]);
         $block  = $config->getCodeBlocks()[0];

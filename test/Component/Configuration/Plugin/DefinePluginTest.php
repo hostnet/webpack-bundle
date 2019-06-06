@@ -19,7 +19,7 @@ class DefinePluginTest extends AbstractTestCase
     /**
      * @doesNotPerformAssertions
      */
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -30,7 +30,7 @@ class DefinePluginTest extends AbstractTestCase
         $config = $tree->buildTree()->finalize([]);
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new DefinePlugin([
             'plugins' => [

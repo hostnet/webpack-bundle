@@ -18,7 +18,6 @@ interface ConfigExtensionInterface extends CodeBlockProviderInterface
      * configuration.
      *
      * @param  NodeBuilder $node_builder
-     * @return string
      */
-    public static function applyConfiguration(NodeBuilder $node_builder);
+    public static function applyConfiguration(NodeBuilder $node_builder): void;
 }

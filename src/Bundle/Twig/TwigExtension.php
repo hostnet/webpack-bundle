@@ -91,7 +91,7 @@ class TwigExtension extends AbstractExtension
      * @param  string $asset
      * @return array
      */
-    public function webpackAsset($asset)
+    public function webpackAsset($asset): array
     {
         $asset_id        = $this->public_path . '/' . Compiler::getAliasId($asset);
         $full_asset_path = $this->web_dir . '/' . $asset_id;
@@ -119,7 +119,7 @@ class TwigExtension extends AbstractExtension
      * @param  string $url
      * @return string
      */
-    public function webpackPublic($url)
+    public function webpackPublic($url): string
     {
         $public_dir = '/' . ltrim($this->dump_path, '/');
 
@@ -139,7 +139,7 @@ class TwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function webpackCommonJs()
+    public function webpackCommonJs(): string
     {
         $file          = $this->web_dir . '/' . $this->common_js;
         $modified_time = file_exists($this->web_dir . '/' . $this->common_js) ? filemtime($file) : 0;
@@ -151,7 +151,7 @@ class TwigExtension extends AbstractExtension
      *
      * @return string
      */
-    public function webpackCommonCss()
+    public function webpackCommonCss(): string
     {
         $file          = $this->web_dir . '/' . $this->common_css;
         $modified_time = file_exists($this->web_dir . '/' . $this->common_css) ? filemtime($file) : 0;

@@ -15,36 +15,25 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class RequestListenerTest extends TestCase
 {
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|GetResponseEvent
-     */
-    private $event;
-
-    /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|CacheGuard
-     */
-    private $guard;
-
-    /** {@inheritdoc} */
-    protected function setUp()
+    public function testRequestNoMasterRequest(): void
     {
-        $this->event = $this->getMockBuilder(GetResponseEvent::class)->disableOriginalConstructor()->getMock();
-        $this->guard = $this->getMockBuilder(CacheGuard::class)->disableOriginalConstructor()->getMock();
+        $event = $this->prophesize(GetResponseEvent::class);
+        $guard = $this->prophesize(CacheGuard::class);
+
+        $guard->rebuild()->shouldNotBeCalled();
+        $event->isMasterRequest()->willReturn(false);
+
+        (new RequestListener($guard->reveal()))->onRequest($event->reveal());
     }
 
-    public function testRequestNoMasterRequest()
+    public function testRequestMasterRequest(): void
     {
-        $this->guard->expects($this->never())->method('rebuild');
-        $this->event->expects($this->once())->method('isMasterRequest')->willReturn(false);
+        $event = $this->prophesize(GetResponseEvent::class);
+        $guard = $this->prophesize(CacheGuard::class);
 
-        (new RequestListener($this->guard))->onRequest($this->event);
-    }
+        $guard->rebuild()->shouldBeCalled();
+        $event->isMasterRequest()->willReturn(true);
 
-    public function testRequestMasterRequest()
-    {
-        $this->guard->expects($this->once())->method('rebuild');
-        $this->event->expects($this->once())->method('isMasterRequest')->willReturn(true);
-
-        (new RequestListener($this->guard))->onRequest($this->event);
+        (new RequestListener($guard->reveal()))->onRequest($event->reveal());
     }
 }

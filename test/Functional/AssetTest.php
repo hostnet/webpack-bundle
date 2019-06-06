@@ -19,7 +19,7 @@ class AssetTest extends KernelTestCase
         return TestKernel::class;
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         static::bootKernel();
         $this->compiled = static::$kernel->getContainer()->getParameter('kernel.root_dir') . '/cache/compiled/';
@@ -29,7 +29,7 @@ class AssetTest extends KernelTestCase
         }
     }
 
-    public function testPublicAsset()
+    public function testPublicAsset(): void
     {
         static::bootKernel();
 
@@ -39,7 +39,7 @@ class AssetTest extends KernelTestCase
         self::assertEquals('/bundles/henk.png', $twig_ext->webpackPublic('henk.png'));
     }
 
-    public function testCompiledAsset()
+    public function testCompiledAsset(): void
     {
         /** @var TwigExtension $twig_ext */
         $container = static::$kernel->getContainer();
@@ -54,11 +54,11 @@ class AssetTest extends KernelTestCase
         touch($this->compiled . 'app.henk.css');
 
         $resources = $twig_ext->webpackAsset('@App/henk.js');
-        self::assertContains('app.henk.js?', (string) $resources['js']);
-        self::assertContains('app.henk.css?', (string) $resources['css']);
+        self::assertStringContainsString('app.henk.js?', (string) $resources['js']);
+        self::assertStringContainsString('app.henk.css?', (string) $resources['css']);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         shell_exec("rm -rf {$this->compiled}");
 

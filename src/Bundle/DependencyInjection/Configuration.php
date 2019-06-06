@@ -62,7 +62,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $node
      */
-    private function addNodeJSConfiguration(NodeBuilder $node)
+    private function addNodeJSConfiguration(NodeBuilder $node): void
     {
         $node
             ->arrayNode('node')
@@ -102,7 +102,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $node
      */
-    private function addParentConfiguration(NodeBuilder $node)
+    private function addParentConfiguration(NodeBuilder $node): void
     {
         $this->applyConfigurationFromClass(ConfigInterface::class, $node);
     }
@@ -112,7 +112,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $node
      */
-    private function addBundleConfiguration(NodeBuilder $node)
+    private function addBundleConfiguration(NodeBuilder $node): void
     {
         $node
             ->arrayNode('bundles')
@@ -128,7 +128,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @param NodeBuilder $node
      */
-    private function addPluginConfiguration(NodeBuilder $node)
+    private function addPluginConfiguration(NodeBuilder $node): void
     {
         $children = $node
             ->arrayNode('plugins')
@@ -144,7 +144,7 @@ class Configuration implements ConfigurationInterface
      *
      * @param NodeBuilder $node
      */
-    private function addLoaderConfiguration(NodeBuilder $node)
+    private function addLoaderConfiguration(NodeBuilder $node): void
     {
         $children = $node
             ->arrayNode('loaders')
@@ -159,7 +159,7 @@ class Configuration implements ConfigurationInterface
      * @param string      $interface
      * @param NodeBuilder $node_builder
      */
-    private function applyConfigurationFromClass($interface, NodeBuilder $node_builder)
+    private function applyConfigurationFromClass($interface, NodeBuilder $node_builder): void
     {
         foreach ($this->plugins as $name => $class_name) {
             // Only accept plugins of type PluginInterface.

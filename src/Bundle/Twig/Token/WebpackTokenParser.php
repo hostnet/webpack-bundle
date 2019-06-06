@@ -99,7 +99,7 @@ class WebpackTokenParser implements TokenParserInterface
      * @param string      $export_type
      * @return WebpackNode
      */
-    private function parseType(TokenStream $stream, $lineno, $export_type)
+    private function parseType(TokenStream $stream, $lineno, $export_type): WebpackNode
     {
         $files = [];
         while (! $stream->isEOF() && ! $stream->getCurrent()->test(Token::BLOCK_END_TYPE)) {
@@ -127,7 +127,7 @@ class WebpackTokenParser implements TokenParserInterface
      * @param int         $lineno
      * @return WebpackInlineNode
      */
-    private function parseInline(TokenStream $stream, $lineno)
+    private function parseInline(TokenStream $stream, $lineno): WebpackInlineNode
     {
         if ($stream->test(Token::NAME_TYPE)) {
             $stream->next();

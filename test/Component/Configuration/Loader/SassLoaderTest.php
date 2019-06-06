@@ -14,7 +14,7 @@ use Hostnet\Tests\AbstractTestCase;
  */
 class SassLoaderTest extends AbstractTestCase
 {
-    public function testConfigTreeBuilder()
+    public function testConfigTreeBuilder(): void
     {
         $tree = $this->createTreeBuilder('webpack');
         $node = $this->retrieveRootNode($tree, 'webpack')->children();
@@ -28,7 +28,7 @@ class SassLoaderTest extends AbstractTestCase
         self::assertArrayHasKey('enabled', $config['sass']);
     }
 
-    public function testGetCodeBlockDisabled()
+    public function testGetCodeBlockDisabled(): void
     {
         $config = new SassLoader(['loaders' => ['sass' => ['enabled' => false]]]);
         $block  = $config->getCodeBlocks()[0];
@@ -36,7 +36,7 @@ class SassLoaderTest extends AbstractTestCase
         self::assertFalse($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlock()
+    public function testGetCodeBlock(): void
     {
         $config = new SassLoader(['loaders' => ['sass' => ['enabled' => true]]]);
         $block  = $config->getCodeBlocks()[0];
@@ -44,7 +44,7 @@ class SassLoaderTest extends AbstractTestCase
         self::assertTrue($block->has(CodeBlock::LOADER));
     }
 
-    public function testGetCodeBlockWithIncludePaths()
+    public function testGetCodeBlockWithIncludePaths(): void
     {
         $config = new SassLoader(
             [

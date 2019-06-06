@@ -25,7 +25,7 @@ final class CssLoader implements LoaderInterface, ConfigExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public static function applyConfiguration(NodeBuilder $node_builder)
+    public static function applyConfiguration(NodeBuilder $node_builder): void
     {
         $node_builder
             ->arrayNode('css')

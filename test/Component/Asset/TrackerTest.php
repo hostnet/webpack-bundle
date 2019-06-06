@@ -9,6 +9,7 @@ namespace Hostnet\Component\Webpack\Asset;
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
@@ -41,7 +42,7 @@ class TrackerTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $fixture_path     = realpath(__DIR__ . '/../../Fixture');
         $this->root_dir   = $fixture_path;
@@ -52,7 +53,7 @@ class TrackerTest extends TestCase
     /**
      * The the isOutdated function in case the 'compiled' version is outdated.
      */
-    public function testIsOutdated()
+    public function testIsOutdated(): void
     {
         $path = tempnam(sys_get_temp_dir(), 'unittest_tracker_source');
         unlink($path);
@@ -73,7 +74,8 @@ class TrackerTest extends TestCase
         $profiler->set('tracker.reason', 'One of the tracked files has been modified.')->shouldBeCalled();
         $profiler->set('bundles', [])->shouldBeCalled();
         $profiler->set('templates', [])->shouldBeCalled();
-        $finder = $this->prophesize(TemplateFinderInterface::class);
+
+        $finder = $this->prophesize(TemplateFinder::class);
         $finder->findAllTemplates()->willReturn([]);
         $tracker = new Tracker(
             $profiler->reveal(),
@@ -95,7 +97,7 @@ class TrackerTest extends TestCase
     /**
      * The the isOutdated function in case the 'compiled' version is still fresh enough.
      */
-    public function testIsNotOutdated()
+    public function testIsNotOutdated(): void
     {
         $path = tempnam(sys_get_temp_dir(), 'unittest_tracker_source');
         unlink($path);
@@ -117,7 +119,7 @@ class TrackerTest extends TestCase
         $profiler->set('bundles', [])->shouldBeCalled();
         $profiler->set('templates', [])->shouldBeCalled();
 
-        $finder = $this->prophesize(TemplateFinderInterface::class);
+        $finder = $this->prophesize(TemplateFinder::class);
         $finder->findAllTemplates()->willReturn([]);
         $tracker = new Tracker(
             $profiler->reveal(),
@@ -139,10 +141,10 @@ class TrackerTest extends TestCase
     /**
      * Test the getTemplates function when there are no templates.
      */
-    public function testGetTemplatesNoTemplates()
+    public function testGetTemplatesNoTemplates(): void
     {
         $profiler = new Profiler();
-        $finder   = $this->prophesize(TemplateFinderInterface::class);
+        $finder   = $this->prophesize(TemplateFinder::class);
         $finder->findAllTemplates()->willReturn([]);
 
         $tracker = new Tracker(
@@ -158,13 +160,13 @@ class TrackerTest extends TestCase
     /**
      * Test the getTemplates function when the path to the template is not resolvable
      */
-    public function testGetTemplatesTemplateNotFound()
+    public function testGetTemplatesTemplateNotFound(): void
     {
         $profiler = new Profiler();
         $ref      = $this->prophesize(TemplateReferenceInterface::class);
         $ref->getPath()->willReturn('/ab/ca/dabra');
         $ref->get('engine')->willReturn('twig');
-        $finder = $this->prophesize(TemplateFinderInterface::class);
+        $finder = $this->prophesize(TemplateFinder::class);
         $finder->findAllTemplates()->willReturn([$ref->reveal()]);
 
         $tracker = new Tracker(
@@ -180,13 +182,13 @@ class TrackerTest extends TestCase
     /**
      * test the getTempaltes function for 1 template, including duplicate call of function.
      */
-    public function testGetTemplates()
+    public function testGetTemplates(): void
     {
         $profiler = new Profiler();
         $ref      = $this->prophesize(TemplateReferenceInterface::class);
         $ref->getPath()->willReturn('assets/base.js');
         $ref->get('engine')->willReturn('twig');
-        $finder = $this->prophesize(TemplateFinderInterface::class);
+        $finder = $this->prophesize(TemplateFinder::class);
         $finder->findAllTemplates()->willReturn([$ref->reveal()]);
 
         $tracker = new Tracker(
@@ -211,10 +213,10 @@ class TrackerTest extends TestCase
     /**
      * test resloveResourcePath for a full path.
      */
-    public function testResolveResourcePathNoBundle()
+    public function testResolveResourcePathNoBundle(): void
     {
         $profiler = new Profiler();
-        $finder   = $this->prophesize(TemplateFinderInterface::class);
+        $finder   = $this->prophesize(TemplateFinder::class);
 
         $tracker = new Tracker(
             $profiler,
@@ -229,10 +231,10 @@ class TrackerTest extends TestCase
     /**
      * test resloveResourcePath for a bundle path when bundle is not found.
      */
-    public function testResolveResourcePathBundleNotFound()
+    public function testResolveResourcePathBundleNotFound(): void
     {
         $profiler = new Profiler();
-        $finder   = $this->prophesize(TemplateFinderInterface::class);
+        $finder   = $this->prophesize(TemplateFinder::class);
 
         $tracker = new Tracker(
             $profiler,
@@ -247,10 +249,10 @@ class TrackerTest extends TestCase
     /**
      * test resloveResourcePath for a bundle path when bundle is found.
      */
-    public function testResolveResourcePathBundle()
+    public function testResolveResourcePathBundle(): void
     {
         $profiler = new Profiler();
-        $finder   = $this->prophesize(TemplateFinderInterface::class);
+        $finder   = $this->prophesize(TemplateFinder::class);
 
         $tracker = new Tracker(
             $profiler,
@@ -269,15 +271,16 @@ class TrackerTest extends TestCase
 
     /**
      * Test addPath for invalid path.
-     *
-     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
-     * @expectedExceptionMessage File "/i/dont/exist" could not be found.
      */
-    public function testAddInvalidPath()
+    public function testAddInvalidPath(): void
     {
         $profiler = new Profiler();
-        $finder   = $this->getMockBuilder(TemplateFinderInterface::class)->getMock();
+        $finder   = $this->prophesize(TemplateFinder::class)->reveal();
         $tracker  = new Tracker($profiler, $finder, $this->root_dir, $this->asset_dir, $this->output_dir, []);
-        $tracker->addPath("/i/dont/exist");
+
+        $this->expectException(FileNotFoundException::class);
+        $this->expectExceptionMessage('File "/i/dont/exist" could not be found.');
+
+        $tracker->addPath('/i/dont/exist');
     }
 }

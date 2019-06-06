@@ -7,7 +7,6 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Profiler\Profiler;
-use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Templating\TemplateReferenceInterface;
 
@@ -24,9 +23,9 @@ class Tracker
     private $profiler;
 
     /**
-     * Sevice used for finding all the templates which needs to be tracked.
+     * Service used for finding all the templates which needs to be tracked.
      *
-     * @var TemplateFinderInterface
+     * @var TemplateFinder
      */
     private $finder;
 
@@ -88,7 +87,7 @@ class Tracker
      * Create new Tracker.
      *
      * @param Profiler $profiler key-value store used to present 'logging' in the symfony-profiler bar.
-     * @param TemplateFinderInterface $finder used to find all the templates which needs to be tracked.
+     * @param TemplateFinder $finder used to find all the templates which needs to be tracked.
      * @param string $root_dir '%kernel.root_dir%' root directory of the application.
      * @param string $asset_dir directory to resolve assets, directory is resolved relative from the bundle path.
      * @param string $output_dir The directory where the compiled resources are stored.
@@ -96,11 +95,11 @@ class Tracker
      */
     public function __construct(
         Profiler $profiler,
-        TemplateFinderInterface $finder,
-        /* string */ $root_dir,
-        /* string */ $asset_dir,
-        /* string */ $output_dir,
-        array        $bundle_paths = []
+        TemplateFinder $finder,
+        string $root_dir,
+        string $asset_dir,
+        string $output_dir,
+        array $bundle_paths = []
     ) {
         $this->profiler     = $profiler;
         $this->finder       = $finder;
@@ -116,7 +115,7 @@ class Tracker
      * @param string $path the path to track.
      * @return Tracker this instance.
      */
-    public function addPath($path)
+    public function addPath($path): Tracker
     {
         if (empty($path) || false === ($real_path = realpath($path))) {
             throw new FileNotFoundException(null, 0, null, $path);
@@ -131,7 +130,7 @@ class Tracker
      *
      * @return bool true, cache is outdated of non exsitant.
      */
-    public function isOutdated()
+    public function isOutdated(): bool
     {
         $this->boot();
 
@@ -144,6 +143,7 @@ class Tracker
         }
 
         $this->profiler->set('tracker.reason', false);
+
         return false;
     }
 
@@ -152,7 +152,7 @@ class Tracker
      *
      * @return array the tracked aliases.
      */
-    public function getAliases()
+    public function getAliases(): array
     {
         return $this->aliases;
     }
@@ -162,7 +162,7 @@ class Tracker
      *
      * @return string[] list of twig templates.
      */
-    public function getTemplates()
+    public function getTemplates(): array
     {
         $this->boot();
 
@@ -172,7 +172,7 @@ class Tracker
     /**
      * Runtime initialize this tracker.
      */
-    private function boot()
+    private function boot(): void
     {
         if ($this->booted) {
             return;
@@ -199,7 +199,7 @@ class Tracker
      * Find the full path to a requested path, this can be bundle configurations like @BundleName/
      *
      * @param string $path the path to resolv.
-     * @return string the full path to the requested resource or false if not found.
+     * @return string|false the full path to the requested resource or false if not found.
      */
     private function resolvePath($path)
     {
@@ -223,7 +223,7 @@ class Tracker
      * Find the full path to a requested resource, this can be bundle configurations like @BundleName/resource.twig
      *
      * @param string $path the path resolve
-     * @return string the full path to the requested resource or false if not found.
+     * @return string|false the full path to the requested resource or false if not found.
      */
     public function resolveResourcePath($path)
     {
@@ -233,14 +233,12 @@ class Tracker
             if (false === isset($this->bundle_paths[$matches[1]])) {
                 return false;
             }
-            $template = realpath(
-                str_replace(
-                    $matches[0],
-                    $this->bundle_paths[$matches[1]] . DIRECTORY_SEPARATOR . trim($this->asset_dir, "\\/"),
-                    $path
-                )
-            );
-            return $template;
+
+            return realpath(str_replace(
+                $matches[0],
+                $this->bundle_paths[$matches[1]] . DIRECTORY_SEPARATOR . trim($this->asset_dir, "\\/"),
+                $path
+            ));
         }
 
         return $path;
@@ -252,7 +250,7 @@ class Tracker
      * @param TemplateReferenceInterface $reference the reference to the twig template to be added.
      * @return Tracker this instance
      */
-    private function addTemplate(TemplateReferenceInterface $reference)
+    private function addTemplate(TemplateReferenceInterface $reference): Tracker
     {
         if ($reference->get('engine') !== 'twig') {
             return $this;
@@ -260,8 +258,10 @@ class Tracker
 
         if (false !== ($path = $this->resolvePath($reference->getPath()))) {
             $this->templates[] = $path;
+
             return $this->addPath($path);
         }
+
         return $this;
     }
 }

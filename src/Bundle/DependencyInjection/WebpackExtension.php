@@ -68,7 +68,7 @@ class WebpackExtension extends Extension
      * @codeCoverageIgnore The outcome and coverage of this method solely depends on which platform PHP is running on.
      * @return string
      */
-    private function getPlatformKey()
+    private function getPlatformKey(): string
     {
         $platform = PHP_OS;
 

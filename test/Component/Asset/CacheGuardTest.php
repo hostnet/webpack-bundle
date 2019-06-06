@@ -17,7 +17,7 @@ class CacheGuardTest extends TestCase
     /**
      * Simple test for the case the cache is outdated.
      */
-    public function testCacheOutdated()
+    public function testCacheOutdated(): void
     {
         $compiler = $this->prophesize(Compiler::class);
         $compiler->compile()->willReturn('some debug output');
@@ -42,7 +42,7 @@ class CacheGuardTest extends TestCase
     /**
      * Simple test for the case the cache is not outdated.
      */
-    public function testCacheUpToDate()
+    public function testCacheUpToDate(): void
     {
         $compiler = $this->prophesize(Compiler::class);
         $compiler->compile()->willReturn('some debug output')->shouldNotBeCalled();

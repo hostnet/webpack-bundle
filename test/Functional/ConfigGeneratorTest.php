@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ConfigGeneratorTest extends KernelTestCase
 {
-    public function testExternalExtensions()
+    public function testExternalExtensions(): void
     {
         static::bootKernel();
 
@@ -25,6 +25,6 @@ class ConfigGeneratorTest extends KernelTestCase
         $contiguration = $config_generator->getConfiguration();
 
         self::assertTrue($mock_loader->code_blocks_called);
-        self::assertContains(MockLoader::BLOCK_CONTENT, $contiguration);
+        self::assertStringContainsString(MockLoader::BLOCK_CONTENT, $contiguration);
     }
 }

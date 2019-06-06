@@ -17,14 +17,14 @@ class DumperTest extends KernelTestCase
      */
     private $dir;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         static::bootKernel();
 
         $this->dir = Path::BASE_DIR . '/test/Fixture/cache/bundles';
     }
 
-    public function testDump()
+    public function testDump(): void
     {
         static::bootKernel();
 
@@ -35,7 +35,7 @@ class DumperTest extends KernelTestCase
         self::assertFileExists($this->dir . '/foo/public.js');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         shell_exec("rm -rf $this->dir");
 

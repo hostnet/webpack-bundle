@@ -38,7 +38,7 @@ class Dumper
     /**
      * Iterates through resources and dump all modified resources to the bundle directory in the public dir.
      */
-    public function dump()
+    public function dump(): void
     {
         foreach ($this->bundle_paths as $name => $path) {
             if (file_exists($path . DIRECTORY_SEPARATOR . $this->public_res_path)) {
@@ -51,7 +51,7 @@ class Dumper
      * @param string $name
      * @param string $path
      */
-    private function dumpBundle($name, $path)
+    private function dumpBundle($name, $path): void
     {
         $target_dir = $this->normalize($this->getTargetDir($name));
         $path       = $this->normalize($path);
@@ -81,7 +81,7 @@ class Dumper
      * @param  string $name
      * @return string
      */
-    private function getTargetDir($name)
+    private function getTargetDir($name): string
     {
         if (substr($name, \strlen($name) - 6) === 'Bundle') {
             $name = substr($name, 0, -6);

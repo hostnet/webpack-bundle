@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationTest extends TestCase
 {
-    public function testGetConfigTreeBuilder()
+    public function testGetConfigTreeBuilder(): void
     {
         $config = new Configuration([], [DefinePlugin::class, CssLoader::class]);
         $tree   = $config->getConfigTreeBuilder();

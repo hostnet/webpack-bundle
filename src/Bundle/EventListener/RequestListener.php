@@ -34,7 +34,7 @@ class RequestListener
      *
      * @param GetResponseEvent $event the response to send to te browser, we don't we only ensure the cache is there.
      */
-    public function onRequest(GetResponseEvent $event)
+    public function onRequest(GetResponseEvent $event): void
     {
         if (! $event->isMasterRequest()) {
             return;

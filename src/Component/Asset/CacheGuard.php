@@ -60,7 +60,7 @@ class CacheGuard
     /**
      * Rebuild the cache, check to see if it's still valid and rebuild if it's outdated.
      */
-    public function rebuild()
+    public function rebuild(): void
     {
         if ($this->tracker->isOutdated()) {
             $this->logger->info('[Webpack 1/2]: Compiling assets.');
