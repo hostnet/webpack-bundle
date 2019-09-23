@@ -20,13 +20,16 @@ class WebpackDataCollectorTest extends TestCase
     {
         $profiler  = new Profiler();
         $collector = new WebpackDataCollector($profiler);
-        $profiler->set('foobar', 'hoi');
         $collector->collect(
             $this->getMockBuilder(Request::class)->getMock(),
             $this->getMockBuilder(Response::class)->getMock()
         );
 
-        self::assertEquals('hoi', $collector->get('foobar'));
         self::assertEquals('webpack', $collector->getName());
+        self::assertNull($collector->get('foobar'));
+
+        $profiler->set('foobar', 'hoi');
+
+        self::assertEquals('hoi', $collector->get('foobar'));
     }
 }
