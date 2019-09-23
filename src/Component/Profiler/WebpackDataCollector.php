@@ -48,9 +48,9 @@ final class WebpackDataCollector implements DataCollectorInterface
     /**
      * @param  string $id
      * @param  mixed  $default
-     * @return string
+     * @return null|string
      */
-    public function get($id, $default = false): string
+    public function get($id, $default = false): ?string
     {
         return $this->profiler->get($id, $default);
     }
