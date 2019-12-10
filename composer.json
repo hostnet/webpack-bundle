@@ -8,7 +8,7 @@
         "ext-json":               "*",
         "monolog/monolog":        "~1.25",
         "symfony/monolog-bundle": "^4.0.0||^3.1.0",
-        "symfony/symfony":        "^4.0.0||^3.3.0",
+        "symfony/symfony":        "^4.3.9||^3.4.36",
         "twig/twig":              "^2.7.2"
     },
     "require-dev": {
