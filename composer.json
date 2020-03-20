@@ -3,6 +3,7 @@
     "type":        "symfony-bundle",
     "description": "Integrates Webpack with Symfony",
     "license":     "MIT",
+    "abandoned":   true,
     "require": {
         "php":                    "^7.1.0",
         "ext-json":               "*",
