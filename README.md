@@ -3,8 +3,8 @@
 This package is abandoned.
 Use alternative tools like:
 
-- [hostnet/asset-bundle]('https://github.com/hostnet/asset-bundle')
-- [Webpack Encore]('https://symfony.com/doc/4.4/frontend.html')
+- [hostnet/asset-bundle](https://github.com/hostnet/asset-bundle)
+- [Webpack Encore](https://symfony.com/doc/4.4/frontend.html)
 
 
 # hostnet/webpack-bundle
