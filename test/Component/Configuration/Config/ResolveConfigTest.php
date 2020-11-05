@@ -37,12 +37,12 @@ class ResolveConfigTest extends AbstractTestCase
     public function testGetCodeBlock(): void
     {
         $config = new ResolveConfig([
-            'node' => [
+            'node'    => [
                 'node_modules_path' => '/path/to/node_modules',
             ],
             'resolve' => [
-                'root' => ['foobar.js'],
-                'alias' => ['@Common' => 'common'],
+                'root'                => ['foobar.js'],
+                'alias'               => ['@Common' => 'common'],
                 'modules_directories' => [],
             ],
         ]);

@@ -59,10 +59,10 @@ class ConfigGeneratorTest extends TestCase
         $config->addExtension(new SassLoader([
             'loaders' => [
                 'sass' => [
-                    'enabled' => true,
+                    'enabled'       => true,
                     'include_paths' => ['path1', 'path2'],
-                    'filename' => 'testfile',
-                    'all_chunks' => true]],
+                    'filename'      => 'testfile',
+                    'all_chunks'    => true]],
         ]));
 
         $fixture_file = __DIR__ . '/../../Fixture/Component/Configuration/ConfigGenerator.js';

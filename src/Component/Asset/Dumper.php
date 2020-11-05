@@ -22,11 +22,11 @@ class Dumper
     private $output_dir;
 
     public function __construct(
-        Filesystem      $fs,
+        Filesystem $fs,
         LoggerInterface $logger,
-        array           $bundle_paths,
-        string          $public_res_path,
-        string          $output_dir
+        array $bundle_paths,
+        string $public_res_path,
+        string $output_dir
     ) {
         $this->fs              = $fs;
         $this->logger          = $logger;
