@@ -31,7 +31,7 @@ class ResolveLoaderConfigTest extends AbstractTestCase
     public function testGetCodeBlock(): void
     {
         $config = new ResolveLoaderConfig([
-            'node' => [
+            'node'           => [
                 'node_modules_path' => '/foo/bar',
             ],
             'resolve_loader' => [

@@ -28,7 +28,6 @@ class RequestListener
         $this->guard = $guard;
     }
 
-
     /**
      * On Request received check the validity of the webpack cache.
      *

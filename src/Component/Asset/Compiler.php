@@ -59,14 +59,14 @@ class Compiler
     private $stopwatch;
 
     public function __construct(
-        Profiler        $profiler,
-        Tracker         $tracker,
-        TwigParser      $twig_parser,
+        Profiler $profiler,
+        Tracker $tracker,
+        TwigParser $twig_parser,
         ConfigGenerator $generator,
-        Process         $process,
+        Process $process,
         /* string */ $cache_dir,
         /* array */ $bundles,
-        Stopwatch       $stopwatch = null
+        Stopwatch $stopwatch = null
     ) {
         $this->profiler    = $profiler;
         $this->tracker     = $tracker;
@@ -146,8 +146,6 @@ class Compiler
             $this->generator->addBlock((new CodeBlock())->set(CodeBlock::ENTRY, [self::getAliasId($id) => $file]));
         }
     }
-
-
 
     /**
      * Returns the alias id for the given path.

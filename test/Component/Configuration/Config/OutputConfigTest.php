@@ -47,7 +47,7 @@ class OutputConfigTest extends AbstractTestCase
     {
         $config = new OutputConfig([
             'output' => [
-                'filename' => 'foobar.js',
+                'filename'  => 'foobar.js',
                 'common_id' => 'common',
             ],
         ]);
