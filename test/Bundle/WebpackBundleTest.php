@@ -8,6 +8,7 @@ namespace Hostnet\Bundle\WebpackBundle;
 
 use Hostnet\Bundle\WebpackBundle\DependencyInjection\WebpackCompilerPass;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -15,6 +16,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class WebpackBundleTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testBuild(): void
     {
         $bundle    = new WebpackBundle();

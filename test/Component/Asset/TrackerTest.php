@@ -8,7 +8,7 @@ namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Component\Webpack\Profiler\Profiler;
 use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplateFinderInterface;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Templating\TemplateReferenceInterface;
@@ -18,6 +18,8 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
  */
 class TrackerTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * The root directory of the application a.k.a. %kernel.root_dir%
      *
@@ -39,9 +41,6 @@ class TrackerTest extends TestCase
      */
     private $output_dir;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp(): void
     {
         $fixture_path     = realpath(__DIR__ . '/../../Fixture');

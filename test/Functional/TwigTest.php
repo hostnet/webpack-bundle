@@ -6,7 +6,6 @@ declare(strict_types=1);
 
 namespace Hostnet\Functional;
 
-use Hostnet\Fixture\WebpackBundle\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 
@@ -23,8 +22,8 @@ class TwigTest extends KernelTestCase
         $twig = static::$kernel->getContainer()->get('twig');
         $html = $twig->render('/common_id.html.twig');
 
-        self::assertRegExp('~src="/compiled/shared\.js\?[0-9]+"~', $html);
-        self::assertRegExp('~href="/compiled/shared\.css\?[0-9]+"~', $html);
+        self::assertMatchesRegularExpression('~src="/compiled/shared\.js\?[0-9]+"~', $html);
+        self::assertMatchesRegularExpression('~href="/compiled/shared\.css\?[0-9]+"~', $html);
 
         $twig->render('/template.html.twig');
     }

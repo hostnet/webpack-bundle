@@ -9,12 +9,15 @@ namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 use Hostnet\Component\Webpack\Configuration\Loader\CssLoader;
 use Hostnet\Component\Webpack\Configuration\Plugin\DefinePlugin;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\DependencyInjection\Configuration
  */
 class ConfigurationTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testGetConfigTreeBuilder(): void
     {
         $config = new Configuration([], [DefinePlugin::class, CssLoader::class]);

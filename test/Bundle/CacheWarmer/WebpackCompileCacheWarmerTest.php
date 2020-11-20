@@ -8,12 +8,15 @@ namespace Hostnet\Bundle\WebpackBundle\CacheWarmer;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @covers \Hostnet\Bundle\WebpackBundle\CacheWarmer\WebpackCompileCacheWarmer
  */
 class WebpackCompileCacheWarmerTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Simple test to see the guard is executed from the cache warmer.
      */

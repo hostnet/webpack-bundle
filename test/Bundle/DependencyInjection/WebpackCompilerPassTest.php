@@ -15,6 +15,7 @@ use Hostnet\Component\Webpack\Profiler\Profiler;
 use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
 use Hostnet\Fixture\WebpackBundle\Bundle\FooBundle\FooBundle;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -29,6 +30,8 @@ use Twig\Loader\FilesystemLoader;
  */
 class WebpackCompilerPassTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testPass(): void
     {
         $bundle      = new WebpackBundle();

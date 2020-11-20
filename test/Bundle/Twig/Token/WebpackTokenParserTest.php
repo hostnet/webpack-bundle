@@ -8,6 +8,7 @@ namespace Hostnet\Bundle\WebpackBundle\Twig\Token;
 
 use Hostnet\Bundle\WebpackBundle\Twig\TwigExtension;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Twig\Loader\LoaderInterface;
 
 /**
@@ -15,6 +16,8 @@ use Twig\Loader\LoaderInterface;
  */
 class WebpackTokenParserTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testParser(): void
     {
         $loader    = $this->prophesize(LoaderInterface::class)->reveal();

@@ -8,6 +8,7 @@ namespace Hostnet\Component\Webpack\Asset;
 
 use Hostnet\Fixture\WebpackBundle\Bundle\BarBundle\BarBundle;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
@@ -15,6 +16,8 @@ use Symfony\Component\HttpKernel\Kernel;
  */
 class TemplateFinderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testFindAllTemplates(): void
     {
         $kernel = $this->prophesize(Kernel::class);
