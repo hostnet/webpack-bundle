@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Bundle\WebpackBundle\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -14,6 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class WebpackExtensionTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testAlias(): void
     {
         self::assertEquals(Configuration::CONFIG_ROOT, (new WebpackExtension())->getAlias());

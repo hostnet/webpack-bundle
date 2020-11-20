@@ -14,7 +14,6 @@ use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-use Symfony\Component\HttpKernel\Kernel;
 
 class Configuration implements ConfigurationInterface
 {
@@ -174,27 +173,11 @@ class Configuration implements ConfigurationInterface
 
     private function createTreeBuilder(): TreeBuilder
     {
-        if (Kernel::VERSION_ID >= 40200) {
-            return new TreeBuilder(self::CONFIG_ROOT);
-        }
-
-        if (Kernel::VERSION_ID >= 30300 && Kernel::VERSION_ID < 40200) {
-            return new TreeBuilder();
-        }
-
-        throw new \RuntimeException('This bundle can only be used by Symfony 3.3 and up.');
+        return new TreeBuilder(self::CONFIG_ROOT);
     }
 
     private function retrieveRootNode(TreeBuilder $tree_builder): NodeDefinition
     {
-        if (Kernel::VERSION_ID >= 40200) {
-            return $tree_builder->getRootNode();
-        }
-
-        if (Kernel::VERSION_ID >= 30300 && Kernel::VERSION_ID < 40200) {
-            return $tree_builder->root(self::CONFIG_ROOT);
-        }
-
-        throw new \RuntimeException('This bundle can only be used by Symfony 3.3 and up.');
+        return $tree_builder->getRootNode();
     }
 }

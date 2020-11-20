@@ -8,6 +8,7 @@ namespace Hostnet\Bundle\WebpackBundle\Command;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -16,6 +17,8 @@ use Symfony\Component\Console\Output\NullOutput;
  */
 class CompileCommandTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Simple test to see the validate function is executed from the CacheGard class.
      */

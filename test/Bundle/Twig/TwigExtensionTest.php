@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Bundle\WebpackBundle\Twig;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Twig\Loader\LoaderInterface;
 
 /**
@@ -14,6 +15,8 @@ use Twig\Loader\LoaderInterface;
  */
 class TwigExtensionTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testExtension(): void
     {
         $loader    = $this->prophesize(LoaderInterface::class)->reveal();
@@ -35,7 +38,7 @@ class TwigExtensionTest extends TestCase
         self::assertEquals($expected, $extension->webpackPublic($asset));
     }
 
-    public function assetProvider()
+    public function assetProvider(): iterable
     {
         return [
             ['/bundles/img.png', 'img.png', __DIR__ . '/web/', '/bundles/', '/'],

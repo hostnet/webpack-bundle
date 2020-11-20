@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Hostnet\Component\Webpack\Asset;
 
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -14,6 +15,8 @@ use Psr\Log\LoggerInterface;
  */
 class CacheGuardTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Simple test for the case the cache is outdated.
      */

@@ -8,6 +8,7 @@ namespace Hostnet\Bundle\WebpackBundle\EventListener;
 
 use Hostnet\Component\Webpack\Asset\CacheGuard;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -15,6 +16,8 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class RequestListenerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testRequestNoMasterRequest(): void
     {
         $event = $this->prophesize(GetResponseEvent::class);
